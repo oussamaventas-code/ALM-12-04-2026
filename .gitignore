@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Extra folders
+.claude/
+ALMELECTRICIDAD_2026-04-04/
+directivas/
+Nuestros servicios NANO/
+NUEVO HERO EN VIDEO .mp4
+backup_log.txt
