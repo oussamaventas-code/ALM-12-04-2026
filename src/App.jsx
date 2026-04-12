@@ -1,0 +1,123 @@
+import { useEffect, lazy, Suspense } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
+
+import Navbar from './components/Navbar';
+import UrgencyBanner from './components/UrgencyBanner';
+import Footer from './components/Footer';
+import WhatsAppFloat from './components/WhatsAppFloat';
+import CustomCursor from './components/CustomCursor';
+import MobileUrgencyBar from './components/MobileUrgencyBar';
+import PageTransition from './components/PageTransition';
+
+// HomePage carga inmediata (primera pantalla)
+import HomePage from './pages/HomePage';
+
+// Resto de páginas: carga diferida (solo se descargan si el usuario navega a ellas)
+const ServicePage      = lazy(() => import('./pages/ServicePage'));
+const ZonePage         = lazy(() => import('./pages/ZonePage'));
+const FotovoltaicaPage = lazy(() => import('./pages/FotovoltaicaPage'));
+const TeamPage         = lazy(() => import('./pages/TeamPage'));
+const FlotaPage        = lazy(() => import('./pages/FlotaPage'));
+const UrgenciasPage    = lazy(() => import('./pages/UrgenciasPage'));
+const PatrociniosPage  = lazy(() => import('./pages/PatrociniosPage'));
+
+// GSAP registrado una única vez aquí — los componentes no necesitan volver a registrarlo
+gsap.registerPlugin(ScrollTrigger);
+
+// ── Lenis smooth scroll ─────────────────────────────────────────────────────
+// Singleton instance shared via module scope so ScrollTrigger can always
+// reference the live Lenis object.
+let lenisInstance = null;
+
+function useLenis() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Skip on touch/coarse-pointer devices — Lenis would add overhead with no benefit
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+    if (isTouch) return;
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo ease
+      smoothWheel: true,
+      syncTouch: false,
+    });
+
+    lenisInstance = lenis;
+
+    // Keep ScrollTrigger in sync with Lenis scroll position
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Drive Lenis from GSAP ticker so both run in the same rAF loop
+    const tickerFn = (time) => lenis.raf(time * 1000);
+    gsap.ticker.add(tickerFn);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      gsap.ticker.remove(tickerFn);
+      lenis.destroy();
+      lenisInstance = null;
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // init once
+
+  // On route change scroll to top via Lenis (avoids position carry-over)
+  useEffect(() => {
+    if (lenisInstance) {
+      lenisInstance.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+    ScrollTrigger.refresh();
+  }, [location.pathname]);
+}
+
+// ── Fallback loader ─────────────────────────────────────────────────────────
+function PageLoader() {
+  return (
+    <div className="min-h-screen bg-dark flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-10 h-10 border-2 border-brand border-t-transparent rounded-full animate-spin" />
+        <span className="text-white/40 text-sm font-body">Cargando...</span>
+      </div>
+    </div>
+  );
+}
+
+// ── App shell ───────────────────────────────────────────────────────────────
+function AppShell() {
+  useLenis();
+
+  return (
+    <div className="overflow-x-hidden">
+      <PageTransition />
+      <Navbar />
+      {/* <UrgencyBanner /> */}
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/"                element={<HomePage />} />
+          <Route path="/urgencias"       element={<UrgenciasPage />} />
+          <Route path="/patrocinios"     element={<PatrociniosPage />} />
+          <Route path="/servicios/:slug" element={<ServicePage />} />
+          <Route path="/zonas/:slug"     element={<ZonePage />} />
+          <Route path="/fotovoltaica"    element={<FotovoltaicaPage />} />
+          <Route path="/equipo"          element={<TeamPage />} />
+          <Route path="/flota"           element={<FlotaPage />} />
+        </Routes>
+      </Suspense>
+      <Footer />
+      <WhatsAppFloat />
+      <MobileUrgencyBar />
+      <CustomCursor />
+    </div>
+  );
+}
+
+export default function App() {
+  return <AppShell />;
+}

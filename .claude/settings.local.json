@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -h \"bg-\\\\|background\" \"c:/Users/Voldemort/Desktop/ALM 06042026/ALMELECTRICIDAD_2026-04-04/src/components/\"*.jsx)",
+      "Bash(grep -rh \"bg-white\\\\b\\\\|bg-ink\\\\b\\\\|text-white\\\\b\" \"c:/Users/Voldemort/Desktop/ALM 06042026/ALMELECTRICIDAD_2026-04-04/src/components/\"*.jsx)",
+      "Bash(npm i:*)",
+      "Bash(npm run:*)",
+      "Bash(gh repo:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(npx vite:*)",
+      "Bash(start http://localhost:5173)",
+      "Bash(start http://localhost:5174)",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}

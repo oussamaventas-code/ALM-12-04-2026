@@ -1,0 +1,224 @@
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+const projects = [
+  {
+    image: '/images/portfolio/bbf912ac-5634-4e6f-ad8d-b83fdf356274.JPG',
+    title: 'Instalación eléctrica completa',
+    type: 'Industrial',
+    result: 'Canalización y cableado profesional. Inspección superada a la primera.',
+  },
+  {
+    image: '/images/portfolio/f015c7ac-f508-4a30-bde0-3dfdb7713f23.JPG',
+    title: 'Cuadro general de distribución',
+    type: 'Alta potencia',
+    result: 'Cuadro eléctrico certificado con protecciones de última generación.',
+  },
+  {
+    image: '/images/portfolio/8217e1cb-136f-4b3c-88ca-fb7cda38d8aa.JPG',
+    title: 'Reforma eléctrica integral',
+    type: 'Rehabilitación',
+    result: 'Adecuación completa a normativa REBT vigente.',
+  },
+  {
+    image: '/images/portfolio/e6948f9c-0f62-4771-bf42-8c308b96c351.JPG',
+    title: 'Canalización en nave industrial',
+    type: 'Industrial',
+    result: 'Tendido de bandejas y cableado certificado BT.',
+  },
+  {
+    image: '/images/portfolio/2d9c7fe9-ebf3-43e6-ae41-41f8e990bf8c.JPG',
+    title: 'Instalación en local comercial',
+    type: 'Comercial',
+    result: 'Iluminación LED + cuadro seccional. Ahorro del 65% en factura.',
+  },
+  {
+    image: '/images/portfolio/0c1c3c06-f1d5-4f04-91a8-1381e29dd650.JPG',
+    title: 'Conexión y puesta en servicio',
+    type: 'Mantenimiento',
+    result: 'Revisión completa y certificación de la instalación existente.',
+  },
+];
+
+export default function Portfolio() {
+  const sectionRef = useRef(null);
+  const pinWrapRef = useRef(null);
+  const trackRef = useRef(null);
+  const titleRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const track = trackRef.current;
+      const section = sectionRef.current;
+
+      // Total horizontal distance to scroll
+      const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
+
+      const horizontalTween = gsap.to(track, {
+        x: () => getScrollAmount(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: () => `+=${Math.abs(getScrollAmount())}`,
+          // Pin se libera exactamente cuando la última tarjeta entra en pantalla
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // Title parallax
+      gsap.to(titleRef.current, {
+        x: -80,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: () => `+=${Math.abs(getScrollAmount())}`,
+          // Pin se libera exactamente cuando la última tarjeta entra en pantalla
+          scrub: 1,
+          invalidateOnRefresh: true,
+          containerAnimation: horizontalTween,
+        },
+      });
+
+      // Card stagger reveal — triggered by horizontal progress
+      gsap.utils.toArray('.portfolio-card').forEach((card, i) => {
+        gsap.fromTo(
+          card,
+          { y: -60, autoAlpha: 0, rotation: -3 + (i % 2 === 0 ? -1 : 1) * 1.5 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            rotation: 0,
+            duration: 0.85,
+            ease: 'power3.out',
+            delay: i * 0.08,
+            scrollTrigger: {
+              trigger: card,
+              containerAnimation: horizontalTween,
+              start: 'left 85%',
+              once: true,
+            },
+          }
+        );
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section
+      id="portfolio"
+      ref={sectionRef}
+      className="bg-surface-200 overflow-hidden"
+      style={{ height: '100vh' }}
+    >
+      <div ref={pinWrapRef} className="h-full flex flex-col">
+        {/* Header — stays at top while pinned */}
+        <div className="container-custom px-6 pt-16 pb-8 shrink-0">
+          <div className="flex items-end justify-between">
+            <div ref={titleRef}>
+              <span className="section-label mb-4 block">Proyectos reales</span>
+              <h2 className="section-title">
+                Esto no son renders.
+                <br />
+                <span className="text-gradient-brand">Son trabajos nuestros.</span>
+              </h2>
+            </div>
+            <p className="section-subtitle hidden md:block max-w-xs text-right">
+              Cada foto es de un proyecto real.
+              <br />
+              Sin retoques ni imágenes de banco.
+            </p>
+          </div>
+        </div>
+
+        {/* Horizontal track */}
+        <div className="flex-1 flex items-center overflow-visible pl-8">
+          <div
+            ref={trackRef}
+            className="flex gap-6 will-change-transform pr-8"
+            style={{ width: 'max-content' }}
+          >
+            {projects.map((p, i) => (
+              <div
+                key={i}
+                className="portfolio-card group relative overflow-hidden cursor-pointer shrink-0 rounded-sm"
+                style={{
+                  width: 'clamp(280px, 35vw, 520px)',
+                  height: '70vh',
+                }}
+              >
+                {/* Image */}
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-7">
+                  <span
+                    className="font-body text-xs font-semibold uppercase tracking-[0.15em]"
+                    style={{ color: 'var(--color-brand-light)' }}
+                  >
+                    {p.type}
+                  </span>
+                  <h3 className="font-heading text-xl font-bold text-white mt-2 leading-snug">
+                    {p.title}
+                  </h3>
+                  <p className="font-body text-sm text-white/60 mt-2 leading-relaxed">
+                    {p.result}
+                  </p>
+                </div>
+
+                {/* Always-visible bottom bar */}
+                <div className="absolute bottom-0 left-0 right-0 bg-dark/85 backdrop-blur-sm px-5 py-3 group-hover:opacity-0 transition-opacity duration-400">
+                  <div className="flex items-center justify-between">
+                    <span
+                      className="font-body text-[10px] font-semibold uppercase tracking-[0.12em]"
+                      style={{ color: 'var(--color-brand)' }}
+                    >
+                      {p.type}
+                    </span>
+                    <span className="font-heading text-sm font-semibold text-white/90">
+                      {p.title}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Left brand accent on hover */}
+                <div
+                  className="absolute top-0 left-0 w-[3px] h-full scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-bottom"
+                  style={{ background: 'var(--color-brand)' }}
+                />
+
+                {/* Card number */}
+                <div className="absolute top-4 left-4 font-heading font-black text-5xl text-white/[0.07] leading-none select-none pointer-events-none group-hover:text-white/[0.12] transition-colors duration-500">
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+              </div>
+            ))}
+
+            {/* Trailing space */}
+            <div className="shrink-0 w-8" />
+          </div>
+        </div>
+
+        {/* Scroll hint */}
+        <div className="container-custom px-6 pb-6 shrink-0 flex items-center gap-3">
+          <div className="h-[1px] w-8 bg-brand/40" />
+          <span className="font-body text-xs text-white/30 uppercase tracking-[0.12em]">
+            Desliza para ver más proyectos
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}
