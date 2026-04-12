@@ -104,12 +104,13 @@ export default function UrgenciasSection() {
       {/* 1. HERO URGENCIAS */}
       <div ref={heroRef} className="relative w-full h-screen flex items-center justify-center overflow-hidden">
         {/* Video Background */}
-        <video 
-          className="absolute inset-0 w-full h-full object-cover opacity-50" 
-          autoPlay 
-          loop 
-          muted 
+        <video
+          className="absolute inset-0 w-full h-full object-cover opacity-50"
+          autoPlay
+          loop
+          muted
           playsInline
+          preload="none"
         >
           <source src="/video  seccion de urgencias/Avería Urgente1.mp4" type="video/mp4" />
         </video>

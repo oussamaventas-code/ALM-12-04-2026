@@ -1,20 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SeoHead from '../components/SeoHead';
 
+// Above the fold — carga inmediata
 import Hero from '../components/Hero';
 import Metrics from '../components/Metrics';
 import Services from '../components/Services';
-import Portfolio from '../components/Portfolio';
-import WhyUs from '../components/WhyUs';
-import Process from '../components/Process';
-import Testimonials from '../components/Testimonials';
-import Mistakes from '../components/Mistakes';
-import FAQ from '../components/FAQ';
-import MapLocation from '../components/MapLocation';
-import ContactForm from '../components/ContactForm';
-import FinalCTA from '../components/FinalCTA';
-import StickyMobileCTA from '../components/StickyMobileCTA';
+
+// Below the fold — carga diferida
+const WhyUs        = lazy(() => import('../components/WhyUs'));
+const Portfolio    = lazy(() => import('../components/Portfolio'));
+const Process      = lazy(() => import('../components/Process'));
+const Testimonials = lazy(() => import('../components/Testimonials'));
+const Mistakes     = lazy(() => import('../components/Mistakes'));
+const FAQ          = lazy(() => import('../components/FAQ'));
+const MapLocation  = lazy(() => import('../components/MapLocation'));
+const ContactForm  = lazy(() => import('../components/ContactForm'));
+const FinalCTA     = lazy(() => import('../components/FinalCTA'));
+const StickyMobileCTA = lazy(() => import('../components/StickyMobileCTA'));
 
 // gsap.registerPlugin ya registrado globalmente en App.jsx
 
@@ -57,35 +60,38 @@ export default function HomePage() {
       {/* 3. Qué hacemos — el usuario sabe si pueden ayudarle */}
       <Services />
 
-      {/* 4. Por qué nosotros — diferenciación real */}
-      <WhyUs />
+      {/* Below the fold — carga diferida */}
+      <Suspense fallback={null}>
+        {/* 4. Por qué nosotros — diferenciación real */}
+        <WhyUs />
 
-      {/* 5. Trabajo real — galería de proyectos */}
-      <Portfolio />
+        {/* 5. Trabajo real — galería de proyectos */}
+        <Portfolio />
 
-      {/* 6. Cómo trabajamos — elimina el miedo al proceso */}
-      <Process />
+        {/* 6. Cómo trabajamos — elimina el miedo al proceso */}
+        <Process />
 
-      {/* 7. Prueba social — testimonios con ubicación */}
-      <Testimonials />
+        {/* 7. Prueba social — testimonios con ubicación */}
+        <Testimonials />
 
-      {/* 8. Derribo de objeciones — errores comunes */}
-      <Mistakes />
+        {/* 8. Derribo de objeciones — errores comunes */}
+        <Mistakes />
 
-      {/* 9. FAQ — últimas dudas antes de contactar */}
-      <FAQ />
+        {/* 9. FAQ — últimas dudas antes de contactar */}
+        <FAQ />
 
-      {/* 10. Mapa — confianza por proximidad geográfica */}
-      <MapLocation />
+        {/* 10. Mapa — confianza por proximidad geográfica */}
+        <MapLocation />
 
-      {/* 11. Formulario principal de conversión */}
-      <ContactForm />
+        {/* 11. Formulario principal de conversión */}
+        <ContactForm />
 
-      {/* 12. Última oportunidad de conversión directa */}
-      <FinalCTA />
-      
-      {/* CTA de Urgencia Movil Fijo */}
-      <StickyMobileCTA />
+        {/* 12. Última oportunidad de conversión directa */}
+        <FinalCTA />
+
+        {/* CTA de Urgencia Movil Fijo */}
+        <StickyMobileCTA />
+      </Suspense>
     </>
   );
 }

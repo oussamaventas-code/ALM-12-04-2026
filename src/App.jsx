@@ -26,6 +26,8 @@ const PatrociniosPage  = lazy(() => import('./pages/PatrociniosPage'));
 
 // GSAP registrado una única vez aquí — los componentes no necesitan volver a registrarlo
 gsap.registerPlugin(ScrollTrigger);
+// Reducir lagSmoothing global para no bloquear el main thread
+gsap.ticker.lagSmoothing(500, 33);
 
 // ── Lenis smooth scroll ─────────────────────────────────────────────────────
 // Singleton instance shared via module scope so ScrollTrigger can always
@@ -38,29 +40,33 @@ function useLenis() {
   useEffect(() => {
     // Skip on touch/coarse-pointer devices — Lenis would add overhead with no benefit
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
-
     if (isTouch) return;
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo ease
-      smoothWheel: true,
-      syncTouch: false,
-    });
+    let tickerFn;
+    let lenis;
 
-    lenisInstance = lenis;
+    // Diferir Lenis hasta después de la carga inicial para no bloquear el TBT
+    const timer = setTimeout(() => {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        syncTouch: false,
+      });
 
-    // Keep ScrollTrigger in sync with Lenis scroll position
-    lenis.on('scroll', ScrollTrigger.update);
+      lenisInstance = lenis;
 
-    // Drive Lenis from GSAP ticker so both run in the same rAF loop
-    const tickerFn = (time) => lenis.raf(time * 1000);
-    gsap.ticker.add(tickerFn);
-    gsap.ticker.lagSmoothing(0);
+      lenis.on('scroll', ScrollTrigger.update);
+
+      tickerFn = (time) => lenis.raf(time * 1000);
+      gsap.ticker.add(tickerFn);
+      gsap.ticker.lagSmoothing(0);
+    }, 300); // 300ms tras el primer render — fuera del critical path
 
     return () => {
-      gsap.ticker.remove(tickerFn);
-      lenis.destroy();
+      clearTimeout(timer);
+      if (tickerFn) gsap.ticker.remove(tickerFn);
+      if (lenis) lenis.destroy();
       lenisInstance = null;
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
