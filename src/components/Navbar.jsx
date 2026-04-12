@@ -20,7 +20,15 @@ const navLinks = [
       { label: 'Moncloa', to: '/zonas/moncloa' },
     ],
   },
-  { label: 'Reseñas', href: '#testimonios' },
+  {
+    label: 'Nosotros',
+    href: '#',
+    dropdown: [
+      { label: 'Nuestro Equipo', to: '/equipo' },
+      { label: 'Nuestra Flota', to: '/flota' },
+      { label: 'Patrocinios', to: '/patrocinios' },
+    ],
+  },
   { label: 'Contacto', href: '#contacto' },
 ];
 
