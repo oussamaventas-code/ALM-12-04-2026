@@ -93,7 +93,7 @@ export const services = [
     subtitle: 'Todo en regla, sin complicaciones',
     shortDesc: 'Altas de luz, legalizaciones y certificaciones. Nos encargamos de la burocracia.',
     heroDesc: 'Necesitas el boletín para dar de alta la luz, legalizar una reforma o pasar una inspección. Nosotros nos encargamos de todo: revisamos la instalación, emitimos el certificado y gestionamos los trámites.',
-    image: '/images/services/certificados.png',
+    image: '/images/services/certificados.webp',
     icon: 'FileCheck',
     bullets: [
       'Boletines eléctricos (CIE/BIE)',

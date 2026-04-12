@@ -24,7 +24,7 @@ const extraServices = [
     subtitle: 'Carga rápida y segura',
     shortDesc:
       'Instalación en garajes privados o comunitarios con materiales certificados y asesoramiento personalizado.',
-    image: '/images/services/recarga.png',
+    image: '/images/services/recarga.webp',
     href: '#contacto',
     isLink: false,
   },

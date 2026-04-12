@@ -6,11 +6,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // gsap.registerPlugin ya registrado globalmente en App.jsx
 
 const timelineSteps = [
-  { img: "/video  seccion de urgencias/img 1.png", title: "Recibimos el aviso" },
-  { img: "/video  seccion de urgencias/img 2.png", title: "Asignamos al equipo" },
-  { img: "/video  seccion de urgencias/img 3.png", title: "Llegamos y diagnosticamos" },
-  { img: "/video  seccion de urgencias/img 4.png", title: "Reparamos la avería" },
-  { img: "/video  seccion de urgencias/img 5.png", title: "Apretón de manos y resuelto" }
+  { img: "/video  seccion de urgencias/img 1.webp", title: "Recibimos el aviso" },
+  { img: "/video  seccion de urgencias/img 2.webp", title: "Asignamos al equipo" },
+  { img: "/video  seccion de urgencias/img 3.webp", title: "Llegamos y diagnosticamos" },
+  { img: "/video  seccion de urgencias/img 4.webp", title: "Reparamos la avería" },
+  { img: "/video  seccion de urgencias/img 5.webp", title: "Apretón de manos y resuelto" }
 ];
 
 export default function UrgenciasSection() {

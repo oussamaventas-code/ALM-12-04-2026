@@ -27,7 +27,7 @@ const vehicles = [
     type: 'Proyectos Especiales',
     desc: 'Para grandes obras, instalaciones industriales y proyectos fotovoltaicos que requieren material voluminoso.',
     specs: ['Capacidad de carga ampliada', 'Grúa de carga integrada', 'Material para instalaciones solares'],
-    image: '/images/flota/Dynamic_3_4_front_202604082312.png',
+    image: '/images/flota/Dynamic_3_4_front_202604082312.webp',
   },
 ];
 
@@ -143,7 +143,7 @@ export default function FlotaPage() {
       <div ref={heroRef} className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 w-full h-full bg-cover bg-center opacity-30"
-          style={{ backgroundImage: `url('/images/flota/Professional_commercial_fleet_202604082305.png')` }}
+          style={{ backgroundImage: `url('/images/flota/Professional_commercial_fleet_202604082305.webp')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark/60 to-dark z-10" />
 

@@ -6,12 +6,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // gsap.registerPlugin ya registrado globalmente en App.jsx
 
 const patrociniosSteps = [
-  { img: "/imagenes patrocinios/imag 1.png", title: "Inauguración de Temporada" },
-  { img: "/imagenes patrocinios/imag 2.png", title: "Encuentro en el Estadio" },
-  { img: "/imagenes patrocinios/imag 3.png", title: "Comprometidos desde la base" },
-  { img: "/imagenes patrocinios/imag 4.png", title: "Victoria Local" },
-  { img: "/imagenes patrocinios/imag 5.png", title: "Momento Clave" },
-  { img: "/imagenes patrocinios/imag 6.png", title: "Entrega de Trofeos" }
+  { img: "/imagenes patrocinios/imag 1.webp", title: "Inauguración de Temporada" },
+  { img: "/imagenes patrocinios/imag 2.webp", title: "Encuentro en el Estadio" },
+  { img: "/imagenes patrocinios/imag 3.webp", title: "Comprometidos desde la base" },
+  { img: "/imagenes patrocinios/imag 4.webp", title: "Victoria Local" },
+  { img: "/imagenes patrocinios/imag 5.webp", title: "Momento Clave" },
+  { img: "/imagenes patrocinios/imag 6.webp", title: "Entrega de Trofeos" }
 ];
 
 export default function PatrociniosSection() {
@@ -105,7 +105,7 @@ export default function PatrociniosSection() {
         {/* Usamos una de las imágenes como fondo principal */}
         <div 
           className="absolute inset-0 w-full h-full bg-cover bg-center opacity-30" 
-          style={{ backgroundImage: `url('/imagenes patrocinios/imag 5.png')` }}
+          style={{ backgroundImage: `url('/imagenes patrocinios/imag 5.webp')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/60 to-ink z-10"></div>
         

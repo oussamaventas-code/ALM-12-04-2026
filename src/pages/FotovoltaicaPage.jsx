@@ -78,7 +78,7 @@ export default function FotovoltaicaPage() {
       {/* ── Hero ── */}
       <section ref={heroRef} className="relative bg-dark pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-          <img src="/images/service-solar.png" alt="" className="w-full h-full object-cover" fetchPriority="high" />
+          <img src="/images/service-solar.webp" alt="" className="w-full h-full object-cover" fetchPriority="high" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark/90 to-dark" />
 
@@ -175,7 +175,7 @@ export default function FotovoltaicaPage() {
 
             <div className="relative">
               <img
-                src="/images/service-solar.png"
+                src="/images/service-solar.webp"
                 alt="Instalación fotovoltaica industrial"
                 loading="lazy"
                 className="w-full h-80 lg:h-[450px] object-cover"
