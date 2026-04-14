@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Wifi, BatteryCharging } from 'lucide-react';
 import gsap from 'gsap';
@@ -39,11 +39,17 @@ export default function Services() {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
   const titleRef = useRef(null);
+  const gsapCtx = useRef(null);
 
+  // Setup GSAP animations after paint
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 100);
+
+    gsapCtx.current = gsap.context(() => {
       const track = trackRef.current;
       const section = sectionRef.current;
+
+      if (!track || !section) return;
 
       const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
 
@@ -56,6 +62,7 @@ export default function Services() {
           end: () => `+=${Math.abs(getScrollAmount())}`,
           scrub: 1,
           pin: true,
+          pinType: 'transform',
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -75,27 +82,40 @@ export default function Services() {
         });
       }
 
-      gsap.utils.toArray('.service-card-h').forEach((card) => {
-        gsap.fromTo(
-          card,
-          { clipPath: 'inset(100% 0 0 0)', autoAlpha: 0 },
-          {
-            clipPath: 'inset(0% 0 0 0)',
-            autoAlpha: 1,
-            duration: 0.9,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: card,
-              containerAnimation: horizontalTween,
-              start: 'left 90%',
-              once: true,
-            },
-          }
-        );
-      });
+      const cards = gsap.utils.toArray('.service-card-h');
+      if (cards.length > 0) {
+        cards.forEach((card) => {
+          gsap.fromTo(
+            card,
+            { clipPath: 'inset(100% 0 0 0)', autoAlpha: 0 },
+            {
+              clipPath: 'inset(0% 0 0 0)',
+              autoAlpha: 1,
+              duration: 0.9,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: card,
+                containerAnimation: horizontalTween,
+                start: 'left 90%',
+                once: true,
+              },
+            }
+          );
+        });
+      }
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Cleanup SYNCHRONOUSLY before React removes DOM nodes
+  useLayoutEffect(() => {
+    return () => {
+      if (gsapCtx.current) {
+        gsapCtx.current.revert();
+        gsapCtx.current = null;
+      }
+    };
   }, []);
 
   const cardStyle = {

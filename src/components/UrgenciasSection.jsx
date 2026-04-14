@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -17,85 +17,101 @@ export default function UrgenciasSection() {
   const containerRef = useRef(null);
   const trackRef = useRef(null);
   const heroRef = useRef(null);
+  const gsapCtx = useRef(null);
 
   useEffect(() => {
-    // Refresh ScrollTrigger to ensure correct layout calculations
-    ScrollTrigger.refresh();
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 100);
 
-    const ctx = gsap.context(() => {
+    gsapCtx.current = gsap.context(() => {
       // 1. Efecto Parallax / Fade para el Hero
-      gsap.to('.urgencias-hero-content', {
-        y: '30%',
-        opacity: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        }
-      });
+      const heroContent = document.querySelector('.urgencias-hero-content');
+      if (heroContent && heroRef.current) {
+        gsap.to(heroContent, {
+          y: '30%',
+          opacity: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          }
+        });
+      }
 
       // 2. Horizontal Scroll para el Timeline
-      const slides = gsap.utils.toArray('.timeline-slide');
-      
-      const pinAnimation = gsap.to(slides, {
-        xPercent: -100 * (slides.length - 1),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          pin: true,
-          scrub: 1,
-          snap: {
-            snapTo: 1 / (slides.length - 1),
-            duration: 0.1,
-            ease: "power1.inOut"
-          },
-          // Cuanto mayor sea el "end", más "largo" será el tramo de scroll
-          end: () => `+=${containerRef.current.offsetWidth * slides.length}`
-        }
-      });
-      
-      // Animaciones de revelado dentro de cada slide individual
-      slides.forEach((slide) => {
-        const title = slide.querySelector('.slide-title');
-        const imgContainer = slide.querySelector('.slide-img-container');
-        
-        if (title && imgContainer) {
-          gsap.fromTo(title, 
-            { y: 50, opacity: 0 },
-            { 
-              y: 0, 
-              opacity: 1, 
-              duration: 1,
-              scrollTrigger: {
-                trigger: slide,
-                start: 'left center', // Cuando el inicio del slide cruza el centro
-                containerAnimation: pinAnimation,
-                toggleActions: "play none none reverse"
-              }
-            }
-          );
-          
-          gsap.fromTo(imgContainer, 
-            { scale: 0.8, opacity: 0.5 },
-            { 
-              scale: 1, 
-              opacity: 1, 
-              duration: 1,
-              scrollTrigger: {
-                trigger: slide,
-                start: 'left 80%', 
-                containerAnimation: pinAnimation,
-                toggleActions: "play none none reverse"
-              }
-            }
-          );
-        }
-      });
-    }, [containerRef, heroRef]);
+      if (containerRef.current) {
+        const slides = gsap.utils.toArray('.timeline-slide');
 
-    return () => ctx.revert();
+        if (slides.length > 0) {
+          const pinAnimation = gsap.to(slides, {
+            xPercent: -100 * (slides.length - 1),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              pin: true,
+              pinType: 'transform',
+              scrub: 1,
+              snap: {
+                snapTo: 1 / (slides.length - 1),
+                duration: 0.1,
+                ease: "power1.inOut"
+              },
+              end: () => `+=${containerRef.current?.offsetWidth * slides.length}`
+            }
+          });
+
+          // Animaciones de revelado dentro de cada slide individual
+          slides.forEach((slide) => {
+            const title = slide.querySelector('.slide-title');
+            const imgContainer = slide.querySelector('.slide-img-container');
+
+            if (title && imgContainer) {
+              gsap.fromTo(title,
+                { y: 50, opacity: 0 },
+                {
+                  y: 0,
+                  opacity: 1,
+                  duration: 1,
+                  scrollTrigger: {
+                    trigger: slide,
+                    start: 'left center', // Cuando el inicio del slide cruza el centro
+                    containerAnimation: pinAnimation,
+                    toggleActions: "play none none reverse"
+                  }
+                }
+              );
+
+              gsap.fromTo(imgContainer,
+                { scale: 0.8, opacity: 0.5 },
+                {
+                  scale: 1,
+                  opacity: 1,
+                  duration: 1,
+                  scrollTrigger: {
+                    trigger: slide,
+                    start: 'left 80%',
+                    containerAnimation: pinAnimation,
+                    toggleActions: "play none none reverse"
+                  }
+                }
+              );
+            }
+          });
+        }
+      }
+    });
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useLayoutEffect(() => {
+    return () => {
+      if (gsapCtx.current) {
+        gsapCtx.current.revert();
+        gsapCtx.current = null;
+      }
+    };
   }, []);
 
   return (

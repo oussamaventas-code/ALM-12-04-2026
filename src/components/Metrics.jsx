@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin ya registrado globalmente en App.jsx
 
 const metrics = [
   { value: 10, suffix: '+', prefix: '', label: 'Años currando sin parar', sub: 'Segunda generación' },
@@ -13,9 +13,10 @@ const metrics = [
 
 export default function Metrics() {
   const sectionRef = useRef(null);
+  const gsapCtx = useRef(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    gsapCtx.current = gsap.context(() => {
       /* Counter animation */
       metrics.forEach((m, i) => {
         const el = document.querySelector(`.metric-num-${i}`);
@@ -77,7 +78,16 @@ export default function Metrics() {
       );
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {};
+  }, []);
+
+  useLayoutEffect(() => {
+    return () => {
+      if (gsapCtx.current) {
+        gsapCtx.current.revert();
+        gsapCtx.current = null;
+      }
+    };
   }, []);
 
   return (
@@ -92,7 +102,7 @@ export default function Metrics() {
           {metrics.map((m, i) => (
             <div
               key={i}
-              className="metric-col px-6 lg:px-10 first:pl-0 last:pr-0 invisible"
+              className="metric-col px-6 lg:px-10 first:pl-0 last:pr-0"
             >
               {/* Big number */}
               <span

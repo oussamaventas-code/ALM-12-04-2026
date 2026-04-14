@@ -1,44 +1,52 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Award, Wrench, Star, Users, Phone } from 'lucide-react';
 import SeoHead from '../components/SeoHead';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin ya registrado globalmente en App.jsx
 
 const teamMembers = [
   {
-    name: 'Alejandro M.',
-    role: 'Instalador Jefe / Fundador',
+    name: 'Jorge',
+    role: 'Instalador Jefe',
     specialty: 'Instalaciones industriales · Fotovoltaica',
     experience: '+15 años',
     cert: 'Instalador Autorizado REBT',
-    initial: 'A',
+    image: '/images/team/EQUIPO PARA PAGINA/JORGE.png',
   },
   {
-    name: 'Luis P.',
-    role: 'Electricista Senior',
+    name: 'Dani',
+    role: 'Especialista Técnico',
     specialty: 'Domótica · Cuadros eléctricos',
     experience: '+10 años',
     cert: 'Certificado SEC · Nivel 2',
-    initial: 'L',
+    image: '/images/team/EQUIPO PARA PAGINA/DANI.png',
   },
   {
-    name: 'Marcos R.',
-    role: 'Técnico Especialista',
+    name: 'Isma',
+    role: 'Técnico Senior',
     specialty: 'Renovaciones · Alarmas · VE',
     experience: '+7 años',
     cert: 'Formación continua AMPERE',
-    initial: 'M',
+    image: '/images/team/EQUIPO PARA PAGINA/ISMA.png',
   },
   {
-    name: 'Carlos D.',
-    role: 'Técnico de Instalaciones',
+    name: 'Jefferson',
+    role: 'Instalador',
     specialty: 'Residencial · Telecomunicaciones',
     experience: '+5 años',
     cert: 'Habilitado RITE',
-    initial: 'C',
+    image: '/images/team/EQUIPO PARA PAGINA/JEFFERSON.png',
+  },
+  {
+    name: 'Melo',
+    role: 'Técnico Especialista',
+    specialty: 'Fotovoltaica · Instalaciones industriales',
+    experience: '+5 años',
+    cert: 'Instalador Autorizado REBT',
+    image: '/images/team/EQUIPO PARA PAGINA/MELO.png',
   },
 ];
 
@@ -66,129 +74,230 @@ const values = [
 ];
 
 export default function TeamPage() {
-  const pageRef = useRef(null);
+  const heroRef = useRef(null);
+  const containerRef = useRef(null);
+  const gsapCtx = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.team-hero-content',
-        { y: 40, autoAlpha: 0 },
-        { y: 0, autoAlpha: 1, duration: 0.9, ease: 'power3.out', delay: 0.2 }
-      );
-      gsap.fromTo(
-        '.team-card',
-        { y: 50, autoAlpha: 0 },
-        {
-          y: 0,
-          autoAlpha: 1,
-          duration: 0.7,
-          stagger: 0.12,
-          ease: 'power3.out',
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 100);
+
+    gsapCtx.current = gsap.context(() => {
+      // Parallax hero content
+      const heroContent = document.querySelector('.team-hero-content');
+      if (heroContent && heroRef.current) {
+        gsap.to(heroContent, {
+          y: '30%',
+          opacity: 0,
+          ease: 'none',
           scrollTrigger: {
-            trigger: '.team-grid',
-            start: 'top 80%',
-            once: true,
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
           },
+        });
+      }
+
+      // Horizontal scroll gallery — igual que Flota
+      if (containerRef.current) {
+        const slides = gsap.utils.toArray('.team-slide');
+
+        if (slides.length > 0) {
+          const pinAnimation = gsap.to(slides, {
+            xPercent: -100 * (slides.length - 1),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              pin: true,
+              pinType: 'transform',
+              scrub: 1,
+              snap: {
+                snapTo: 1 / (slides.length - 1),
+                duration: 0.1,
+                ease: 'power1.inOut',
+              },
+              end: () => `+=${containerRef.current?.offsetWidth * slides.length}`,
+            },
+          });
+
+          // Animación dentro de cada slide
+          slides.forEach((slide) => {
+            const title = slide.querySelector('.slide-title');
+            const imgContainer = slide.querySelector('.slide-img-container');
+
+            if (title && imgContainer) {
+              gsap.fromTo(
+                title,
+                { y: 50, opacity: 0 },
+                {
+                  y: 0, opacity: 1, duration: 1,
+                  scrollTrigger: {
+                    trigger: slide,
+                    start: 'left center',
+                    containerAnimation: pinAnimation,
+                    toggleActions: 'play none none reverse',
+                  },
+                }
+              );
+              gsap.fromTo(
+                imgContainer,
+                { scale: 0.8, opacity: 0 },
+                {
+                  scale: 1, opacity: 1, duration: 1,
+                  scrollTrigger: {
+                    trigger: slide,
+                    start: 'left 80%',
+                    containerAnimation: pinAnimation,
+                    toggleActions: 'play none none reverse',
+                  },
+                }
+              );
+            }
+          });
         }
-      );
-      gsap.fromTo(
-        '.value-card',
-        { x: -20, autoAlpha: 0 },
-        {
-          x: 0,
-          autoAlpha: 1,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.values-grid',
-            start: 'top 85%',
-            once: true,
-          },
-        }
-      );
-    }, pageRef);
-    return () => ctx.revert();
+      }
+
+      // Values cards
+      const valuesGrid = document.querySelector('.values-grid');
+      const valueCards = document.querySelectorAll('.value-card');
+
+      if (valuesGrid && valueCards.length > 0) {
+        gsap.fromTo(
+          valueCards,
+          { x: -20, autoAlpha: 0 },
+          {
+            x: 0, autoAlpha: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out',
+            scrollTrigger: { trigger: valuesGrid, start: 'top 85%', once: true },
+          }
+        );
+      }
+    });
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useLayoutEffect(() => {
+    return () => {
+      if (gsapCtx.current) {
+        gsapCtx.current.revert();
+        gsapCtx.current = null;
+      }
+    };
   }, []);
 
   return (
-    <div ref={pageRef} className="overflow-x-hidden">
+    <div className="overflow-x-hidden">
       <SeoHead
         title="Nuestro Equipo — ALMelectricidad"
         description="Conoce al equipo de electricistas profesionales de ALMelectricidad. Más de 10 años de experiencia en instalaciones eléctricas en Madrid y Toledo."
         canonical="/equipo"
       />
-      {/* Hero */}
-      <section className="relative pt-40 pb-24 bg-dark overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand/5 via-transparent to-transparent pointer-events-none" />
-        <div className="absolute top-20 right-0 w-96 h-96 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="team-hero-content invisible max-w-3xl">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-brand text-sm font-body font-semibold hover:gap-3 transition-all duration-300 mb-8"
-            >
-              <ArrowRight size={14} className="rotate-180" />
-              Volver al inicio
-            </Link>
-            <span className="section-label">Nuestro equipo</span>
-            <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mt-4">
-              Las personas detrás
-              <br />
-              <span className="text-gradient-brand">de cada instalación</span>
-            </h1>
-            <p className="font-body text-lg text-white/55 max-w-2xl leading-relaxed mt-6">
-              No somos una franquicia ni una plataforma de intermediación.
-              Somos un equipo de técnicos especializados que trabaja cada
-              proyecto con el mismo nivel de exigencia, independientemente del
-              tamaño.
-            </p>
-          </div>
+
+      {/* ── HERO ── */}
+      <div ref={heroRef} className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark/60 to-dark z-10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand/5 via-transparent to-transparent" />
+
+        <div className="team-hero-content relative z-20 text-center flex flex-col items-center px-6 mt-16 md:mt-0">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-brand text-sm font-body font-semibold hover:gap-3 transition-all duration-300 mb-8"
+          >
+            <ArrowRight size={14} className="rotate-180" />
+            Volver al inicio
+          </Link>
+          <span className="text-brand font-body text-sm md:text-base tracking-[0.2em] uppercase font-semibold mb-6 flex items-center gap-3">
+            <Users className="text-brand w-5 h-5" />
+            Nuestro Equipo
+            <Users className="text-brand w-5 h-5" />
+          </span>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-black uppercase tracking-tighter text-white mb-6 leading-none">
+            LAS PERSONAS DETRÁS{' '}
+            <span className="text-brand">DE CADA OBRA</span>
+          </h1>
+          <p className="text-xl md:text-2xl font-body font-light max-w-2xl text-white/70">
+            No somos una franquicia. Somos un equipo de técnicos especializados que trabaja cada proyecto con el mismo nivel de exigencia.
+          </p>
         </div>
-      </section>
+      </div>
 
-      {/* Team Grid */}
-      <section className="py-24 bg-surface overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="team-grid grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {teamMembers.map((member) => (
-              <div
-                key={member.name}
-                className="team-card invisible group card border border-surface-300 hover:border-brand transition-all duration-300 text-center p-8"
-              >
-                {/* Avatar */}
-                <div className="w-20 h-20 bg-brand/15 border-2 border-brand/30 group-hover:border-brand rounded-full flex items-center justify-center mx-auto mb-5 transition-all duration-300">
-                  <span className="font-heading text-3xl font-black text-brand">
-                    {member.initial}
-                  </span>
-                </div>
+      {/* ── GALERÍA HORIZONTAL ── */}
+      <div ref={containerRef} className="h-screen w-full flex overflow-hidden bg-dark relative z-30">
+        <div className="flex h-full will-change-transform items-center">
 
-                <h3 className="font-heading text-lg font-bold text-ink group-hover:text-brand transition-colors duration-300">
+          {teamMembers.map((member, i) => (
+            <div
+              key={i}
+              className="team-slide w-screen h-full flex shrink-0 relative"
+            >
+              {/* Texto izquierda */}
+              <div className="slide-title flex flex-col justify-center px-10 md:px-20 w-1/2 shrink-0 z-10">
+                <span className="text-brand font-body font-bold text-lg md:text-xl block mb-3">
+                  {member.role}
+                </span>
+                <h3 className="text-4xl md:text-6xl lg:text-7xl font-heading font-black text-white leading-none mb-6 tracking-tighter">
                   {member.name}
                 </h3>
-                <p className="font-body text-sm text-brand font-semibold mt-1">
-                  {member.role}
-                </p>
-                <p className="font-body text-xs text-ink-400 mt-3 leading-relaxed">
+                <p className="text-white/60 font-body text-base md:text-lg max-w-sm mb-6">
                   {member.specialty}
                 </p>
-
-                <div className="mt-5 pt-5 border-t border-surface-300 space-y-1.5">
-                  <p className="font-body text-xs text-white/40">
-                    🏅 {member.cert}
-                  </p>
-                  <p className="font-body text-xs text-white/40">
-                    ⏱ {member.experience} de experiencia
-                  </p>
-                </div>
+                <ul className="flex flex-col gap-2">
+                  <li className="flex items-center gap-2 text-sm text-white/40 font-body">
+                    <span className="text-brand">🏅</span> {member.cert}
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-white/40 font-body">
+                    <span className="text-brand">⏱</span> {member.experience} de experiencia
+                  </li>
+                </ul>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Values */}
+              {/* Foto derecha */}
+              <div className="slide-img-container w-1/2 h-full shrink-0 overflow-hidden">
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
+                />
+              </div>
+            </div>
+          ))}
+
+          {/* Slide final — CTA */}
+          <div className="team-slide w-screen h-full flex flex-col items-center justify-center px-6 shrink-0 bg-brand text-dark relative">
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <Users size={60} className="mb-6" />
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-black mb-6 max-w-3xl tracking-tighter leading-none">
+                HABLEMOS DE TU PROYECTO
+              </h2>
+              <p className="text-dark/70 font-body text-xl md:text-2xl mb-10 max-w-2xl font-medium">
+                5 técnicos especializados listos para atenderte. Sin intermediarios, sin bots.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="/#contacto"
+                  className="bg-dark text-brand px-10 py-5 rounded-full font-body text-xl font-bold uppercase tracking-wide hover:scale-105 transition-transform inline-flex items-center gap-3 group"
+                >
+                  Pedir presupuesto
+                  <ArrowRight className="group-hover:-rotate-45 transition-transform" />
+                </a>
+                <a
+                  href="tel:+34605333108"
+                  className="bg-dark/10 text-dark px-10 py-5 rounded-full font-body text-xl font-bold uppercase tracking-wide hover:scale-105 transition-transform inline-flex items-center gap-3"
+                >
+                  <Phone size={20} />
+                  605 33 31 08
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* ── VALORES ── */}
       <section className="py-24 bg-dark overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -201,49 +310,19 @@ export default function TeamPage() {
             {values.map((v) => (
               <div
                 key={v.title}
-                className="value-card invisible p-6 border border-white/8 hover:border-brand/40 bg-white/[0.02] hover:bg-brand/5 transition-all duration-300 group"
+                className="value-card p-6 border border-white/8 hover:border-brand/40 bg-white/[0.02] hover:bg-brand/5 transition-all duration-300 group"
               >
                 <div className="w-10 h-10 bg-brand/10 flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors duration-300">
                   <v.icon size={20} className="text-brand" />
                 </div>
-                <h3 className="font-heading text-base font-bold text-white mb-2">
-                  {v.title}
-                </h3>
-                <p className="font-body text-sm text-white/50 leading-relaxed">
-                  {v.desc}
-                </p>
+                <h3 className="font-heading text-base font-bold text-white mb-2">{v.title}</h3>
+                <p className="font-body text-sm text-white/50 leading-relaxed">{v.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-surface border-t border-white/5">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="font-heading text-3xl font-bold text-white mb-4">
-            ¿Tienes un proyecto en mente?
-          </h2>
-          <p className="font-body text-white/50 mb-8">
-            Habla directamente con el equipo. Sin intermediarios, sin bots.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/#contacto"
-              className="btn-brand !py-3.5 !px-8 justify-center"
-            >
-              Pedir presupuesto gratis
-            </a>
-            <a
-              href="tel:+34605333108"
-              className="flex items-center justify-center gap-2 border border-white/15 hover:border-brand text-white/70 hover:text-brand font-heading font-semibold text-sm uppercase tracking-wide px-8 py-3.5 transition-all duration-300"
-            >
-              <Phone size={16} />
-              605 33 31 08
-            </a>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

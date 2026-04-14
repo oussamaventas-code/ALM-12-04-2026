@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect, useLayoutEffect, useRef, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -79,7 +79,8 @@ function useLenis() {
     } else {
       window.scrollTo(0, 0);
     }
-    ScrollTrigger.refresh();
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 150);
+    return () => clearTimeout(timer);
   }, [location.pathname]);
 }
 
@@ -95,9 +96,30 @@ function PageLoader() {
   );
 }
 
+// ── Kill ScrollTrigger pins synchronously before React unmounts DOM ──────────
+// GSAP pin:true reparents nodes into .pin-spacer wrappers.
+// React then fails with "removeChild: not a child of this node" because the
+// DOM no longer matches React's virtual tree.  useLayoutEffect cleanup runs
+// BEFORE React commits deletions, giving us a window to revert GSAP changes.
+function useScrollTriggerCleanup() {
+  const location = useLocation();
+  const prevPath = useRef(location.pathname);
+
+  useLayoutEffect(() => {
+    if (prevPath.current !== location.pathname) {
+      // Revert all ScrollTrigger instances: removes pin-spacers,
+      // restores original DOM positions, kills tweens.
+      ScrollTrigger.getAll().forEach((st) => st.kill(true));
+      gsap.killTweensOf('*');
+      prevPath.current = location.pathname;
+    }
+  }, [location.pathname]);
+}
+
 // ── App shell ───────────────────────────────────────────────────────────────
 function AppShell() {
   useLenis();
+  useScrollTriggerCleanup();
 
   return (
     <div className="overflow-x-hidden">

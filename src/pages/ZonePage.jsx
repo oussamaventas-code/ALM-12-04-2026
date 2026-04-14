@@ -19,7 +19,7 @@ import { zones } from '../data/zones';
 import { services } from '../data/services';
 import SeoHead from '../components/SeoHead';
 
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin ya registrado globalmente en App.jsx
 
 const iconMap = {
   Plug,
@@ -42,6 +42,17 @@ export default function ZonePage() {
 
   useEffect(() => {
     if (!zone) return;
+
+    // Kill all existing ScrollTriggers from previous zone before creating new ones
+    ScrollTrigger.getAll().forEach(trigger => {
+      if (trigger.vars.trigger === descRef.current ||
+          trigger.vars.trigger === neighborhoodsRef.current ||
+          trigger.vars.trigger === servicesRef.current ||
+          trigger.vars.trigger === ctaRef.current ||
+          trigger.vars.trigger === otherZonesRef.current) {
+        trigger.kill();
+      }
+    });
 
     const ctx = gsap.context(() => {
       // Hero animations
@@ -75,62 +86,71 @@ export default function ZonePage() {
       });
 
       // Description
-      gsap.from('.zone-desc-content', {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: descRef.current,
-          start: 'top 75%',
-          once: true,
-        },
-      });
+      if (descRef.current) {
+        gsap.from('.zone-desc-content', {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: descRef.current,
+            start: 'top 75%',
+            once: true,
+          },
+        });
+      }
 
       // Neighborhoods
-      gsap.from('.zone-neighborhood-tag', {
-        y: 20,
-        opacity: 0,
-        duration: 0.5,
-        stagger: 0.05,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: neighborhoodsRef.current,
-          start: 'top 80%',
-          once: true,
-        },
-      });
+      if (neighborhoodsRef.current) {
+        gsap.from('.zone-neighborhood-tag', {
+          y: 20,
+          opacity: 0,
+          duration: 0.5,
+          stagger: 0.05,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: neighborhoodsRef.current,
+            start: 'top 80%',
+            once: true,
+          },
+        });
+      }
 
       // Services grid
-      gsap.from('.zone-service-card', {
-        y: 40,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: servicesRef.current,
-          start: 'top 80%',
-          once: true,
-        },
-      });
+      if (servicesRef.current) {
+        gsap.from('.zone-service-card', {
+          y: 40,
+          opacity: 0,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: servicesRef.current,
+            start: 'top 80%',
+            once: true,
+          },
+        });
+      }
 
       // CTA
-      gsap.from('.zone-cta-content', {
-        y: 50,
-        opacity: 0,
-        duration: 0.9,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: ctaRef.current,
-          start: 'top 75%',
-          once: true,
-        },
-      });
+      if (ctaRef.current) {
+        gsap.from('.zone-cta-content', {
+          y: 50,
+          opacity: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: ctaRef.current,
+            start: 'top 75%',
+            once: true,
+          },
+        });
+      }
 
       // Other zones
-      gsap.from('.zone-other-link', {
-        x: 30,
+      if (otherZonesRef.current) {
+        gsap.from('.zone-other-link', {
+          x: 30,
         opacity: 0,
         duration: 0.6,
         stagger: 0.06,
@@ -140,7 +160,8 @@ export default function ZonePage() {
           start: 'top 85%',
           once: true,
         },
-      });
+        });
+      }
     }, heroRef);
 
     return () => ctx.revert();

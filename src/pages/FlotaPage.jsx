@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Truck, Wrench, Shield, Package, Phone } from 'lucide-react';
 import SeoHead from '../components/SeoHead';
@@ -41,93 +41,113 @@ const whyFleet = [
 export default function FlotaPage() {
   const heroRef = useRef(null);
   const containerRef = useRef(null);
+  const gsapCtx = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     const timer = setTimeout(() => ScrollTrigger.refresh(), 100);
 
-    const ctx = gsap.context(() => {
+    gsapCtx.current = gsap.context(() => {
       // Parallax hero content
-      gsap.to('.flota-hero-content', {
-        y: '30%',
-        opacity: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
+      const heroContent = document.querySelector('.flota-hero-content');
+      if (heroContent && heroRef.current) {
+        gsap.to(heroContent, {
+          y: '30%',
+          opacity: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      }
 
       // Horizontal scroll gallery — igual que Patrocinios
-      const slides = gsap.utils.toArray('.flota-slide');
+      if (containerRef.current) {
+        const slides = gsap.utils.toArray('.flota-slide');
 
-      const pinAnimation = gsap.to(slides, {
-        xPercent: -100 * (slides.length - 1),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          pin: true,
-          scrub: 1,
-          snap: {
-            snapTo: 1 / (slides.length - 1),
-            duration: 0.1,
-            ease: 'power1.inOut',
-          },
-          end: () => `+=${containerRef.current.offsetWidth * slides.length}`,
-        },
-      });
-
-      // Animación dentro de cada slide
-      slides.forEach((slide) => {
-        const title = slide.querySelector('.slide-title');
-        const imgContainer = slide.querySelector('.slide-img-container');
-
-        if (title && imgContainer) {
-          gsap.fromTo(
-            title,
-            { y: 50, opacity: 0 },
-            {
-              y: 0, opacity: 1, duration: 1,
-              scrollTrigger: {
-                trigger: slide,
-                start: 'left center',
-                containerAnimation: pinAnimation,
-                toggleActions: 'play none none reverse',
+        if (slides.length > 0) {
+          const pinAnimation = gsap.to(slides, {
+            xPercent: -100 * (slides.length - 1),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              pin: true,
+              pinType: 'transform',
+              scrub: 1,
+              snap: {
+                snapTo: 1 / (slides.length - 1),
+                duration: 0.1,
+                ease: 'power1.inOut',
               },
+              end: () => `+=${containerRef.current?.offsetWidth * slides.length}`,
+            },
+          });
+
+          // Animación dentro de cada slide
+          slides.forEach((slide) => {
+            const title = slide.querySelector('.slide-title');
+            const imgContainer = slide.querySelector('.slide-img-container');
+
+            if (title && imgContainer) {
+              gsap.fromTo(
+                title,
+                { y: 50, opacity: 0 },
+                {
+                  y: 0, opacity: 1, duration: 1,
+                  scrollTrigger: {
+                    trigger: slide,
+                    start: 'left center',
+                    containerAnimation: pinAnimation,
+                    toggleActions: 'play none none reverse',
+                  },
+                }
+              );
+              gsap.fromTo(
+                imgContainer,
+                { scale: 0.8, opacity: 0 },
+                {
+                  scale: 1, opacity: 1, duration: 1,
+                  scrollTrigger: {
+                    trigger: slide,
+                    start: 'left 80%',
+                    containerAnimation: pinAnimation,
+                    toggleActions: 'play none none reverse',
+                  },
+                }
+              );
             }
-          );
-          gsap.fromTo(
-            imgContainer,
-            { scale: 0.8, opacity: 0 },
-            {
-              scale: 1, opacity: 1, duration: 1,
-              scrollTrigger: {
-                trigger: slide,
-                start: 'left 80%',
-                containerAnimation: pinAnimation,
-                toggleActions: 'play none none reverse',
-              },
-            }
-          );
+          });
         }
-      });
+      }
 
       // Why fleet cards
-      gsap.fromTo(
-        '.why-card',
-        { x: -20, autoAlpha: 0 },
-        {
-          x: 0, autoAlpha: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out',
-          scrollTrigger: { trigger: '.why-grid', start: 'top 85%', once: true },
-        }
-      );
-    }, [containerRef, heroRef]);
+      const whyGrid = document.querySelector('.why-grid');
+      const whyCards = document.querySelectorAll('.why-card');
 
+      if (whyGrid && whyCards.length > 0) {
+        gsap.fromTo(
+          whyCards,
+          { x: -20, autoAlpha: 0 },
+          {
+            x: 0, autoAlpha: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out',
+            scrollTrigger: { trigger: whyGrid, start: 'top 85%', once: true },
+          }
+        );
+      }
+    });
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useLayoutEffect(() => {
     return () => {
-      clearTimeout(timer);
-      ctx.revert();
+      if (gsapCtx.current) {
+        gsapCtx.current.revert();
+        gsapCtx.current = null;
+      }
     };
   }, []);
 
@@ -257,7 +277,7 @@ export default function FlotaPage() {
             {whyFleet.map((w) => (
               <div
                 key={w.title}
-                className="why-card invisible p-6 border border-white/8 hover:border-brand/40 bg-white/[0.02] hover:bg-brand/5 transition-all duration-300 group"
+                className="why-card p-6 border border-white/8 hover:border-brand/40 bg-white/[0.02] hover:bg-brand/5 transition-all duration-300 group"
               >
                 <div className="w-10 h-10 bg-brand/10 flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors duration-300">
                   <w.icon size={20} className="text-brand" />

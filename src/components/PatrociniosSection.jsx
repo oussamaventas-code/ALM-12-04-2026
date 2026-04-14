@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { ArrowRight, Trophy } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -18,83 +18,101 @@ export default function PatrociniosSection() {
   const containerRef = useRef(null);
   const trackRef = useRef(null);
   const heroRef = useRef(null);
+  const gsapCtx = useRef(null);
 
   useEffect(() => {
-    ScrollTrigger.refresh();
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 100);
 
-    const ctx = gsap.context(() => {
+    gsapCtx.current = gsap.context(() => {
       // 1. Efecto Parallax para el Hero
-      gsap.to('.patrocinios-hero-content', {
-        y: '30%',
-        opacity: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        }
-      });
+      const heroContent = document.querySelector('.patrocinios-hero-content');
+      if (heroContent && heroRef.current) {
+        gsap.to(heroContent, {
+          y: '30%',
+          opacity: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          }
+        });
+      }
 
       // 2. Horizontal Scroll para el Timeline (Carrusel de fotos)
-      const slides = gsap.utils.toArray('.patrocinios-slide');
-      
-      const pinAnimation = gsap.to(slides, {
-        xPercent: -100 * (slides.length - 1),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          pin: true,
-          scrub: 1,
-          snap: {
-            snapTo: 1 / (slides.length - 1),
-            duration: 0.1,
-            ease: "power1.inOut"
-          },
-          end: () => `+=${containerRef.current.offsetWidth * slides.length}`
-        }
-      });
-      
-      // Animations for items inside the slide as it appears
-      slides.forEach((slide) => {
-        const title = slide.querySelector('.slide-title');
-        const imgContainer = slide.querySelector('.slide-img-container');
-        
-        if (title && imgContainer) {
-          gsap.fromTo(title, 
-            { y: 50, opacity: 0 },
-            { 
-              y: 0, 
-              opacity: 1, 
-              duration: 1,
-              scrollTrigger: {
-                trigger: slide,
-                start: 'left center', 
-                containerAnimation: pinAnimation,
-                toggleActions: "play none none reverse"
-              }
-            }
-          );
-          
-          gsap.fromTo(imgContainer, 
-            { scale: 0.8, opacity: 0 },
-            { 
-              scale: 1, 
-              opacity: 1, 
-              duration: 1,
-              scrollTrigger: {
-                trigger: slide,
-                start: 'left 80%', 
-                containerAnimation: pinAnimation,
-                toggleActions: "play none none reverse"
-              }
-            }
-          );
-        }
-      });
-    }, [containerRef, heroRef]);
+      if (containerRef.current) {
+        const slides = gsap.utils.toArray('.patrocinios-slide');
 
-    return () => ctx.revert();
+        if (slides.length > 0) {
+          const pinAnimation = gsap.to(slides, {
+            xPercent: -100 * (slides.length - 1),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              pin: true,
+              pinType: 'transform',
+              scrub: 1,
+              snap: {
+                snapTo: 1 / (slides.length - 1),
+                duration: 0.1,
+                ease: "power1.inOut"
+              },
+              end: () => `+=${containerRef.current?.offsetWidth * slides.length}`
+            }
+          });
+
+          // Animations for items inside the slide as it appears
+          slides.forEach((slide) => {
+            const title = slide.querySelector('.slide-title');
+            const imgContainer = slide.querySelector('.slide-img-container');
+
+            if (title && imgContainer) {
+              gsap.fromTo(title,
+                { y: 50, opacity: 0 },
+                {
+                  y: 0,
+                  opacity: 1,
+                  duration: 1,
+                  scrollTrigger: {
+                    trigger: slide,
+                    start: 'left center',
+                    containerAnimation: pinAnimation,
+                    toggleActions: "play none none reverse"
+                  }
+                }
+              );
+
+              gsap.fromTo(imgContainer,
+                { scale: 0.8, opacity: 0 },
+                {
+                  scale: 1,
+                  opacity: 1,
+                  duration: 1,
+                  scrollTrigger: {
+                    trigger: slide,
+                    start: 'left 80%',
+                    containerAnimation: pinAnimation,
+                    toggleActions: "play none none reverse"
+                  }
+                }
+              );
+            }
+          });
+        }
+      }
+    });
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useLayoutEffect(() => {
+    return () => {
+      if (gsapCtx.current) {
+        gsapCtx.current.revert();
+        gsapCtx.current = null;
+      }
+    };
   }, []);
 
   return (

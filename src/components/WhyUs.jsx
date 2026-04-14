@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin ya registrado globalmente en App.jsx
 
 const StatCounter = ({ end, suffix = '', label }) => {
   const nodeRef = useRef(null);
+  const gsapCtx = useRef(null);
 
   useEffect(() => {
     const node = nodeRef.current;
@@ -13,7 +14,7 @@ const StatCounter = ({ end, suffix = '', label }) => {
     
     const obj = { val: 0 };
     
-    const ctx = gsap.context(() => {
+    gsapCtx.current = gsap.context(() => {
       gsap.to(obj, {
         val: end,
         duration: 2.5,
@@ -28,8 +29,17 @@ const StatCounter = ({ end, suffix = '', label }) => {
         }
       });
     });
-    return () => ctx.revert();
+    return () => {};
   }, [end, suffix]);
+
+  useLayoutEffect(() => {
+    return () => {
+      if (gsapCtx.current) {
+        gsapCtx.current.revert();
+        gsapCtx.current = null;
+      }
+    };
+  }, []);
 
   return (
     <div className="flex flex-col gap-1">
@@ -75,9 +85,10 @@ export default function WhyUs() {
   const sectionRef = useRef(null);
   const bigNumRef = useRef(null);
   const progressBarRef = useRef(null);
+  const gsapCtx = useRef(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    gsapCtx.current = gsap.context(() => {
       /* Left column entrance */
       gsap.fromTo(
         '.whyus-left',
@@ -155,7 +166,16 @@ export default function WhyUs() {
       });
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {};
+  }, []);
+
+  useLayoutEffect(() => {
+    return () => {
+      if (gsapCtx.current) {
+        gsapCtx.current.revert();
+        gsapCtx.current = null;
+      }
+    };
   }, []);
 
   return (
@@ -166,14 +186,14 @@ export default function WhyUs() {
         className="absolute top-8 right-8 big-number-dark opacity-30 select-none pointer-events-none hidden lg:block"
         style={{ willChange: 'transform' }}
       >
-        ?
+        10+
       </div>
 
       <div className="container-custom px-6">
         {/* Asymmetric grid: left headline, right reasons */}
         <div className="grid lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-24 items-start">
           {/* Left side — headline block */}
-          <div className="whyus-left invisible lg:sticky lg:top-32">
+          <div className="whyus-left lg:sticky lg:top-32">
             <span className="section-label mb-6">Por qué elegirnos</span>
 
             <h2 className="section-title mt-4">

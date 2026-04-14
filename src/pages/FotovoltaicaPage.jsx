@@ -9,7 +9,7 @@ import {
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin ya registrado globalmente en App.jsx
 
 const benefits = [
   { icon: TrendingUp, title: 'Ahorro del 30-50%', desc: 'En tu factura eléctrica desde el primer mes de funcionamiento.' },

@@ -71,22 +71,22 @@ export default function HomePage() {
         {/* 6. Cómo trabajamos — elimina el miedo al proceso */}
         <Process />
 
-        {/* 7. Prueba social — testimonios con ubicación */}
+        {/* 8. Prueba social — testimonios con ubicación */}
         <Testimonials />
 
-        {/* 8. Derribo de objeciones — errores comunes */}
+        {/* 9. Derribo de objeciones — errores comunes */}
         <Mistakes />
 
-        {/* 9. FAQ — últimas dudas antes de contactar */}
+        {/* 10. FAQ — últimas dudas antes de contactar */}
         <FAQ />
 
-        {/* 10. Mapa — confianza por proximidad geográfica */}
+        {/* 11. Mapa — confianza por proximidad geográfica */}
         <MapLocation />
 
-        {/* 11. Formulario principal de conversión */}
+        {/* 12. Formulario principal de conversión */}
         <ContactForm />
 
-        {/* 12. Última oportunidad de conversión directa */}
+        {/* 13. Última oportunidad de conversión directa */}
         <FinalCTA />
 
         {/* CTA de Urgencia Movil Fijo */}

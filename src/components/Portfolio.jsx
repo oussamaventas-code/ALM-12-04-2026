@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -46,11 +46,16 @@ export default function Portfolio() {
   const pinWrapRef = useRef(null);
   const trackRef = useRef(null);
   const titleRef = useRef(null);
+  const gsapCtx = useRef(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 100);
+
+    gsapCtx.current = gsap.context(() => {
       const track = trackRef.current;
       const section = sectionRef.current;
+
+      if (!track || !section) return;
 
       // Total horizontal distance to scroll
       const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
@@ -65,50 +70,66 @@ export default function Portfolio() {
           // Pin se libera exactamente cuando la última tarjeta entra en pantalla
           scrub: 1,
           pin: true,
+          pinType: 'transform',
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
       // Title parallax
-      gsap.to(titleRef.current, {
-        x: -80,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: () => `+=${Math.abs(getScrollAmount())}`,
-          // Pin se libera exactamente cuando la última tarjeta entra en pantalla
-          scrub: 1,
-          invalidateOnRefresh: true,
-          containerAnimation: horizontalTween,
-        },
-      });
+      if (titleRef.current) {
+        gsap.to(titleRef.current, {
+          x: -80,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: () => `+=${Math.abs(getScrollAmount())}`,
+            // Pin se libera exactamente cuando la última tarjeta entra en pantalla
+            scrub: 1,
+            invalidateOnRefresh: true,
+            containerAnimation: horizontalTween,
+          },
+        });
+      }
 
       // Card stagger reveal — triggered by horizontal progress
-      gsap.utils.toArray('.portfolio-card').forEach((card, i) => {
-        gsap.fromTo(
-          card,
-          { y: -60, autoAlpha: 0, rotation: -3 + (i % 2 === 0 ? -1 : 1) * 1.5 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            rotation: 0,
-            duration: 0.85,
-            ease: 'power3.out',
-            delay: i * 0.08,
-            scrollTrigger: {
-              trigger: card,
-              containerAnimation: horizontalTween,
-              start: 'left 85%',
-              once: true,
-            },
-          }
-        );
-      });
+      const cards = gsap.utils.toArray('.portfolio-card');
+      if (cards.length > 0) {
+        cards.forEach((card, i) => {
+          gsap.fromTo(
+            card,
+            { y: -60, autoAlpha: 0, rotation: -3 + (i % 2 === 0 ? -1 : 1) * 1.5 },
+            {
+              y: 0,
+              autoAlpha: 1,
+              rotation: 0,
+              duration: 0.85,
+              ease: 'power3.out',
+              delay: i * 0.08,
+              scrollTrigger: {
+                trigger: card,
+                containerAnimation: horizontalTween,
+                start: 'left 85%',
+                once: true,
+              },
+            }
+          );
+        });
+      }
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Cleanup SYNCHRONOUSLY before React removes DOM nodes
+  useLayoutEffect(() => {
+    return () => {
+      if (gsapCtx.current) {
+        gsapCtx.current.revert();
+        gsapCtx.current = null;
+      }
+    };
   }, []);
 
   return (

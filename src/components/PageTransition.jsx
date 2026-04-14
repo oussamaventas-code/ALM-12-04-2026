@@ -58,7 +58,11 @@ export default function PageTransition() {
       // — Sweep OUT (baja revelando la nueva página) —
       .to(overlay, { yPercent: -100, duration: 0.55, ease: 'power4.inOut' });
 
-    return () => { tl.kill(); };
+    return () => {
+      tl.kill();
+      // Ensure overlay is always pushed off-screen on cleanup
+      gsap.set(overlay, { yPercent: -100 });
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
