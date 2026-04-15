@@ -221,7 +221,7 @@ export default function Process() {
                     </h3>
 
                     {/* Descripción */}
-                    <p className="text-white/50 font-body text-base leading-relaxed max-w-md mb-6">
+                    <p className="text-white/65 font-body text-base leading-relaxed max-w-md mb-6">
                       {step.body}
                     </p>
 
@@ -253,7 +253,7 @@ export default function Process() {
             <p className="text-white font-heading text-xl font-bold mb-1">
               ¿Listo para empezar?
             </p>
-            <p className="text-white/40 text-sm leading-relaxed max-w-md">
+            <p className="text-white/65 text-sm leading-relaxed max-w-md">
               El proceso completo — desde la primera llamada hasta el trabajo acabado — suele resolverse en menos tiempo del que piensas.
             </p>
           </div>

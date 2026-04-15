@@ -229,7 +229,7 @@ export default function Hero() {
                 <h3 className="font-heading text-xl font-bold text-white">
                   Cuéntanos qué necesitas
                 </h3>
-                <p className="text-white/40 text-sm font-body mt-1">
+                <p className="text-white/65 text-sm font-body mt-1">
                   Te respondemos en menos de 24h. De verdad.
                 </p>
               </div>
@@ -314,7 +314,8 @@ export default function Hero() {
 
       {/* ── Scroll indicator ── */}
       <div className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
-        <span className="text-white/40 text-xs font-body uppercase tracking-[0.15em]">
+        <span className="text-white/60 text-xs font-body uppercase tracking-[0.15em]">
+
           Descubre más
         </span>
         <ArrowDown size={18} className="text-brand animate-bounce" />

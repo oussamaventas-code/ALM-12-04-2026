@@ -118,13 +118,28 @@ export default function Testimonials() {
       id="testimonios"
       ref={sectionRef}
       className="pt-2 pb-24 md:pt-4 md:pb-32 bg-dark overflow-hidden relative"
+      aria-label="Testimonios de clientes"
     >
       {/* Big decorative "5.0" in background */}
-      <div className="testimonials-big-number absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none">
+      <div className="testimonials-big-number absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none" aria-hidden="true">
         <span className="font-heading text-[12rem] md:text-[18rem] font-black text-white/[0.03] leading-none">
           5.0
         </span>
       </div>
+
+      {/* Contenido accesible oculto visualmente (lectores de pantalla) */}
+      <ul className="sr-only" aria-label="Lista de opiniones de clientes">
+        {testimonials.map((t, i) => (
+          <li key={i}>
+            <blockquote>
+              <p>{t.text}</p>
+              <footer>
+                <cite>{t.name}</cite> — {t.role}, {t.timeAgo}
+              </footer>
+            </blockquote>
+          </li>
+        ))}
+      </ul>
 
       <div className="relative z-10">
         {/* Header */}
@@ -137,16 +152,20 @@ export default function Testimonials() {
           {/* Rating row */}
           <div className="flex items-center justify-center gap-8 mt-6 flex-wrap">
             {logoRatings.map((lr) => (
-              <div key={lr.label} className="flex flex-col items-center gap-1.5">
+              <div
+                key={lr.label}
+                className="flex flex-col items-center gap-1.5"
+                aria-label={`Valoración en ${lr.label}: 5 de 5 estrellas`}
+              >
                 <span className="font-heading font-bold text-white/50 text-xs uppercase tracking-widest">
                   {lr.label}
                 </span>
-                <div className="flex items-center gap-0.5">
+                <div className="flex items-center gap-0.5" aria-hidden="true">
                   {[...Array(lr.stars)].map((_, i) => (
                     <Star key={i} size={14} className="text-brand fill-brand" />
                   ))}
                 </div>
-                <span className="font-heading font-extrabold text-brand text-sm">
+                <span className="font-heading font-extrabold text-brand text-sm" aria-hidden="true">
                   5.0
                 </span>
               </div>
@@ -154,9 +173,10 @@ export default function Testimonials() {
           </div>
         </div>
 
-        {/* Marquee */}
+        {/* Marquee — decorativo, datos accesibles en sr-only arriba */}
         <div
           className="overflow-hidden"
+          aria-hidden="true"
           style={{
             maskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
             WebkitMaskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
@@ -176,7 +196,7 @@ export default function Testimonials() {
                 style={{ width: 'clamp(280px, 28vw, 400px)' }}
               >
                 {/* Decorative quote */}
-                <Quote size={32} className="text-brand/20 mb-4 shrink-0" />
+                <Quote size={32} className="text-brand/20 mb-4 shrink-0" aria-hidden="true" />
 
                 {/* Quote text */}
                 <p className="text-white/80 font-body text-base leading-relaxed italic flex-1">
@@ -185,17 +205,17 @@ export default function Testimonials() {
 
                 {/* Stars + attribution */}
                 <div className="mt-6 pt-5 border-t border-white/[0.08]">
-                  <div className="flex items-center gap-0.5 mb-3">
+                  <div className="flex items-center gap-0.5 mb-3" aria-hidden="true">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} size={13} className="text-brand fill-brand" />
                     ))}
                   </div>
-                  <h4 className="text-white font-heading font-bold text-base">
+                  <p className="text-white font-heading font-bold text-base">
                     {t.name}
-                  </h4>
+                  </p>
                   <div className="flex items-center gap-2 mt-1">
                     <span className="text-white/40 font-body text-xs">{t.timeAgo}</span>
-                    <span className="text-white/20 text-xs">·</span>
+                    <span className="text-white/20 text-xs" aria-hidden="true">&middot;</span>
                     <span className="text-white/40 font-body text-xs">{t.reviews} reseña{t.reviews !== 1 ? 's' : ''} en Google</span>
                   </div>
                 </div>
@@ -203,6 +223,7 @@ export default function Testimonials() {
                 {/* Left brand accent */}
                 <div
                   className="absolute top-0 left-0 w-[3px] h-full"
+                  aria-hidden="true"
                   style={{ background: 'var(--color-brand)', opacity: 0.3 }}
                 />
               </div>

@@ -64,9 +64,9 @@ export default function FlotaPage() {
         });
       }
 
-      // Horizontal scroll gallery — igual que Patrocinios
-      if (containerRef.current) {
-        const slides = gsap.utils.toArray('.flota-slide');
+      // Horizontal scroll gallery — solo en desktop
+      if (containerRef.current && window.innerWidth >= 1024) {
+        const slides = gsap.utils.toArray('.flota-slide-desktop');
 
         if (slides.length > 0) {
           const pinAnimation = gsap.to(slides, {
@@ -189,14 +189,84 @@ export default function FlotaPage() {
         </div>
       </div>
 
-      {/* ── GALERÍA HORIZONTAL ── */}
-      <div ref={containerRef} className="h-screen w-full flex overflow-hidden bg-dark relative z-30">
+      {/* ── GALERÍA MÓVIL (< lg) — CSS scroll-snap ── */}
+      <div className="lg:hidden bg-dark">
+        <div
+          className="flex overflow-x-auto"
+          style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth' }}
+        >
+          {vehicles.map((v, i) => (
+            <div
+              key={i}
+              className="flex-shrink-0 w-screen flex flex-col"
+              style={{ scrollSnapAlign: 'start' }}
+            >
+              {/* Imagen del vehículo */}
+              <div className="w-full bg-dark-800 overflow-hidden" style={{ height: '56vw', maxHeight: '260px' }}>
+                <img
+                  src={v.image}
+                  alt={v.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              {/* Info */}
+              <div className="flex flex-col px-6 py-8 bg-dark border-b border-white/8">
+                <span className="text-brand font-body font-bold text-sm mb-1">{v.type}</span>
+                <h3 className="text-2xl font-heading font-black text-white leading-none mb-2 tracking-tighter">{v.name}</h3>
+                <p className="text-white/55 font-body text-sm mb-4">{v.desc}</p>
+                <ul className="flex flex-col gap-1.5">
+                  {v.specs.map((spec) => (
+                    <li key={spec} className="flex items-center gap-2 text-xs text-white/65 font-body">
+                      <span className="text-brand">&#10003;</span> {spec}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+          {/* Slide CTA móvil */}
+          <div
+            className="flex-shrink-0 w-screen flex flex-col items-center justify-center px-6 py-16 bg-brand text-dark"
+            style={{ scrollSnapAlign: 'start' }}
+          >
+            <Truck size={48} className="mb-5" />
+            <h2 className="text-3xl font-heading font-black mb-4 text-center tracking-tighter leading-none">
+              LISTOS PARA TU PROYECTO
+            </h2>
+            <p className="text-dark/70 font-body text-base mb-8 text-center">
+              3 unidades operativas. Material completo. Sin esperas.
+            </p>
+            <div className="flex flex-col w-full gap-3 max-w-xs">
+              <a
+                href="/#contacto"
+                className="bg-dark text-brand px-6 py-4 font-body text-base font-bold uppercase tracking-wide hover:scale-105 transition-transform inline-flex items-center justify-center gap-3"
+              >
+                Pedir presupuesto
+                <ArrowRight size={18} />
+              </a>
+              <a
+                href="tel:+34605333108"
+                className="bg-dark/15 text-dark px-6 py-4 font-body text-base font-bold uppercase tracking-wide hover:scale-105 transition-transform inline-flex items-center justify-center gap-3"
+              >
+                <Phone size={18} />
+                605 33 31 08
+              </a>
+            </div>
+          </div>
+        </div>
+        <p className="text-center text-white/20 text-xs py-3 font-body">← Desliza para ver la flota →</p>
+      </div>
+
+      {/* ── GALERÍA DESKTOP (≥ lg) — GSAP horizontal pin ── */}
+      <div ref={containerRef} className="hidden lg:flex h-screen w-full overflow-hidden bg-dark relative z-30">
         <div className="flex h-full will-change-transform items-center">
 
           {vehicles.map((v, i) => (
             <div
               key={i}
-              className="flota-slide w-screen h-full flex flex-col items-center justify-center px-4 md:px-12 shrink-0 relative"
+              className="flota-slide-desktop w-screen h-full flex flex-col items-center justify-center px-4 md:px-12 shrink-0 relative"
             >
               <div className="slide-img-container relative w-full flex items-center justify-center aspect-[16/10] md:aspect-video rounded-xl md:rounded-[2rem] overflow-hidden shadow-2xl border border-white/10 bg-dark-800">
                 <img
@@ -221,8 +291,8 @@ export default function FlotaPage() {
                     </p>
                     <ul className="hidden md:flex flex-wrap gap-x-6 gap-y-1">
                       {v.specs.map((spec) => (
-                        <li key={spec} className="flex items-center gap-1.5 text-xs text-white/50 font-body">
-                          <span className="text-brand">✓</span> {spec}
+                        <li key={spec} className="flex items-center gap-1.5 text-xs text-white/65 font-body">
+                          <span className="text-brand">&#10003;</span> {spec}
                         </li>
                       ))}
                     </ul>
@@ -233,7 +303,7 @@ export default function FlotaPage() {
           ))}
 
           {/* Slide final — CTA */}
-          <div className="flota-slide w-screen h-full flex flex-col items-center justify-center px-6 shrink-0 bg-brand text-dark relative">
+          <div className="flota-slide-desktop w-screen h-full flex flex-col items-center justify-center px-6 shrink-0 bg-brand text-dark relative">
             <div className="relative z-10 flex flex-col items-center text-center">
               <Truck size={60} className="mb-6" />
               <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-black mb-6 max-w-3xl tracking-tighter leading-none">
@@ -283,7 +353,7 @@ export default function FlotaPage() {
                   <w.icon size={20} className="text-brand" />
                 </div>
                 <h3 className="font-heading text-base font-bold text-white mb-2">{w.title}</h3>
-                <p className="font-body text-sm text-white/50 leading-relaxed">{w.desc}</p>
+                <p className="font-body text-sm text-white/65 leading-relaxed">{w.desc}</p>
               </div>
             ))}
           </div>

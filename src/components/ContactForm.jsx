@@ -158,45 +158,80 @@ export default function ContactForm() {
   };
 
   /* ── reusable field renderers ── */
-  const Field = ({ name, label, icon: Icon, required = true, placeholder = '', type = 'text' }) => (
-    <div className="mb-5">
-      <label className="flex items-center gap-2 text-sm font-medium text-ink mb-1.5 font-heading tracking-wide uppercase">
-        <Icon size={15} className="text-brand" />
-        {label}
-        {!required && (
-          <span className="text-ink-300 text-xs normal-case tracking-normal">(opcional)</span>
+  const Field = ({ name, label, icon: Icon, required = true, placeholder = '', type = 'text' }) => {
+    const fieldId  = `field-${name}`;
+    const errorId  = `error-${name}`;
+    return (
+      <div className="mb-5">
+        <label
+          htmlFor={fieldId}
+          className="flex items-center gap-2 text-sm font-medium text-ink mb-1.5 font-heading tracking-wide uppercase"
+        >
+          <Icon size={15} className="text-brand" aria-hidden="true" />
+          {label}
+          {required && <span className="text-brand/60 text-xs normal-case tracking-normal ml-0.5">*</span>}
+          {!required && (
+            <span className="text-ink-300 text-xs normal-case tracking-normal">(opcional)</span>
+          )}
+        </label>
+        <input
+          id={fieldId}
+          type={type}
+          name={name}
+          value={formData[name]}
+          onChange={(e) => update(name, e.target.value)}
+          placeholder={placeholder}
+          required={required}
+          aria-required={required ? 'true' : 'false'}
+          aria-invalid={errors[name] ? 'true' : 'false'}
+          aria-describedby={errors[name] ? errorId : undefined}
+          autoComplete={type === 'email' ? 'email' : type === 'tel' ? 'tel' : name === 'nombre' ? 'name' : name === 'empresa' ? 'organization' : undefined}
+          className={`input-field-light w-full transition-all duration-200 focus:ring-2 focus:ring-brand/50 focus:border-brand ${errors[name] ? '!border-red-400' : ''}`}
+        />
+        {errors[name] && (
+          <p id={errorId} role="alert" className="text-red-600 text-xs mt-1">
+            {errors[name]}
+          </p>
         )}
-      </label>
-      <input
-        type={type}
-        value={formData[name]}
-        onChange={(e) => update(name, e.target.value)}
-        placeholder={placeholder}
-        className={`input-field-light w-full transition-all duration-200 focus:ring-2 focus:ring-brand/50 focus:border-brand ${errors[name] ? '!border-red-400' : ''}`}
-      />
-      {errors[name] && <p className="text-red-600 text-xs mt-1">{errors[name]}</p>}
-    </div>
-  );
+      </div>
+    );
+  };
 
-  const Select = ({ name, label, icon: Icon, options, placeholder }) => (
-    <div className="mb-5">
-      <label className="flex items-center gap-2 text-sm font-medium text-ink mb-1.5 font-heading tracking-wide uppercase">
-        <Icon size={15} className="text-brand" />
-        {label}
-      </label>
-      <select
-        value={formData[name]}
-        onChange={(e) => update(name, e.target.value)}
-        className={`input-field-light w-full appearance-none transition-all duration-200 focus:ring-2 focus:ring-brand/50 focus:border-brand cursor-pointer ${errors[name] ? '!border-red-400' : ''}`}
-      >
-        <option value="">{placeholder}</option>
-        {options.map((o) => (
-          <option key={o} value={o}>{o}</option>
-        ))}
-      </select>
-      {errors[name] && <p className="text-red-600 text-xs mt-1">{errors[name]}</p>}
-    </div>
-  );
+  const Select = ({ name, label, icon: Icon, options, placeholder }) => {
+    const fieldId = `field-${name}`;
+    const errorId = `error-${name}`;
+    return (
+      <div className="mb-5">
+        <label
+          htmlFor={fieldId}
+          className="flex items-center gap-2 text-sm font-medium text-ink mb-1.5 font-heading tracking-wide uppercase"
+        >
+          <Icon size={15} className="text-brand" aria-hidden="true" />
+          {label}
+        </label>
+        <select
+          id={fieldId}
+          name={name}
+          value={formData[name]}
+          onChange={(e) => update(name, e.target.value)}
+          aria-required="true"
+          aria-invalid={errors[name] ? 'true' : 'false'}
+          aria-describedby={errors[name] ? errorId : undefined}
+          className={`input-field-light w-full appearance-none transition-all duration-200 focus:ring-2 focus:ring-brand/50 focus:border-brand cursor-pointer ${errors[name] ? '!border-red-400' : ''}`}
+        >
+          <option value="">{placeholder}</option>
+          {options.map((o) => (
+            <option key={o} value={o}>{o}</option>
+          ))}
+        </select>
+        {errors[name] && (
+          <p id={errorId} role="alert" className="text-red-600 text-xs mt-1">
+            {errors[name]}
+          </p>
+        )}
+      </div>
+    );
+  };
 
   const progressPct = ((step - 1) / 2) * 100;
 
@@ -219,7 +254,14 @@ export default function ContactForm() {
         {/* Card container */}
         <div className="contact-card card-elevated p-0 overflow-hidden border border-brand/25 shadow-2xl">
           {/* Top progress bar */}
-          <div className="h-1 bg-surface-200 w-full">
+          <div
+            className="h-1 bg-surface-200 w-full"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={submitted ? 100 : progressPct}
+            aria-label={`Paso ${submitted ? '3 de 3 completado' : `${step} de 3`}`}
+          >
             <div
               className="h-full bg-gradient-to-r from-brand via-brand to-brand/80 transition-all duration-500 ease-out shadow-[0_0_12px_rgba(245,197,24,0.6)]"
               style={{ width: submitted ? '100%' : `${progressPct}%` }}
@@ -271,55 +313,70 @@ export default function ContactForm() {
               </div>
             ) : (
               /* ── Multi-step form ── */
-              <form onSubmit={handleSubmit}>
+              <form
+                onSubmit={handleSubmit}
+                aria-label={`Formulario de contacto — ${stepMeta.find(s => s.num === step)?.label}`}
+                noValidate
+              >
                 <div ref={formRef}>
                   {step === 1 && (
-                    <div>
-                      <h3 className="font-heading text-lg font-bold text-ink mb-6 flex items-center gap-2">
-                        <User size={20} className="text-brand" />
+                    <fieldset className="border-0 p-0 m-0">
+                      <legend className="font-heading text-lg font-bold text-ink mb-6 flex items-center gap-2">
+                        <User size={20} className="text-brand" aria-hidden="true" />
                         Dinos qui&eacute;n eres
-                      </h3>
+                      </legend>
                       <Field name="nombre" label="Nombre completo" icon={User} placeholder="Tu nombre" />
                       <Field name="empresa" label="Empresa" icon={Building} required={false} placeholder="Tu empresa (si aplica)" />
                       <Field name="email" label="Email" icon={Mail} type="email" placeholder="tu@email.com" />
-                    </div>
+                    </fieldset>
                   )}
 
                   {step === 2 && (
-                    <div>
-                      <h3 className="font-heading text-lg font-bold text-ink mb-6 flex items-center gap-2">
-                        <Wrench size={20} className="text-brand" />
+                    <fieldset className="border-0 p-0 m-0">
+                      <legend className="font-heading text-lg font-bold text-ink mb-6 flex items-center gap-2">
+                        <Wrench size={20} className="text-brand" aria-hidden="true" />
                         &iquest;Qu&eacute; necesitas?
-                      </h3>
+                      </legend>
                       <Field name="telefono" label="Tel&eacute;fono" icon={Phone} type="tel" placeholder="600 000 000" />
-                      <Select name="tipo" label="Tipo de instalaci&oacute;n" icon={Wrench} options={installationTypes} placeholder="Selecciona una opci\u00F3n" />
+                      <Select name="tipo" label="Tipo de instalaci&oacute;n" icon={Wrench} options={installationTypes} placeholder="Selecciona una opci&#243;n" />
                       <Select name="presupuesto" label="Presupuesto estimado" icon={Euro} options={budgetRanges} placeholder="Rango orientativo" />
-                    </div>
+                    </fieldset>
                   )}
 
                   {step === 3 && (
-                    <div>
-                      <h3 className="font-heading text-lg font-bold text-ink mb-6 flex items-center gap-2">
-                        <MessageSquare size={20} className="text-brand" />
+                    <fieldset className="border-0 p-0 m-0">
+                      <legend className="font-heading text-lg font-bold text-ink mb-6 flex items-center gap-2">
+                        <MessageSquare size={20} className="text-brand" aria-hidden="true" />
                         Cu&eacute;ntanos m&aacute;s
-                      </h3>
+                      </legend>
                       <div className="mb-5">
-                        <label className="flex items-center gap-2 text-sm font-medium text-ink mb-1.5 font-heading tracking-wide uppercase">
-                          <MessageSquare size={15} className="text-brand" />
-                          Mensaje
+                        <label
+                          htmlFor="field-mensaje"
+                          className="flex items-center gap-2 text-sm font-medium text-ink mb-1.5 font-heading tracking-wide uppercase"
+                        >
+                          <MessageSquare size={15} className="text-brand" aria-hidden="true" />
+                          Mensaje <span className="text-brand/60 text-xs normal-case tracking-normal ml-0.5">*</span>
                         </label>
                         <textarea
+                          id="field-mensaje"
+                          name="mensaje"
                           value={formData.mensaje}
                           onChange={(e) => update('mensaje', e.target.value)}
                           rows={5}
-                          placeholder="Descr\u00EDbenos tu proyecto, direcci\u00F3n, plazos o cualquier detalle relevante..."
+                          placeholder="Descr&#237;benos tu proyecto, direcci&#243;n, plazos o cualquier detalle relevante..."
+                          required
+                          aria-required="true"
+                          aria-invalid={errors.mensaje ? 'true' : 'false'}
+                          aria-describedby={errors.mensaje ? 'error-mensaje' : undefined}
                           className={`input-field-light w-full resize-none transition-all duration-200 focus:ring-2 focus:ring-brand/50 focus:border-brand ${errors.mensaje ? '!border-red-400' : ''}`}
                         />
                         {errors.mensaje && (
-                          <p className="text-red-600 text-xs mt-1">{errors.mensaje}</p>
+                          <p id="error-mensaje" role="alert" className="text-red-600 text-xs mt-1">
+                            {errors.mensaje}
+                          </p>
                         )}
                       </div>
-                    </div>
+                    </fieldset>
                   )}
                 </div>
 

@@ -209,11 +209,24 @@ export default function WhyUs() {
 
             <div className="mt-8 h-[3px] w-12 bg-brand" />
 
-            {/* GSAP Animated Stats */}
-            <div className="grid grid-cols-2 gap-8 mt-10">
-              <StatCounter end={10} suffix="+" label="Años de experiencia" />
-              <StatCounter end={500} suffix="+" label="Proyectos completados" />
-              <StatCounter end={100} suffix="%" label="Inspecciones aprobadas" />
+            {/* Trust pillars — distintos a los de Metrics */}
+            <div className="grid grid-cols-2 gap-6 mt-10">
+              <div className="flex flex-col gap-1">
+                <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">24h</span>
+                <span className="font-body text-xs text-ink-300 uppercase tracking-widest font-bold">Disponibilidad real</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">0</span>
+                <span className="font-body text-xs text-ink-300 uppercase tracking-widest font-bold">Inspecciones fallidas</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">60'</span>
+                <span className="font-body text-xs text-ink-300 uppercase tracking-widest font-bold">Tiempo respuesta urgencia</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">2ª</span>
+                <span className="font-body text-xs text-ink-300 uppercase tracking-widest font-bold">Generación de electricistas</span>
+              </div>
             </div>
 
             {/* Vertical progress bar */}
@@ -240,7 +253,7 @@ export default function WhyUs() {
             {reasons.map((r, i) => (
               <div
                 key={i}
-                className="reason-row group invisible border-l-[3px] border-transparent transition-all duration-400 pl-6 py-6 cursor-default [&.reason-active]:border-brand [&.reason-active]:[box-shadow:-4px_0_12px_-4px_var(--color-brand)]"
+                className="reason-row group border-l-[3px] border-transparent transition-all duration-400 pl-6 py-6 cursor-default [&.reason-active]:border-brand [&.reason-active]:[box-shadow:-4px_0_12px_-4px_var(--color-brand)]"
                 style={{ borderBottom: '1px solid var(--color-surface-300)' }}
               >
                 <div className="flex items-start gap-5">

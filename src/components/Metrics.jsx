@@ -91,10 +91,14 @@ export default function Metrics() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative bg-dark py-24 md:py-32 overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative bg-dark py-24 md:py-32 overflow-hidden"
+      aria-label="Métricas de confianza"
+    >
       {/* Ambient amber glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-brand/5 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[200px] bg-brand/3 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-brand/5 rounded-full blur-[150px] pointer-events-none" aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[200px] bg-brand/3 rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
 
       <div className="container-custom px-6">
         {/* Dashboard-style horizontal strip */}
@@ -104,26 +108,33 @@ export default function Metrics() {
               key={i}
               className="metric-col px-6 lg:px-10 first:pl-0 last:pr-0"
             >
-              {/* Big number */}
+              {/* Big number — aria-hidden: el lector no ve la animación */}
               <span
                 className={`metric-num-${i} block font-heading text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white`}
+                aria-hidden="true"
               >
                 {m.prefix}0{m.suffix}
+              </span>
+
+              {/* Valor estático para lectores de pantalla */}
+              <span className="sr-only">
+                {m.prefix}{m.value}{m.suffix} — {m.label}
               </span>
 
               {/* Thin amber underline */}
               <div
                 className="metric-rule mt-4 mb-4 h-[2px] origin-left"
+                aria-hidden="true"
                 style={{
                   background: 'linear-gradient(90deg, var(--color-brand), var(--color-brand-glow))',
                 }}
               />
 
               {/* Label */}
-              <p className="font-body text-sm font-semibold text-white/80 tracking-wide uppercase">
+              <p className="font-body text-sm font-semibold text-white/80 tracking-wide uppercase" aria-hidden="true">
                 {m.label}
               </p>
-              <p className="font-body text-xs text-white/35 mt-1">
+              <p className="font-body text-xs text-white/35 mt-1" aria-hidden="true">
                 {m.sub}
               </p>
             </div>

@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Bloquear archivos innecesarios para crawlers
+Disallow: /src/
+Disallow: /node_modules/
+
 Sitemap: https://almelectricidad.com/sitemap.xml

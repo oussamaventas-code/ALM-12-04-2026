@@ -57,6 +57,10 @@ export default function FAQ() {
     setOpenIndex((prev) => (prev === i ? null : i));
   };
 
+  /* IDs únicos para aria-controls / id pairs */
+  const qId = (i) => `faq-question-${i}`;
+  const aId = (i) => `faq-answer-${i}`;
+
   /* Animate answer open/close */
   useEffect(() => {
     faqs.forEach((_, i) => {
@@ -151,13 +155,14 @@ export default function FAQ() {
           </div>
 
           {/* FAQ List */}
-          <div className="faq-list space-y-0">
+          <div className="faq-list space-y-0" role="list">
             {faqs.map((faq, i) => {
               const isOpen = openIndex === i;
               return (
                 <div
                   key={i}
                   className="faq-item invisible rounded-lg overflow-hidden transition-all duration-300"
+                  role="listitem"
                   style={{
                     backgroundColor: isOpen
                       ? 'rgba(245, 197, 24, 0.08)'
@@ -170,7 +175,10 @@ export default function FAQ() {
                 >
                   {/* Question button */}
                   <button
+                    id={qId(i)}
                     onClick={() => toggle(i)}
+                    aria-expanded={isOpen}
+                    aria-controls={aId(i)}
                     className="w-full flex items-center justify-between gap-4 py-6 px-6 text-left cursor-pointer group transition-all duration-300 hover:bg-white/[0.03]"
                     style={{
                       borderLeft: isOpen
@@ -192,6 +200,7 @@ export default function FAQ() {
 
                     <ChevronDown
                       size={20}
+                      aria-hidden="true"
                       className="flex-shrink-0 transition-transform duration-400"
                       style={{
                         color: isOpen
@@ -202,9 +211,12 @@ export default function FAQ() {
                     />
                   </button>
 
-                  {/* Answer */}
+                  {/* Answer panel */}
                   <div
+                    id={aId(i)}
                     ref={(el) => (answersRef.current[i] = el)}
+                    role="region"
+                    aria-labelledby={qId(i)}
                     className="overflow-hidden border-t border-brand/20"
                     style={{ display: 'none', height: 0 }}
                   >

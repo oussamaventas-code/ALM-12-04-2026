@@ -11,6 +11,7 @@ import WhatsAppFloat from './components/WhatsAppFloat';
 import CustomCursor from './components/CustomCursor';
 import MobileUrgencyBar from './components/MobileUrgencyBar';
 import PageTransition from './components/PageTransition';
+import CookieBanner from './components/CookieBanner';
 
 // HomePage carga inmediata (primera pantalla)
 import HomePage from './pages/HomePage';
@@ -23,6 +24,9 @@ const TeamPage         = lazy(() => import('./pages/TeamPage'));
 const FlotaPage        = lazy(() => import('./pages/FlotaPage'));
 const UrgenciasPage    = lazy(() => import('./pages/UrgenciasPage'));
 const PatrociniosPage  = lazy(() => import('./pages/PatrociniosPage'));
+const PrivacidadPage   = lazy(() => import('./pages/PrivacidadPage'));
+const AvisoLegalPage   = lazy(() => import('./pages/AvisoLegalPage'));
+const CookiesPage      = lazy(() => import('./pages/CookiesPage'));
 
 // GSAP registrado una única vez aquí — los componentes no necesitan volver a registrarlo
 gsap.registerPlugin(ScrollTrigger);
@@ -123,25 +127,39 @@ function AppShell() {
 
   return (
     <div className="overflow-x-hidden">
+      {/* Skip-to-content para accesibilidad por teclado */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[#F5C518] focus:text-[#080809] focus:px-4 focus:py-2 focus:font-bold focus:font-body focus:text-sm"
+      >
+        Saltar al contenido principal
+      </a>
+
       <PageTransition />
       <Navbar />
       {/* <UrgencyBanner /> */}
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/"                element={<HomePage />} />
-          <Route path="/urgencias"       element={<UrgenciasPage />} />
-          <Route path="/patrocinios"     element={<PatrociniosPage />} />
-          <Route path="/servicios/:slug" element={<ServicePage />} />
-          <Route path="/zonas/:slug"     element={<ZonePage />} />
-          <Route path="/fotovoltaica"    element={<FotovoltaicaPage />} />
-          <Route path="/equipo"          element={<TeamPage />} />
-          <Route path="/flota"           element={<FlotaPage />} />
-        </Routes>
-      </Suspense>
+      <main id="main-content">
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/"                element={<HomePage />} />
+            <Route path="/urgencias"       element={<UrgenciasPage />} />
+            <Route path="/patrocinios"     element={<PatrociniosPage />} />
+            <Route path="/servicios/:slug" element={<ServicePage />} />
+            <Route path="/zonas/:slug"     element={<ZonePage />} />
+            <Route path="/fotovoltaica"    element={<FotovoltaicaPage />} />
+            <Route path="/equipo"          element={<TeamPage />} />
+            <Route path="/flota"           element={<FlotaPage />} />
+            <Route path="/privacidad"      element={<PrivacidadPage />} />
+            <Route path="/aviso-legal"     element={<AvisoLegalPage />} />
+            <Route path="/cookies"         element={<CookiesPage />} />
+          </Routes>
+        </Suspense>
+      </main>
       <Footer />
       <WhatsAppFloat />
       <MobileUrgencyBar />
       <CustomCursor />
+      <CookieBanner />
     </div>
   );
 }

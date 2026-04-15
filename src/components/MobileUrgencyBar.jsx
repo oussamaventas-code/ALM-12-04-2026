@@ -31,21 +31,24 @@ export default function MobileUrgencyBar() {
   return (
     <div
       ref={barRef}
+      role="complementary"
+      aria-label="Barra de urgencias eléctricas"
       className="fixed bottom-0 left-0 right-0 z-[49] lg:hidden"
       style={{ transform: 'translateY(100%)', opacity: 0 }}
     >
       <a
         href="tel:+34605333108"
+        aria-label="Urgencia eléctrica — Llamar al 605 33 31 08"
         className="flex items-center justify-center gap-3 bg-danger text-white py-4 px-6 w-full font-heading font-bold text-sm uppercase tracking-wider shadow-[0_-4px_24px_rgba(220,38,38,0.4)]"
       >
-        <span className="relative flex h-2.5 w-2.5 shrink-0">
+        <span className="relative flex h-2.5 w-2.5 shrink-0" aria-hidden="true">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-70" />
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
         </span>
-        <Zap size={16} className="text-yellow-300" />
+        <Zap size={16} className="text-yellow-300" aria-hidden="true" />
         Urgencia eléctrica — Llamar ahora
         <span className="bg-white/20 rounded-full px-3 py-0.5 text-xs flex items-center gap-1.5">
-          <Phone size={11} />
+          <Phone size={11} aria-hidden="true" />
           605 33 31 08
         </span>
       </a>

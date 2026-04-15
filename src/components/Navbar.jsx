@@ -107,6 +107,7 @@ export default function Navbar() {
 
       <nav
         ref={navRef}
+        aria-label="Navegación principal"
         className={`fixed top-[3px] left-0 w-full z-50 transition-all duration-500 ${
           scrolled
             ? 'bg-dark/90 backdrop-blur-xl shadow-lg shadow-black/30'
@@ -114,7 +115,7 @@ export default function Navbar() {
         }`}
       >
         <div className="container-custom flex items-center justify-between px-6 h-[72px]">
-          <Link to="/" className="flex items-center gap-2 group shrink-0">
+          <Link to="/" className="flex items-center gap-2 group shrink-0" aria-label="ALMelectricidad — Inicio">
             <img
               src="/LOGO Y JORGE/LOGO.JPG"
               alt="ALMelectricidad"
@@ -135,15 +136,21 @@ export default function Navbar() {
                   <button
                     className="font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.08em] text-white/70 hover:text-brand-glow px-4 py-2 transition-colors duration-300 flex items-center gap-1.5"
                     onClick={() => setActiveDropdown(activeDropdown === link.id ? null : link.id)}
+                    aria-haspopup="true"
+                    aria-expanded={activeDropdown === link.id}
+                    aria-label={`${link.label} — ver submenú`}
                   >
                     {link.label}
                     <ChevronDown
                       size={14}
+                      aria-hidden="true"
                       className={`transition-transform duration-300 ${activeDropdown === link.id ? 'rotate-180' : ''}`}
                     />
                   </button>
 
                   <div
+                    role="menu"
+                    aria-label={link.label}
                     className={`absolute top-full left-0 mt-1 min-w-[220px] bg-dark-800 border border-white/10 shadow-2xl shadow-black/40 transition-all duration-300 ${
                       activeDropdown === link.id
                         ? 'opacity-100 translate-y-0 pointer-events-auto'
@@ -155,15 +162,16 @@ export default function Navbar() {
                         <Link
                           key={item.to}
                           to={item.to}
+                          role="menuitem"
                           onClick={() => setActiveDropdown(null)}
                           className="flex items-center gap-2.5 px-5 py-2.5 text-sm text-white/60 hover:text-brand-glow hover:bg-white/5 transition-all duration-200 font-body"
                         >
-                          <MapPin size={13} className="text-brand/50" />
+                          <MapPin size={13} className="text-brand/50" aria-hidden="true" />
                           {item.label}
                         </Link>
                       ))}
                     </div>
-                    <div className="h-[2px] bg-gradient-to-r from-brand via-brand-glow to-transparent" />
+                    <div className="h-[2px] bg-gradient-to-r from-brand via-brand-glow to-transparent" aria-hidden="true" />
                   </div>
                 </div>
               ) : (
@@ -182,21 +190,23 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-4">
             <a
               href="tel:+34605333108"
+              aria-label="Llamar al 605 33 31 08"
               className="flex items-center gap-2 text-white/60 hover:text-white text-sm font-body transition-colors duration-300"
             >
-              <Phone size={15} className="text-brand" />
-              <span className="font-medium">605 33 31 08</span>
+              <Phone size={15} className="text-brand" aria-hidden="true" />
+              <span className="font-medium" aria-hidden="true">605 33 31 08</span>
             </a>
 
             <Link
               to="/urgencias"
+              aria-label="Urgencias eléctricas 24 horas — contactar ahora"
               className="relative flex items-center gap-1.5 bg-danger/90 hover:bg-danger text-white text-[0.6875rem] font-bold uppercase tracking-widest px-3 py-1.5 transition-all duration-300"
             >
-              <span className="relative flex h-2 w-2">
+              <span className="relative flex h-2 w-2" aria-hidden="true">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-300 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
               </span>
-              <Zap size={11} />
+              <Zap size={11} aria-hidden="true" />
               Urgencias 24h
             </Link>
 
@@ -208,7 +218,9 @@ export default function Navbar() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden text-white p-2 relative z-[60]"
-            aria-label="Menu"
+            aria-label={mobileOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav-menu"
           >
             {mobileOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
@@ -217,9 +229,13 @@ export default function Navbar() {
 
       {mobileOpen && (
         <div
+          id="mobile-nav-menu"
           ref={mobileMenuRef}
           className="fixed inset-0 z-[55] bg-dark/98 backdrop-blur-xl flex flex-col"
           style={{ paddingTop: 'calc(3px + 72px)' }}
+          role="dialog"
+          aria-label="Menú de navegación"
+          aria-modal="true"
         >
           <div className="flex-1 flex flex-col justify-center px-8 -mt-12">
             {navLinks.map((link) =>

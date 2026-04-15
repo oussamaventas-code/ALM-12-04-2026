@@ -99,9 +99,9 @@ export default function TeamPage() {
         });
       }
 
-      // Horizontal scroll gallery — igual que Flota
-      if (containerRef.current) {
-        const slides = gsap.utils.toArray('.team-slide');
+      // Horizontal scroll gallery — solo en desktop
+      if (containerRef.current && window.innerWidth >= 1024) {
+        const slides = gsap.utils.toArray('.team-slide-desktop');
 
         if (slides.length > 0) {
           const pinAnimation = gsap.to(slides, {
@@ -222,14 +222,85 @@ export default function TeamPage() {
         </div>
       </div>
 
-      {/* ── GALERÍA HORIZONTAL ── */}
-      <div ref={containerRef} className="h-screen w-full flex overflow-hidden bg-dark relative z-30">
+      {/* ── GALERÍA MÓVIL (< lg) — CSS scroll-snap ── */}
+      <div className="lg:hidden bg-dark">
+        <div
+          className="flex overflow-x-auto"
+          style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth' }}
+        >
+          {teamMembers.map((member, i) => (
+            <div
+              key={i}
+              className="flex-shrink-0 w-screen flex flex-col"
+              style={{ scrollSnapAlign: 'start' }}
+            >
+              {/* Foto arriba */}
+              <div className="w-full h-[60vw] max-h-72 overflow-hidden">
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+              {/* Texto abajo */}
+              <div className="flex flex-col px-6 py-8 bg-dark border-b border-white/8">
+                <span className="text-brand font-body font-bold text-sm mb-1">{member.role}</span>
+                <h3 className="text-3xl font-heading font-black text-white leading-none mb-3 tracking-tighter">{member.name}</h3>
+                <p className="text-white/55 font-body text-sm mb-4">{member.specialty}</p>
+                <ul className="flex flex-col gap-2">
+                  <li className="flex items-center gap-2 text-xs text-white/65 font-body">
+                    <span className="text-brand">🏅</span> {member.cert}
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-white/65 font-body">
+                    <span className="text-brand">⏱</span> {member.experience} de experiencia
+                  </li>
+                </ul>
+              </div>
+            </div>
+          ))}
+          {/* Slide CTA móvil */}
+          <div
+            className="flex-shrink-0 w-screen flex flex-col items-center justify-center px-6 py-16 bg-brand text-dark"
+            style={{ scrollSnapAlign: 'start' }}
+          >
+            <Users size={48} className="mb-5" />
+            <h2 className="text-3xl font-heading font-black mb-4 text-center tracking-tighter leading-none">
+              HABLEMOS DE TU PROYECTO
+            </h2>
+            <p className="text-dark/70 font-body text-base mb-8 text-center">
+              5 técnicos especializados. Sin bots, sin esperas.
+            </p>
+            <div className="flex flex-col w-full gap-3 max-w-xs">
+              <a
+                href="/#contacto"
+                className="bg-dark text-brand px-6 py-4 font-body text-base font-bold uppercase tracking-wide hover:scale-105 transition-transform inline-flex items-center justify-center gap-3"
+              >
+                Pedir presupuesto
+                <ArrowRight size={18} />
+              </a>
+              <a
+                href="tel:+34605333108"
+                className="bg-dark/15 text-dark px-6 py-4 font-body text-base font-bold uppercase tracking-wide hover:scale-105 transition-transform inline-flex items-center justify-center gap-3"
+              >
+                <Phone size={18} />
+                605 33 31 08
+              </a>
+            </div>
+          </div>
+        </div>
+        <p className="text-center text-white/20 text-xs py-3 font-body">← Desliza para ver el equipo →</p>
+      </div>
+
+      {/* ── GALERÍA DESKTOP (≥ lg) — GSAP horizontal pin ── */}
+      <div ref={containerRef} className="hidden lg:flex h-screen w-full overflow-hidden bg-dark relative z-30">
         <div className="flex h-full will-change-transform items-center">
 
           {teamMembers.map((member, i) => (
             <div
               key={i}
-              className="team-slide w-screen h-full flex shrink-0 relative"
+              className="team-slide-desktop w-screen h-full flex shrink-0 relative"
             >
               {/* Texto izquierda */}
               <div className="slide-title flex flex-col justify-center px-10 md:px-20 w-1/2 shrink-0 z-10">
@@ -243,10 +314,10 @@ export default function TeamPage() {
                   {member.specialty}
                 </p>
                 <ul className="flex flex-col gap-2">
-                  <li className="flex items-center gap-2 text-sm text-white/40 font-body">
+                  <li className="flex items-center gap-2 text-sm text-white/65 font-body">
                     <span className="text-brand">🏅</span> {member.cert}
                   </li>
-                  <li className="flex items-center gap-2 text-sm text-white/40 font-body">
+                  <li className="flex items-center gap-2 text-sm text-white/65 font-body">
                     <span className="text-brand">⏱</span> {member.experience} de experiencia
                   </li>
                 </ul>
@@ -266,7 +337,7 @@ export default function TeamPage() {
           ))}
 
           {/* Slide final — CTA */}
-          <div className="team-slide w-screen h-full flex flex-col items-center justify-center px-6 shrink-0 bg-brand text-dark relative">
+          <div className="team-slide-desktop w-screen h-full flex flex-col items-center justify-center px-6 shrink-0 bg-brand text-dark relative">
             <div className="relative z-10 flex flex-col items-center text-center">
               <Users size={60} className="mb-6" />
               <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-black mb-6 max-w-3xl tracking-tighter leading-none">
@@ -316,7 +387,7 @@ export default function TeamPage() {
                   <v.icon size={20} className="text-brand" />
                 </div>
                 <h3 className="font-heading text-base font-bold text-white mb-2">{v.title}</h3>
-                <p className="font-body text-sm text-white/50 leading-relaxed">{v.desc}</p>
+                <p className="font-body text-sm text-white/65 leading-relaxed">{v.desc}</p>
               </div>
             ))}
           </div>

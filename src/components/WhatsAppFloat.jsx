@@ -60,9 +60,9 @@ export default function WhatsAppFloat() {
   }, []);
 
   return (
-    <div ref={wrapRef} className="fixed bottom-6 right-6 z-50">
+    <div ref={wrapRef} className="fixed bottom-6 right-6 z-50" aria-live="polite" aria-atomic="true">
       {/* Pulse ring */}
-      <span className="absolute inset-0 rounded-full bg-[#25D366]/35 animate-ping pointer-events-none" />
+      <span className="absolute inset-0 rounded-full bg-[#25D366]/35 animate-ping pointer-events-none" aria-hidden="true" />
 
       {/* Row: label + button */}
       <div className="relative flex items-center">

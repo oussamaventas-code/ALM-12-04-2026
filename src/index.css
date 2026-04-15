@@ -130,7 +130,93 @@
     background-repeat: repeat;
     background-size: 256px;
   }
+
+  /* ── Accesibilidad: focus visible (navegación por teclado) ── */
+  /* Sólo mostramos outline cuando el usuario navega con teclado (focus-visible),
+     no cuando hace click con ratón. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Reset forzado para el cursor de puntero */
+  button, [role="button"], a, [tabindex]:not([tabindex="-1"]) {
+    cursor: pointer;
+  }
+
+  /* Clase sr-only para elementos solo para lectores de pantalla */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* ── Range input — cross-browser (iOS Safari, Firefox, Chrome) ── */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--color-surface-400);
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-brand);
+    cursor: pointer;
+    box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.2);
+    transition: box-shadow 0.2s;
+  }
+
+  input[type="range"]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 5px rgba(245, 197, 24, 0.3);
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-brand);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.2);
+  }
+
+  input[type="range"]::-moz-range-track {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--color-surface-400);
+  }
+
+  input[type="range"]::-ms-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-brand);
+    cursor: pointer;
+    border: none;
+  }
+
+  input[type="range"]:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 4px;
+  }
 }
+
 
 /* ─── Components ─── */
 @layer components {
@@ -557,4 +643,36 @@
   .delay-300 { animation-delay: 300ms; }
   .delay-400 { animation-delay: 400ms; }
   .delay-500 { animation-delay: 500ms; }
+}
+
+/* ═══════════════════════════════════════════════════
+   ACCESIBILIDAD — prefers-reduced-motion
+   WCAG 2.1 | Criterio 2.3.3 (nivel AA)
+   Respeta la preferencia del sistema del usuario.
+   GSAP también lo respeta automáticamente si
+   globalTimeline.timeScale se ajusta aquí.
+   ═══════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Mantener visibilidad de elementos que GSAP pone en autoAlpha=0 */
+  .hero-badge,
+  .hero-title-line,
+  .hero-subtitle,
+  .hero-ctas,
+  .hero-trust,
+  .testimonials-header,
+  .testimonials-big-number {
+    opacity: 1 !important;
+    visibility: visible !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
 }

@@ -84,12 +84,12 @@ export default function FotovoltaicaPage() {
 
         <div className="container-custom px-6 relative z-10">
           <div className="fv-hero-content max-w-3xl">
-            <nav className="flex items-center gap-2 text-sm text-white/40 mb-8 font-body">
+            <nav className="flex items-center gap-2 text-sm text-white/65 mb-8 font-body" aria-label="Migas de pan">
               <Link to="/" className="hover:text-brand transition-colors">Inicio</Link>
-              <span>/</span>
+              <span aria-hidden="true">/</span>
               <Link to="/servicios/paneles-solares" className="hover:text-brand transition-colors">Paneles Solares</Link>
-              <span>/</span>
-              <span className="text-white/70">Fotovoltaica en profundidad</span>
+              <span aria-hidden="true">/</span>
+              <span className="text-white/80">Fotovoltaica en profundidad</span>
             </nav>
 
             <div className="inline-flex items-center gap-2 border border-brand/30 bg-brand/10 px-4 py-2 mb-6">
@@ -260,15 +260,18 @@ export default function FotovoltaicaPage() {
 
               <div className="grid grid-cols-3 gap-4">
                 <div className="bg-dark/50 p-5 text-center border border-brand/10">
-                  <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Ahorro/mes</p>
+                  <p className="text-white/65 text-xs uppercase tracking-wider mb-1">
+Ahorro/mes</p>
                   <p className="text-white font-heading font-bold text-2xl">{savings}€</p>
                 </div>
                 <div className="bg-dark/50 p-5 text-center border border-brand/10">
-                  <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Ahorro/año</p>
+                  <p className="text-white/65 text-xs uppercase tracking-wider mb-1">
+Ahorro/año</p>
                   <p className="text-brand font-heading font-bold text-2xl">{yearSavings.toLocaleString()}€</p>
                 </div>
                 <div className="bg-dark/50 p-5 text-center border border-brand/10">
-                  <p className="text-white/40 text-xs uppercase tracking-wider mb-1">CO₂ evitado</p>
+                  <p className="text-white/65 text-xs uppercase tracking-wider mb-1">
+CO₂ evitado</p>
                   <p className="text-green-400 font-heading font-bold text-2xl">{co2} Tn</p>
                 </div>
               </div>
@@ -321,15 +324,15 @@ export default function FotovoltaicaPage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
             ¿Listo para producir tu propia energía?
           </h2>
-          <p className="text-white/50 mb-10 max-w-lg mx-auto">
+          <p className="text-white/70 mb-10 max-w-lg mx-auto">
             Te hacemos un estudio gratuito y sin compromiso. En 24h tienes una propuesta clara con números reales.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/#contacto" className="btn-brand">
+            <a href="/#contacto" className="btn-brand">
               Pide tu estudio gratuito
               <ArrowRight size={18} />
-            </Link>
+            </a>
             <a href="https://wa.me/34605333108?text=Hola%2C%20quiero%20un%20estudio%20fotovoltaico" target="_blank" rel="noopener" className="btn-whatsapp">
               <MessageCircle size={18} />
               WhatsApp
