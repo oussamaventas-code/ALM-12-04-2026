@@ -129,14 +129,30 @@ export default function Hero() {
     >
       {/* ── Video Background ── */}
       <div ref={bgRef} className="absolute inset-0 z-0">
+        {/* Fallback image — visible cuando el video no carga (móvil, conexión lenta) */}
+        <img
+          src="/hero-bg.webp"
+          alt=""
+          aria-hidden="true"
+          fetchpriority="high"
+          className="absolute inset-0 w-full h-full object-cover scale-110"
+        />
+
+        {/* Video — se superpone sobre la imagen cuando carga */}
+        {/* En móvil carga el video ligero, en PC el de calidad */}
         <video
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
-          className="w-full h-full object-cover scale-110"
+          className="absolute inset-0 w-full h-full object-cover scale-110"
         >
+          <source
+            media="(max-width: 768px)"
+            src="/videos/HERO MOVIL.mp4"
+            type="video/mp4"
+          />
           <source
             src="/videos/HERO PARA PC.mp4"
             type="video/mp4"
@@ -218,8 +234,10 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ── Right — Semi-transparent contact form ── */}
-          <div className="hero-form">
+          {/* ── Right — Contact form ── */}
+          {/* Solo visible en desktop (≥ lg) donde el grid de 2 cols está activo */}
+          {/* En móvil/tablet: el copy y sus CTAs de WhatsApp/llamada son suficientes */}
+          <div className="hero-form hidden lg:block">
             <form
               onSubmit={handleSubmit}
               className="animate-pulse-glow bg-black/15 backdrop-blur-sm border border-white/[0.08] p-6 md:p-8 space-y-4"

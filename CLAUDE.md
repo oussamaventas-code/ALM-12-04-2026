@@ -33,4 +33,10 @@ npm run lint      # ESLint
 
 **Lenis + ScrollTrigger sync:** `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.add(tickerFn)` keep them in sync. When adding scroll-triggered animations, do not call `ScrollTrigger.refresh()` synchronously on mount — use a `setTimeout(..., 150)` as done in the route-change handler.
 
+**Premium UX components:** `<CustomCursor />` (global custom cursor with spring physics, toggled via `data-cursor="pointer"` on interactive elements), `<MagneticElement />` (GSAP magnet wrapper for CTAs — used in Hero and Navbar), `<PageTransition />` (GSAP-based route transition overlay mounted in `App.jsx`). The cursor is enabled via `cursor: none` in `index.css`.
+
 **Deployment:** Vercel. `vercel.json` sets `buildCommand` and `outputDirectory`. SPA routing is handled by Vercel's default rewrites for Vite projects.
+
+## Reference
+
+`directivas/` contains design directives that defined the current architecture (GSAP/Lenis integration, cursor system, page transitions). Consult them when making significant changes to animation infrastructure.

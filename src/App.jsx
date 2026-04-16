@@ -33,6 +33,15 @@ gsap.registerPlugin(ScrollTrigger);
 // Reducir lagSmoothing global para no bloquear el main thread
 gsap.ticker.lagSmoothing(500, 33);
 
+// ── prefers-reduced-motion ──────────────────────────────────────────────────
+// Si el usuario tiene "Reducir movimiento" activado en su SO, todas las
+// animaciones GSAP se ejecutan instantáneamente (duration/delay → 0).
+// Los demás usuarios no se ven afectados en absoluto.
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  gsap.defaults({ duration: 0, delay: 0 });
+  gsap.globalTimeline.timeScale(100);
+}
+
 // ── Lenis smooth scroll ─────────────────────────────────────────────────────
 // Singleton instance shared via module scope so ScrollTrigger can always
 // reference the live Lenis object.

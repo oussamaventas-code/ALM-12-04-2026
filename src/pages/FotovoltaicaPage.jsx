@@ -329,7 +329,7 @@ CO₂ evitado</p>
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/#contacto" className="btn-brand">
+            <a href="#contacto-solar" className="btn-brand">
               Pide tu estudio gratuito
               <ArrowRight size={18} />
             </a>

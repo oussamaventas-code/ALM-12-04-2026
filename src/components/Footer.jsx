@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import {
-  Zap,
   Phone,
   Mail,
   Clock,
@@ -10,6 +9,7 @@ import {
   Wrench,
   Shield,
   CheckCircle,
+  Accessibility,
 } from 'lucide-react';
 import { services } from '../data/services';
 import { zones } from '../data/zones';
@@ -20,6 +20,7 @@ const humanPromises = [
   { icon: Shield, text: 'Presupuesto sin sorpresas' },
   { icon: CheckCircle, text: 'Limpiamos al terminar' },
   { icon: Heart, text: 'Tratamos tu casa como nuestra' },
+  { icon: Accessibility, text: 'Web accesible WCAG AA' },
 ];
 
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
