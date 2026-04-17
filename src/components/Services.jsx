@@ -41,8 +41,11 @@ export default function Services() {
   const titleRef = useRef(null);
   const gsapCtx = useRef(null);
 
-  // Setup GSAP animations after paint
+  // Setup GSAP animations after paint — solo en desktop
   useEffect(() => {
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouch) return; // móvil usa layout vertical sin GSAP pin
+
     const timer = setTimeout(() => ScrollTrigger.refresh(), 100);
 
     gsapCtx.current = gsap.context(() => {
@@ -118,19 +121,20 @@ export default function Services() {
     };
   }, []);
 
-  const cardStyle = {
-    width: 'clamp(300px, 35vw, 520px)',
-    height: '70vh',
-  };
+  const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
+  const cardStyle = isTouchDevice
+    ? { width: '100%', height: '260px' }
+    : { width: 'clamp(300px, 35vw, 520px)', height: '70vh' };
 
   return (
     <section
       id="servicios"
       ref={sectionRef}
       className="bg-surface overflow-hidden"
-      style={{ height: '100vh' }}
+      style={isTouchDevice ? {} : { height: '100vh' }}
     >
-      <div className="h-full flex flex-col">
+      <div className={isTouchDevice ? 'flex flex-col' : 'h-full flex flex-col'}>
 
         {/* Header */}
         <div className="max-w-7xl mx-auto w-full px-6 pt-[82px] pb-8 shrink-0">
@@ -149,12 +153,12 @@ export default function Services() {
           </div>
         </div>
 
-        {/* Horizontal track */}
-        <div className="flex-1 flex items-center overflow-visible pl-6 md:pl-10">
+        {/* Horizontal track (desktop) / Grid vertical (móvil) */}
+        <div className={isTouchDevice ? 'px-6 pb-10' : 'flex-1 flex items-center overflow-visible pl-6 md:pl-10'}>
           <div
             ref={trackRef}
-            className="flex gap-6 will-change-transform pr-6 md:pr-10"
-            style={{ width: 'max-content' }}
+            className={isTouchDevice ? 'grid grid-cols-1 gap-5' : 'flex gap-6 will-change-transform pr-6 md:pr-10'}
+            style={isTouchDevice ? {} : { width: 'max-content' }}
           >
             {allServices.map((s, i) => {
               const cardContent = (
@@ -235,8 +239,8 @@ export default function Services() {
           </div>
         </div>
 
-        {/* Scroll hint */}
-        <div className="max-w-7xl mx-auto w-full px-6 pb-6 shrink-0 flex items-center gap-3">
+        {/* Scroll hint — solo desktop */}
+        <div className={`max-w-7xl mx-auto w-full px-6 pb-6 shrink-0 flex items-center gap-3 ${isTouchDevice ? 'hidden' : ''}`}>
           <div className="h-[1px] w-8 bg-brand/40" />
           <span className="font-body text-xs text-white/30 uppercase tracking-[0.12em]">
             Desliza para ver todos los servicios
