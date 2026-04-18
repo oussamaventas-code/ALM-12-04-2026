@@ -129,14 +129,8 @@ export default function Hero() {
     >
       {/* ── Video Background ── */}
       <div ref={bgRef} className="absolute inset-0 z-0">
-        {/* Fallback image — visible cuando el video no carga (móvil, conexión lenta) */}
-        <img
-          src="/hero-bg.webp"
-          alt=""
-          aria-hidden="true"
-          fetchPriority="high"
-          className="absolute inset-0 w-full h-full object-cover scale-110"
-        />
+        {/* Fallback CSS — visible cuando el video no carga (móvil, conexión lenta) */}
+        <div className="absolute inset-0 w-full h-full bg-dark bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#1a2235] to-[#0a0e17]" />
 
         {/* Video — se superpone sobre la imagen cuando carga */}
         {/* En móvil carga el video ligero, en PC el de calidad */}

@@ -39,7 +39,7 @@ export default function MobileUrgencyBar() {
       <a
         href="tel:+34605333108"
         aria-label="Urgencia eléctrica — Llamar al 605 33 31 08"
-        className="flex items-center justify-center gap-3 bg-danger text-white py-4 px-6 w-full font-heading font-bold text-sm uppercase tracking-wider shadow-[0_-4px_24px_rgba(220,38,38,0.4)]"
+        className="flex items-center justify-center gap-3 bg-danger text-white py-2.5 px-4 w-full font-heading font-bold text-xs uppercase tracking-wider shadow-[0_-4px_24px_rgba(220,38,38,0.4)]"
       >
         <span className="relative flex h-2.5 w-2.5 shrink-0" aria-hidden="true">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-70" />
