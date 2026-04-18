@@ -10,6 +10,7 @@ import {
   Shield,
   CheckCircle,
   Accessibility,
+  Instagram,
 } from 'lucide-react';
 import { services } from '../data/services';
 import { zones } from '../data/zones';
@@ -56,7 +57,17 @@ export default function Footer() {
             <p className="text-sm leading-relaxed mb-4">
               Electricistas profesionales en Madrid y Toledo. Instalaciones, reformas, aver&iacute;as y energ&iacute;a solar con garant&iacute;a.
             </p>
-
+            <div className="flex items-center gap-4 mt-6">
+              <a 
+                href="https://www.instagram.com/almelectricidad/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-white/5 hover:bg-brand hover:text-dark flex items-center justify-center transition-all duration-300"
+                aria-label="Síguenos en Instagram"
+              >
+                <Instagram size={18} />
+              </a>
+            </div>
           </div>
 
           {/* Services */}
@@ -106,11 +117,11 @@ export default function Footer() {
               <li>
                 <a
                   href="tel:+34605333108"
-                  aria-label="Llamar al 605 333 108"
+                  aria-label="Llamar al +34 605 33 31 08"
                   className="flex items-center gap-2.5 text-sm hover:text-brand-light transition-colors"
                 >
                   <Phone size={15} className="text-brand-light shrink-0" aria-hidden="true" />
-                  605 333 108
+                  +34 605 33 31 08
                 </a>
               </li>
               <li>
