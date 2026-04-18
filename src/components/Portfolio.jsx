@@ -1,6 +1,5 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const projects = [
   {
@@ -41,21 +40,15 @@ const projects = [
   },
 ];
 
-export default function Portfolio() {
+function PortfolioDesktop() {
   const sectionRef = useRef(null);
-  const pinWrapRef = useRef(null);
   const trackRef = useRef(null);
   const titleRef = useRef(null);
-  const gsapCtx = useRef(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => ScrollTrigger.refresh(), 100);
-
-    gsapCtx.current = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const track = trackRef.current;
       const section = sectionRef.current;
-
-      if (!track || !section) return;
 
       // Total horizontal distance to scroll
       const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
@@ -70,66 +63,50 @@ export default function Portfolio() {
           // Pin se libera exactamente cuando la última tarjeta entra en pantalla
           scrub: 1,
           pin: true,
-          pinType: 'transform',
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
       // Title parallax
-      if (titleRef.current) {
-        gsap.to(titleRef.current, {
-          x: -80,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: () => `+=${Math.abs(getScrollAmount())}`,
-            // Pin se libera exactamente cuando la última tarjeta entra en pantalla
-            scrub: 1,
-            invalidateOnRefresh: true,
-            containerAnimation: horizontalTween,
-          },
-        });
-      }
+      gsap.to(titleRef.current, {
+        x: -80,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: () => `+=${Math.abs(getScrollAmount())}`,
+          // Pin se libera exactamente cuando la última tarjeta entra en pantalla
+          scrub: 1,
+          invalidateOnRefresh: true,
+          containerAnimation: horizontalTween,
+        },
+      });
 
       // Card stagger reveal — triggered by horizontal progress
-      const cards = gsap.utils.toArray('.portfolio-card');
-      if (cards.length > 0) {
-        cards.forEach((card, i) => {
-          gsap.fromTo(
-            card,
-            { y: -60, autoAlpha: 0, rotation: -3 + (i % 2 === 0 ? -1 : 1) * 1.5 },
-            {
-              y: 0,
-              autoAlpha: 1,
-              rotation: 0,
-              duration: 0.85,
-              ease: 'power3.out',
-              delay: i * 0.08,
-              scrollTrigger: {
-                trigger: card,
-                containerAnimation: horizontalTween,
-                start: 'left 85%',
-                once: true,
-              },
-            }
-          );
-        });
-      }
+      gsap.utils.toArray('.portfolio-card').forEach((card, i) => {
+        gsap.fromTo(
+          card,
+          { y: -60, autoAlpha: 0, rotation: -3 + (i % 2 === 0 ? -1 : 1) * 1.5 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            rotation: 0,
+            duration: 0.85,
+            ease: 'power3.out',
+            delay: i * 0.08,
+            scrollTrigger: {
+              trigger: card,
+              containerAnimation: horizontalTween,
+              start: 'left 85%',
+              once: true,
+            },
+          }
+        );
+      });
     }, sectionRef);
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Cleanup SYNCHRONOUSLY before React removes DOM nodes
-  useLayoutEffect(() => {
-    return () => {
-      if (gsapCtx.current) {
-        gsapCtx.current.revert();
-        gsapCtx.current = null;
-      }
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -139,8 +116,8 @@ export default function Portfolio() {
       className="bg-surface-200 overflow-hidden"
       style={{ height: '100vh' }}
     >
-      <div ref={pinWrapRef} className="h-full flex flex-col">
-        {/* Header — stays at top while pinned */}
+      <div className="h-full flex flex-col">
+        {/* Header */}
         <div className="container-custom px-6 pt-16 pb-8 shrink-0">
           <div className="flex items-end justify-between">
             <div ref={titleRef}>
@@ -175,15 +152,12 @@ export default function Portfolio() {
                   height: '70vh',
                 }}
               >
-                {/* Image */}
                 <img
                   src={p.image}
                   alt={p.title}
                   loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-
-                {/* Hover overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-7">
                   <span
                     className="font-body text-xs font-semibold uppercase tracking-[0.15em]"
@@ -198,8 +172,6 @@ export default function Portfolio() {
                     {p.result}
                   </p>
                 </div>
-
-                {/* Always-visible bottom bar */}
                 <div className="absolute bottom-0 left-0 right-0 bg-dark/85 backdrop-blur-sm px-5 py-3 group-hover:opacity-0 transition-opacity duration-400">
                   <div className="flex items-center justify-between">
                     <span
@@ -213,26 +185,19 @@ export default function Portfolio() {
                     </span>
                   </div>
                 </div>
-
-                {/* Left brand accent on hover */}
                 <div
                   className="absolute top-0 left-0 w-[3px] h-full scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-bottom"
                   style={{ background: 'var(--color-brand)' }}
                 />
-
-                {/* Card number */}
                 <div className="absolute top-4 left-4 font-heading font-black text-5xl text-white/[0.07] leading-none select-none pointer-events-none group-hover:text-white/[0.12] transition-colors duration-500">
                   {String(i + 1).padStart(2, '0')}
                 </div>
               </div>
             ))}
-
-            {/* Trailing space */}
             <div className="shrink-0 w-8" />
           </div>
         </div>
 
-        {/* Scroll hint */}
         <div className="container-custom px-6 pb-6 shrink-0 flex items-center gap-3">
           <div className="h-[1px] w-8 bg-brand/40" />
           <span className="font-body text-xs text-white/30 uppercase tracking-[0.12em]">
@@ -241,5 +206,135 @@ export default function Portfolio() {
         </div>
       </div>
     </section>
+  );
+}
+
+function PortfolioMobile() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray('.portfolio-card-mobile');
+      if (cards.length > 0) {
+        cards.forEach((card, i) => {
+          gsap.fromTo(
+            card,
+            { y: 60, autoAlpha: 0, rotation: -2 + (i % 2 === 0 ? -1 : 1) * 0.8 },
+            {
+              y: 0,
+              autoAlpha: 1,
+              rotation: 0,
+              duration: 0.7,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 80%',
+                once: true,
+              },
+            }
+          );
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section
+      id="portfolio"
+      ref={sectionRef}
+      className="bg-surface-200 overflow-hidden py-16"
+    >
+      <div className="container-custom px-6">
+        {/* Header */}
+        <div className="mb-12">
+          <span className="section-label mb-4 block">Proyectos reales</span>
+          <h2 className="section-title">
+            Esto no son renders.
+            <br />
+            <span className="text-gradient-brand">Son trabajos nuestros.</span>
+          </h2>
+          <p className="section-subtitle text-sm mt-4 text-white/60">
+            Cada foto es de un proyecto real. Sin retoques ni imágenes de banco.
+          </p>
+        </div>
+
+        {/* Vertical carousel */}
+        <div className="flex flex-col gap-5">
+          {projects.map((p, i) => (
+            <div
+              key={i}
+              className="portfolio-card-mobile group relative overflow-hidden cursor-pointer rounded-sm"
+              style={{
+                width: '100%',
+                height: '45vh',
+              }}
+            >
+              <img
+                src={p.image}
+                alt={p.title}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-5">
+                <span
+                  className="font-body text-xs font-semibold uppercase tracking-[0.15em]"
+                  style={{ color: 'var(--color-brand-light)' }}
+                >
+                  {p.type}
+                </span>
+                <h3 className="font-heading text-lg font-bold text-white mt-2 leading-snug">
+                  {p.title}
+                </h3>
+                <p className="font-body text-xs text-white/60 mt-2 leading-relaxed">
+                  {p.result}
+                </p>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 bg-dark/85 backdrop-blur-sm px-4 py-2 group-hover:opacity-0 transition-opacity duration-400">
+                <div className="flex items-center justify-between">
+                  <span
+                    className="font-body text-[9px] font-semibold uppercase tracking-[0.12em]"
+                    style={{ color: 'var(--color-brand)' }}
+                  >
+                    {p.type}
+                  </span>
+                  <span className="font-heading text-xs font-semibold text-white/90">
+                    {p.title}
+                  </span>
+                </div>
+              </div>
+              <div
+                className="absolute top-0 left-0 w-[2px] h-full scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-bottom"
+                style={{ background: 'var(--color-brand)' }}
+              />
+              <div className="absolute top-3 left-3 font-heading font-black text-4xl text-white/[0.07] leading-none select-none pointer-events-none group-hover:text-white/[0.12] transition-colors duration-500">
+                {String(i + 1).padStart(2, '0')}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 flex items-center gap-3">
+          <div className="h-[1px] w-6 bg-brand/40" />
+          <span className="font-body text-xs text-white/30 uppercase tracking-[0.12em]">
+            Desplázate para ver más proyectos
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function Portfolio() {
+  return (
+    <>
+      <div className="hidden lg:block">
+        <PortfolioDesktop />
+      </div>
+      <div className="lg:hidden">
+        <PortfolioMobile />
+      </div>
+    </>
   );
 }

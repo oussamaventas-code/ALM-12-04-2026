@@ -20,11 +20,12 @@ export default function PatrociniosSection() {
   const heroRef = useRef(null);
   const gsapCtx = useRef(null);
 
+  // ─── GSAP: parallax hero + horizontal scroll gallery (móvil + desktop) ───
   useEffect(() => {
     const timer = setTimeout(() => ScrollTrigger.refresh(), 100);
 
     gsapCtx.current = gsap.context(() => {
-      // 1. Efecto Parallax para el Hero
+      // 1. Parallax for Hero
       const heroContent = document.querySelector('.patrocinios-hero-content');
       if (heroContent && heroRef.current) {
         gsap.to(heroContent, {
@@ -40,10 +41,9 @@ export default function PatrociniosSection() {
         });
       }
 
-      // 2. Horizontal Scroll para el Timeline (Carrusel de fotos)
+      // 2. Horizontal scroll gallery
       if (containerRef.current) {
         const slides = gsap.utils.toArray('.patrocinios-slide');
-
         if (slides.length > 0) {
           const pinAnimation = gsap.to(slides, {
             xPercent: -100 * (slides.length - 1),
@@ -62,39 +62,20 @@ export default function PatrociniosSection() {
             }
           });
 
-          // Animations for items inside the slide as it appears
           slides.forEach((slide) => {
             const title = slide.querySelector('.slide-title');
             const imgContainer = slide.querySelector('.slide-img-container');
-
             if (title && imgContainer) {
               gsap.fromTo(title,
                 { y: 50, opacity: 0 },
-                {
-                  y: 0,
-                  opacity: 1,
-                  duration: 1,
-                  scrollTrigger: {
-                    trigger: slide,
-                    start: 'left center',
-                    containerAnimation: pinAnimation,
-                    toggleActions: "play none none reverse"
-                  }
+                { y: 0, opacity: 1, duration: 1,
+                  scrollTrigger: { trigger: slide, start: 'left center', containerAnimation: pinAnimation, toggleActions: "play none none reverse" }
                 }
               );
-
               gsap.fromTo(imgContainer,
                 { scale: 0.8, opacity: 0 },
-                {
-                  scale: 1,
-                  opacity: 1,
-                  duration: 1,
-                  scrollTrigger: {
-                    trigger: slide,
-                    start: 'left 80%',
-                    containerAnimation: pinAnimation,
-                    toggleActions: "play none none reverse"
-                  }
+                { scale: 1, opacity: 1, duration: 1,
+                  scrollTrigger: { trigger: slide, start: 'left 80%', containerAnimation: pinAnimation, toggleActions: "play none none reverse" }
                 }
               );
             }
@@ -117,16 +98,15 @@ export default function PatrociniosSection() {
 
   return (
     <section className="w-full bg-ink text-surface overflow-hidden relative">
-      
+
       {/* 1. HERO PATROCINIOS */}
       <div ref={heroRef} className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden">
-        {/* Usamos una de las imágenes como fondo principal */}
-        <div 
-          className="absolute inset-0 w-full h-full bg-cover bg-center opacity-30" 
+        <div
+          className="absolute inset-0 w-full h-full bg-cover bg-center opacity-30"
           style={{ backgroundImage: `url('/imagenes patrocinios/imag 5.webp')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/60 to-ink z-10"></div>
-        
+
         <div className="patrocinios-hero-content relative z-20 text-center flex flex-col items-center px-6 mt-16 md:mt-0">
           <span className="text-brand font-body text-sm md:text-base tracking-[0.2em] uppercase font-semibold mb-6 flex items-center gap-3">
             <Trophy className="text-brand w-5 h-5" />
@@ -145,31 +125,29 @@ export default function PatrociniosSection() {
       {/* 2. TIMELINE SCROLL HORIZONTAL (GALERÍA) */}
       <div ref={containerRef} className="h-screen w-full flex overflow-hidden bg-ink relative z-30">
         <div ref={trackRef} className="flex h-full will-change-transform items-center">
-          
+
           {patrociniosSteps.map((step, i) => (
             <div key={i} className="patrocinios-slide w-screen h-full flex flex-col items-center justify-center px-4 md:px-12 shrink-0 relative">
               <div className="slide-img-container relative w-full flex items-center justify-center aspect-[16/10] md:aspect-video rounded-xl md:rounded-[2rem] overflow-hidden shadow-2xl border border-surface/10 bg-dark-800">
-                <img 
-                  src={step.img} 
-                  alt={step.title} 
+                <img
+                  src={step.img}
+                  alt={step.title}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover md:object-contain relative z-0 transition-transform duration-700 hover:scale-[1.03]" 
+                  className="w-full h-full object-cover md:object-contain relative z-0 transition-transform duration-700 hover:scale-[1.03]"
                 />
-                
-                {/* Overlay Text */}
                 <div className="absolute inset-x-0 bottom-0 pointer-events-none bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-6 md:p-12 z-10">
-                   <div className="slide-title">
-                     <span className="text-brand font-body font-bold text-lg md:text-xl md:mb-1 block">Foto 0{i+1}</span>
-                     <h3 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold text-surface max-w-3xl leading-tight">
-                       {step.title}
-                     </h3>
-                   </div>
+                  <div className="slide-title">
+                    <span className="text-brand font-body font-bold text-lg md:text-xl md:mb-1 block">Foto 0{i+1}</span>
+                    <h3 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold text-surface max-w-3xl leading-tight">
+                      {step.title}
+                    </h3>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
-          
+
           {/* FINAL CARD */}
           <div className="patrocinios-slide w-screen h-full flex flex-col items-center justify-center px-6 shrink-0 bg-brand text-ink relative">
             <div className="relative z-10 flex flex-col items-center text-center">
@@ -180,8 +158,8 @@ export default function PatrociniosSection() {
               <p className="text-ink/80 font-body text-xl md:text-2xl mb-10 max-w-2xl font-medium">
                 Alm Electricidad patrocina proyectos con la misma excelencia técnica que entregamos todos los días a nuestros clientes.
               </p>
-              <a 
-                href="/#contacto" 
+              <a
+                href="/#contacto"
                 className="bg-ink text-brand px-10 py-5 rounded-full font-body text-xl font-bold uppercase tracking-wide hover:scale-105 transition-transform inline-flex items-center gap-3 group"
               >
                 Cuenta con nosotros
@@ -189,7 +167,7 @@ export default function PatrociniosSection() {
               </a>
             </div>
           </div>
-          
+
         </div>
       </div>
 

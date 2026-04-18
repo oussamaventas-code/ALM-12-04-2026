@@ -27,6 +27,7 @@ const PatrociniosPage  = lazy(() => import('./pages/PatrociniosPage'));
 const PrivacidadPage   = lazy(() => import('./pages/PrivacidadPage'));
 const AvisoLegalPage   = lazy(() => import('./pages/AvisoLegalPage'));
 const CookiesPage      = lazy(() => import('./pages/CookiesPage'));
+const NotFoundPage     = lazy(() => import('./pages/NotFoundPage'));
 
 // GSAP registrado una única vez aquí — los componentes no necesitan volver a registrarlo
 gsap.registerPlugin(ScrollTrigger);
@@ -54,6 +55,10 @@ function useLenis() {
     // Skip on touch/coarse-pointer devices — Lenis would add overhead with no benefit
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
     if (isTouch) return;
+
+    // Skip if user prefers reduced motion
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
 
     let tickerFn;
     let lenis;
@@ -161,6 +166,7 @@ function AppShell() {
             <Route path="/privacidad"      element={<PrivacidadPage />} />
             <Route path="/aviso-legal"     element={<AvisoLegalPage />} />
             <Route path="/cookies"         element={<CookiesPage />} />
+            <Route path="*"                element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </main>

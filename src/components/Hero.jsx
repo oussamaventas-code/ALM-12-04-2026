@@ -134,7 +134,7 @@ export default function Hero() {
           src="/hero-bg.webp"
           alt=""
           aria-hidden="true"
-          fetchpriority="high"
+          fetchPriority="high"
           className="absolute inset-0 w-full h-full object-cover scale-110"
         />
 

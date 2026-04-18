@@ -66,7 +66,6 @@ export default function MagneticElement({
       const normX = dx / (rect.width  / 2); // -1 → +1
       const normY = dy / (rect.height / 2);
       rxTo(-normY * tilt); // rotationX: cursor arriba → inclinación hacia el user
-      rxTo(-normY * tilt);
       ryTo( normX * tilt); // rotationY: cursor derecha → inclinación derecha
     };
 

@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 const BASE_URL = 'https://almelectricidad.com';
 const OG_IMAGE = `${BASE_URL}/og-image.png`;
 
-export default function SeoHead({ title, description, canonical, schema, ogImage }) {
+export default function SeoHead({ title, description, canonical, schema, ogImage, noindex }) {
   const image = ogImage || OG_IMAGE;
 
   return (
@@ -11,6 +11,7 @@ export default function SeoHead({ title, description, canonical, schema, ogImage
       {/* Básicos */}
       <title>{title}</title>
       <meta name="description" content={description} />
+      {noindex && <meta name="robots" content="noindex" />}
       {canonical && <link rel="canonical" href={`${BASE_URL}${canonical}`} />}
 
       {/* Open Graph — WhatsApp, LinkedIn, Facebook */}
