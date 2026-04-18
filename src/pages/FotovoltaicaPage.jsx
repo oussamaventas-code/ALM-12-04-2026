@@ -318,6 +318,199 @@ export default function FotovoltaicaPage() {
         </div>
       </section>
 
+      {/* ── FinLight — Financiación ── */}
+      <section className="section-padding bg-surface">
+        <div className="container-custom px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+
+              {/* Texto */}
+              <div>
+                <div className="inline-flex items-center gap-2 border border-brand/25 bg-brand/8 px-4 py-2 mb-6">
+                  <TrendingUp size={14} className="text-brand" />
+                  <span className="text-brand text-xs font-semibold uppercase tracking-widest">Financiación disponible</span>
+                </div>
+                <h2 className="font-heading text-3xl font-bold text-white leading-tight mb-5">
+                  Sin dinero por adelantado{' '}
+                  <span className="text-gradient-gold">con FinLight</span>
+                </h2>
+                <p className="text-white/60 leading-relaxed mb-5">
+                  Trabajamos con <strong className="text-white">FinLight</strong>, empresa especializada en financiación
+                  de instalaciones fotovoltaicas. El proceso es transparente: nosotros te presentamos la propuesta
+                  técnica, y FinLight evalúa tu caso sin compromiso.
+                </p>
+                <p className="text-white/60 leading-relaxed mb-7">
+                  La mayoría de nuestros clientes empiezan a ahorrar desde el primer mes de cuota —
+                  porque el ahorro en factura suele superar el coste de la financiación.
+                  Las placas se pagan prácticamente solas.
+                </p>
+
+                <ul className="space-y-3 mb-7">
+                  {[
+                    'Sin entrada mínima en la mayoría de casos',
+                    'Evaluación rápida (respuesta en 24-48h)',
+                    'Cuotas mensuales inferiores al ahorro generado',
+                    'Compatible con instalaciones residenciales e industriales',
+                    'Gestionamos el proceso completo contigo',
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-white/70 text-sm">
+                      <CheckCircle size={15} className="text-brand flex-shrink-0 mt-0.5" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href="#presupuesto-solar"
+                  className="btn-brand"
+                >
+                  Consultar financiación
+                  <ArrowRight size={17} />
+                </a>
+              </div>
+
+              {/* Cards FinLight */}
+              <div className="space-y-4">
+                {[
+                  {
+                    step: '01',
+                    title: 'Solicitamos tu estudio',
+                    desc: 'Hacemos el análisis técnico de tu instalación y calculamos el ahorro real esperado.',
+                  },
+                  {
+                    step: '02',
+                    title: 'FinLight evalúa tu caso',
+                    desc: 'Con los datos técnicos, FinLight analiza tu perfil financiero y te ofrece las condiciones en 24-48h.',
+                  },
+                  {
+                    step: '03',
+                    title: 'Instalamos sin esperas',
+                    desc: 'Con la financiación aprobada, instalamos. Tú empiezas a ahorrar mientras pagas la cuota.',
+                  },
+                ].map((s) => (
+                  <div key={s.step} className="flex gap-5 bg-white/4 border border-white/8 rounded-xl p-5">
+                    <div className="w-10 h-10 bg-brand/15 border border-brand/25 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className="font-heading font-extrabold text-brand text-sm">{s.step}</span>
+                    </div>
+                    <div>
+                      <p className="font-heading font-bold text-white mb-1">{s.title}</p>
+                      <p className="text-white/55 text-sm leading-relaxed">{s.desc}</p>
+                    </div>
+                  </div>
+                ))}
+
+                <div className="bg-brand/8 border border-brand/20 rounded-xl p-5 mt-2">
+                  <p className="text-white/70 text-sm leading-relaxed">
+                    <strong className="text-brand">Ejemplo real:</strong> Instalación de 20 paneles (10kW)
+                    con ahorro estimado de 280€/mes. Cuota de financiación: ~180€/mes.
+                    <strong className="text-white"> Beneficio neto desde el día 1: +100€/mes.</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Asesoramiento Incluido — Filtro de Clientes ── */}
+      <section className="py-20 bg-dark">
+        <div className="container-custom px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 border border-brand/25 bg-brand/8 px-4 py-2 mb-5">
+                <Shield size={14} className="text-brand" />
+                <span className="text-brand text-xs font-semibold uppercase tracking-widest">Honestidad ante todo</span>
+              </div>
+              <h2 className="font-heading text-3xl md:text-4xl font-bold text-white leading-tight mb-4">
+                No instalamos paneles a todo el mundo.{' '}
+                <span className="text-gradient-gold">Y es lo correcto.</span>
+              </h2>
+              <p className="text-white/55 max-w-2xl mx-auto leading-relaxed">
+                Antes de instalar, evaluamos si realmente merece la pena en tu caso concreto.
+                Si los números no cuadran, te lo decimos. Preferimos perder una venta que hacerte
+                una instalación que no te va a rentar.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-5 mb-12">
+              {[
+                {
+                  icon: CheckCircle,
+                  color: 'brand',
+                  title: 'Cuándo SÍ te recomendamos',
+                  items: [
+                    'Cubierta con buena orientación (Sur/SE/SO)',
+                    'Consumo eléctrico significativo (+300€/mes)',
+                    'Baja factura en fin de semana (buen candidato solar)',
+                    'Empresa con horario diurno intensivo',
+                    'Edificio propio o con permiso de comunidad',
+                  ],
+                },
+                {
+                  icon: Shield,
+                  color: 'yellow',
+                  title: 'Cuándo necesitas más estudio',
+                  items: [
+                    'Cubierta orientada al Norte',
+                    'Mucho sombreado en horas de sol',
+                    'Consumo muy bajo (< 200€/mes)',
+                    'Edificio de alquiler sin permiso del propietario',
+                    'Instalación eléctrica muy antigua',
+                  ],
+                },
+                {
+                  icon: Building,
+                  color: 'green',
+                  title: 'Industrial — nuestro punto fuerte',
+                  items: [
+                    'Naves con actividad diurna: retorno en 4-5 años',
+                    'Cubiertas grandes = mayor rentabilidad',
+                    'Compensación por excedentes muy favorable',
+                    'Compatible con tarifas industriales',
+                    'Subvenciones específicas para industria',
+                  ],
+                },
+              ].map((col) => {
+                const Icon = col.icon;
+                const colorMap = { brand: 'text-brand border-brand/25 bg-brand/10', yellow: 'text-yellow-400 border-yellow-400/25 bg-yellow-400/10', green: 'text-green-400 border-green-400/25 bg-green-400/10' };
+                return (
+                  <div key={col.title} className="bg-white/4 border border-white/8 rounded-xl p-6">
+                    <div className={`inline-flex items-center gap-2 border px-3 py-1.5 rounded-full mb-4 ${colorMap[col.color]}`}>
+                      <Icon size={13} />
+                      <span className="text-xs font-bold">{col.title}</span>
+                    </div>
+                    <ul className="space-y-2.5">
+                      {col.items.map((item) => (
+                        <li key={item} className="flex items-start gap-2.5 text-white/60 text-sm">
+                          <div className="w-1.5 h-1.5 rounded-full bg-white/30 flex-shrink-0 mt-1.5" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="text-center bg-white/4 border border-white/8 rounded-2xl p-8">
+              <Leaf size={28} className="text-green-400 mx-auto mb-4" />
+              <p className="font-heading text-xl font-bold text-white mb-3">
+                El asesoramiento es parte del servicio
+              </p>
+              <p className="text-white/55 text-sm max-w-lg mx-auto mb-6">
+                Hacemos el estudio previo gratis. Si vemos que no te va a rentabilizar, te lo decimos
+                claramente. Sin presiones, sin ventas forzadas. Si te interesa seguir adelante, perfecto.
+                Si no, al menos sabrás la verdad.
+              </p>
+              <a href="#presupuesto-solar" className="btn-brand">
+                Pide tu estudio (sin compromiso)
+                <ArrowRight size={17} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── FAQ ── */}
       <section className="section-padding bg-surface">
         <div className="container-custom px-6">
