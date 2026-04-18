@@ -27,6 +27,7 @@ const ProyectosPage    = lazy(() => import('./pages/ProyectosPage'));
 const PrivacidadPage   = lazy(() => import('./pages/PrivacidadPage'));
 const AvisoLegalPage   = lazy(() => import('./pages/AvisoLegalPage'));
 const CookiesPage      = lazy(() => import('./pages/CookiesPage'));
+const ContactoPage     = lazy(() => import('./pages/ContactoPage'));
 const NotFoundPage     = lazy(() => import('./pages/NotFoundPage'));
 
 // GSAP registrado una única vez aquí — los componentes no necesitan volver a registrarlo
@@ -167,6 +168,7 @@ function AppShell() {
             <Route path="/privacidad"      element={<PrivacidadPage />} />
             <Route path="/aviso-legal"     element={<AvisoLegalPage />} />
             <Route path="/cookies"         element={<CookiesPage />} />
+            <Route path="/contacto"        element={<ContactoPage />} />
             <Route path="*"                element={<NotFoundPage />} />
           </Routes>
         </Suspense>

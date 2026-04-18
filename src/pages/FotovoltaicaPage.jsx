@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SeoHead from '../components/SeoHead';
+import PresupuestoSolarForm from '../components/PresupuestoSolarForm';
 import {
   Sun, Zap, Shield, TrendingUp, CheckCircle, ArrowRight,
   Phone, MessageCircle, Calculator, Leaf, Building, Home,
@@ -46,14 +47,21 @@ const faqs = [
   { q: '¿Cuánto tarda la instalación completa?', a: 'Desde el estudio hasta la puesta en marcha, entre 4-8 semanas según el tamaño. La instalación física suele ser 1-3 semanas.' },
 ];
 
+const TIPO_MULTIPLICADOR = { residencial: 0.35, empresa: 0.45, comunidad: 0.30 };
+
 export default function FotovoltaicaPage() {
   const heroRef = useRef(null);
   const [openFaq, setOpenFaq] = useState(null);
   const [consumption, setConsumption] = useState(800);
+  const [calcTipo, setCalcTipo] = useState('empresa');
 
-  const savings = Math.round(consumption * 0.35);
+  const mult       = TIPO_MULTIPLICADOR[calcTipo];
+  const savings    = Math.round(consumption * mult);
   const yearSavings = savings * 12;
-  const co2 = (consumption * 0.385 * 0.35 / 1000).toFixed(1);
+  const co2        = (consumption * 0.385 * mult / 1000).toFixed(1);
+  // Coste estimado del sistema ≈ factura mensual × 15 (heurística sencilla)
+  const costeEstimado = consumption * 15;
+  const amortizacion  = yearSavings > 0 ? (costeEstimado / yearSavings).toFixed(1) : '—';
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -235,6 +243,25 @@ export default function FotovoltaicaPage() {
             </div>
 
             <div className="card-dark p-8">
+              {/* Selector de tipo */}
+              <div className="mb-7">
+                <p className="text-white/50 text-xs uppercase tracking-wider mb-3">Tipo de instalación</p>
+                <div className="flex gap-2 flex-wrap">
+                  {[['residencial','Residencial'],['empresa','Empresa / Nave'],['comunidad','Comunidad']].map(([id, label]) => (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => setCalcTipo(id)}
+                      className={`px-4 py-2 text-sm font-heading font-bold rounded-lg border transition-all duration-200
+                        ${calcTipo === id ? 'border-brand bg-brand/15 text-brand' : 'border-white/10 bg-white/5 text-white/60 hover:border-white/30'}`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Slider */}
               <div className="mb-8">
                 <div className="flex justify-between mb-3">
                   <label className="text-white/60 text-sm">Tu factura mensual</label>
@@ -247,9 +274,9 @@ export default function FotovoltaicaPage() {
                   step="50"
                   value={consumption}
                   onChange={(e) => setConsumption(Number(e.target.value))}
-                  className="w-full h-2 bg-dark-700 appearance-none cursor-pointer"
+                  className="w-full h-2 appearance-none cursor-pointer"
                   style={{
-                    background: `linear-gradient(to right, #d97706 ${((consumption - 100) / 1900) * 100}%, #162036 ${((consumption - 100) / 1900) * 100}%)`,
+                    background: `linear-gradient(to right, #F5C518 ${((consumption - 100) / 1900) * 100}%, #162036 ${((consumption - 100) / 1900) * 100}%)`,
                   }}
                 />
                 <div className="flex justify-between text-white/25 text-xs mt-1">
@@ -258,27 +285,34 @@ export default function FotovoltaicaPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
-                <div className="bg-dark/50 p-5 text-center border border-brand/10">
-                  <p className="text-white/65 text-xs uppercase tracking-wider mb-1">
-Ahorro/mes</p>
+              {/* Métricas — ahora 4 tarjetas */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                <div className="bg-dark/50 p-4 text-center border border-brand/10 rounded-lg">
+                  <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Ahorro/mes</p>
                   <p className="text-white font-heading font-bold text-2xl">{savings}€</p>
                 </div>
-                <div className="bg-dark/50 p-5 text-center border border-brand/10">
-                  <p className="text-white/65 text-xs uppercase tracking-wider mb-1">
-Ahorro/año</p>
+                <div className="bg-dark/50 p-4 text-center border border-brand/10 rounded-lg">
+                  <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Ahorro/año</p>
                   <p className="text-brand font-heading font-bold text-2xl">{yearSavings.toLocaleString()}€</p>
                 </div>
-                <div className="bg-dark/50 p-5 text-center border border-brand/10">
-                  <p className="text-white/65 text-xs uppercase tracking-wider mb-1">
-CO₂ evitado</p>
+                <div className="bg-dark/50 p-4 text-center border border-brand/10 rounded-lg">
+                  <p className="text-white/50 text-xs uppercase tracking-wider mb-1">CO₂ evitado</p>
                   <p className="text-green-400 font-heading font-bold text-2xl">{co2} Tn</p>
+                </div>
+                <div className="bg-dark/50 p-4 text-center border border-brand/10 rounded-lg">
+                  <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Amortización</p>
+                  <p className="text-yellow-300 font-heading font-bold text-2xl">{amortizacion} años</p>
                 </div>
               </div>
 
-              <p className="text-white/25 text-xs text-center mt-4">
-                * Estimación basada en un autoconsumo del 35%. El ahorro real depende de tu cubierta y consumo.
+              <p className="text-white/25 text-xs text-center mb-5">
+                * Estimación orientativa. El ahorro real depende de cubierta, orientación y consumo.
               </p>
+
+              <a href="#presupuesto-solar" className="btn-brand w-full justify-center">
+                Quiero un presupuesto exacto
+                <ArrowRight size={18} />
+              </a>
             </div>
           </div>
         </div>
@@ -316,31 +350,61 @@ CO₂ evitado</p>
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section id="contacto-solar" className="relative py-24 bg-dark overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/8 rounded-full blur-[120px]" />
+      {/* ── Formulario Embudo ── */}
+      <section id="presupuesto-solar" className="relative py-24 bg-dark overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/6 rounded-full blur-[140px] pointer-events-none" />
 
-        <div className="container-custom px-6 relative z-10 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
-            ¿Listo para producir tu propia energía?
-          </h2>
-          <p className="text-white/70 mb-10 max-w-lg mx-auto">
-            Te hacemos un estudio gratuito y sin compromiso. En 24h tienes una propuesta clara con números reales.
-          </p>
+        <div className="container-custom px-6 relative z-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#contacto-solar" className="btn-brand">
-              Pide tu estudio gratuito
-              <ArrowRight size={18} />
-            </a>
-            <a href="https://wa.me/34605333108?text=Hola%2C%20quiero%20un%20estudio%20fotovoltaico" target="_blank" rel="noopener" className="btn-whatsapp">
-              <MessageCircle size={18} />
-              WhatsApp
-            </a>
-            <a href="tel:+34605333108" className="btn-outline !border-white/25 !text-white hover:!border-brand hover:!text-brand">
-              <Phone size={18} />
-              605 33 31 08
-            </a>
+              {/* Columna izquierda — contexto */}
+              <div>
+                <div className="inline-flex items-center gap-2 border border-brand/20 bg-brand/10 px-4 py-2 mb-6">
+                  <Sun size={15} className="text-brand" />
+                  <span className="text-brand text-xs font-semibold uppercase tracking-wider">Estudio gratuito</span>
+                </div>
+                <h2 className="font-heading text-3xl md:text-4xl font-bold text-white leading-tight mb-5">
+                  Solicita tu estudio{' '}
+                  <span className="text-gradient-gold">sin compromiso</span>
+                </h2>
+                <p className="text-white/60 leading-relaxed mb-8">
+                  En menos de 24h te enviamos una propuesta con números reales: paneles necesarios,
+                  ahorro estimado y tiempo de amortización para tu caso concreto.
+                </p>
+
+                <ul className="space-y-3">
+                  {[
+                    'Estudio de cubierta y orientación',
+                    'Dimensionado personalizado',
+                    'Cálculo de amortización exacto',
+                    'Gestión de subvenciones incluida',
+                    'Sin coste ni compromiso',
+                  ].map((item) => (
+                    <li key={item} className="flex items-center gap-3 text-white/70 text-sm">
+                      <CheckCircle size={16} className="text-brand flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-8 flex items-center gap-3">
+                  <a href="https://wa.me/34605333108?text=Hola%2C%20quiero%20un%20estudio%20fotovoltaico" target="_blank" rel="noopener" className="btn-whatsapp text-sm">
+                    <MessageCircle size={16} />
+                    WhatsApp directo
+                  </a>
+                  <a href="tel:+34605333108" className="btn-outline !border-white/25 !text-white text-sm">
+                    <Phone size={16} />
+                    605 33 31 08
+                  </a>
+                </div>
+              </div>
+
+              {/* Columna derecha — embudo */}
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
+                <PresupuestoSolarForm />
+              </div>
+            </div>
           </div>
         </div>
       </section>

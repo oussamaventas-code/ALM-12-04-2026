@@ -31,7 +31,7 @@ const navLinks = [
     ],
   },
   { label: 'Proyectos', to: '/proyectos' },
-  { label: 'Contacto', href: '/#contacto' },
+  { label: 'Contacto',  to: '/contacto' },
 ];
 
 export default function Navbar() {
