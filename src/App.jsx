@@ -8,7 +8,6 @@ import Navbar from './components/Navbar';
 import UrgencyBanner from './components/UrgencyBanner';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
-import CustomCursor from './components/CustomCursor';
 import MobileUrgencyBar from './components/MobileUrgencyBar';
 import PageTransition from './components/PageTransition';
 import CookieBanner from './components/CookieBanner';
@@ -152,7 +151,7 @@ function AppShell() {
       <PageTransition />
       <Navbar />
       {/* <UrgencyBanner /> */}
-      <main id="main-content">
+      <main id="main-content" className="pb-[72px] lg:pb-0">
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/"                element={<HomePage />} />
@@ -173,7 +172,6 @@ function AppShell() {
       <Footer />
       <WhatsAppFloat />
       <MobileUrgencyBar />
-      <CustomCursor />
       <CookieBanner />
     </div>
   );

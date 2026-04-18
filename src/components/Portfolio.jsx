@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 const projects = [
@@ -45,7 +45,7 @@ function PortfolioDesktop() {
   const trackRef = useRef(null);
   const titleRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const track = trackRef.current;
       const section = sectionRef.current;
@@ -79,7 +79,6 @@ function PortfolioDesktop() {
           // Pin se libera exactamente cuando la última tarjeta entra en pantalla
           scrub: 1,
           invalidateOnRefresh: true,
-          containerAnimation: horizontalTween,
         },
       });
 
@@ -212,7 +211,7 @@ function PortfolioDesktop() {
 function PortfolioMobile() {
   const sectionRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray('.portfolio-card-mobile');
       if (cards.length > 0) {

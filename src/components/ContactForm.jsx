@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { User, Building, Mail, Phone, MessageSquare, CheckCircle, ArrowRight } from 'lucide-react';
+import { ArrowRight, User, Mail, Phone, MessageSquare } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -7,41 +7,40 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ContactForm() {
   const sectionRef = useRef(null);
-  const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
     telefono: '',
     empresa: '',
-    mensaje: '',
+    servicio: '',
   });
+
+  const servicios = [
+    'Instalación eléctrica completa',
+    'Reforma eléctrica',
+    'Cuadro eléctrico',
+    'Urgencia eléctrica 24h',
+    'Boletín eléctrico (BIE/CIE)',
+    'Paneles solares (fotovoltaica)',
+    'Puntos de recarga VE',
+    'Telecomunicaciones',
+    'Otro (especificar en mensaje)',
+  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.contact-header', {
+      gsap.from('.contact-animate', {
         y: 40,
         opacity: 0,
         duration: 0.8,
+        stagger: 0.1,
         ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' },
-      });
-      gsap.from('.contact-card', {
-        y: 60,
-        opacity: 0,
-        duration: 0.9,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
       });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
-
-  useEffect(() => {
-    if (!submitted) return;
-    gsap.from('.success-icon', { scale: 0, rotation: -180, duration: 0.6, ease: 'back.out(1.7)' });
-    gsap.from('.success-text', { y: 20, opacity: 0, duration: 0.5, delay: 0.3 });
-  }, [submitted]);
 
   const handleChange = useCallback((field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -55,7 +54,7 @@ export default function ContactForm() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Email inválido';
     if (!formData.telefono.trim()) e.telefono = 'El teléfono es obligatorio';
     else if (!/^[0-9+\s()-]{6,}$/.test(formData.telefono)) e.telefono = 'Teléfono inválido';
-    if (!formData.mensaje.trim()) e.mensaje = 'Cuéntanos tu necesidad';
+    if (!formData.servicio.trim()) e.servicio = 'Por favor elige un servicio';
     setErrors(e);
     return Object.keys(e).length === 0;
   }, [formData]);
@@ -63,149 +62,216 @@ export default function ContactForm() {
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     if (!validate()) return;
-    setSubmitted(true);
+    handleWhatsApp();
   }, [validate]);
+
+  const handleWhatsApp = () => {
+    const message = `Hola, me gustaría solicitar un presupuesto. Nombre: ${formData.nombre}, Email: ${formData.email}, Teléfono: ${formData.telefono}${formData.empresa ? `, Empresa: ${formData.empresa}` : ''}, Servicio: ${formData.servicio}`;
+    const whatsappUrl = `https://wa.me/34605333108?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   return (
     <section
       id="contacto"
       ref={sectionRef}
-      className="py-24 md:py-32 bg-gradient-to-b from-dark-800 via-dark-600 to-dark-800 relative overflow-hidden"
+      className="py-24 md:py-32 overflow-hidden bg-dark relative"
     >
-      <div className="absolute top-0 right-0 w-96 h-96 bg-brand/5 rounded-full blur-3xl -z-10 hidden lg:block" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand/3 rounded-full blur-3xl -z-10 hidden lg:block" />
 
-      <div className="max-w-2xl mx-auto px-6 relative z-10">
-        <div className="contact-header text-center mb-12">
-          <span className="inline-flex items-center gap-2 text-brand text-sm font-heading font-semibold tracking-wide uppercase mb-4">
-            <span className="w-2 h-2 rounded-full bg-brand" />
-            Diagnóstico Eléctrico
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Top Pill */}
+        <div className="contact-animate inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[var(--color-brand)]/30 bg-[var(--color-brand)]/10 mb-8 backdrop-blur-sm">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-brand)]" />
+          <span className="text-[var(--color-brand)] text-xs font-semibold tracking-wide uppercase">
+            Presupuesto Eléctrico
           </span>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4 leading-tight">
-            Cuéntanos tu necesidad eléctrica
-          </h2>
-          <p className="text-lg text-white/60 max-w-xl mx-auto">
-            Completa el formulario y te contactaremos en menos de 24h con un diagnóstico personalizado y presupuesto cerrado.
-          </p>
         </div>
 
-        <div className="contact-card card-elevated p-8 md:p-10 border border-brand/25">
-          {submitted ? (
-            <div className="text-center py-12">
-              <div className="success-icon inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-brand/20 to-brand/5 text-brand mb-8 rounded-full shadow-[0_0_30px_rgba(37,99,235,0.3)]">
-                <CheckCircle size={48} strokeWidth={1.5} />
+        {/* Split Layout: Left Content + Right Form */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+
+          {/* LEFT: Headlines & Benefits */}
+          <div className="flex flex-col justify-center">
+            <h2 className="contact-animate text-3xl md:text-5xl font-bold text-[var(--color-ink)] mb-6 leading-[1.15] tracking-tight font-heading">
+              ¿Necesitas un presupuesto rápido?
+            </h2>
+
+            <p className="contact-animate text-[var(--color-ink-400)] text-base md:text-lg leading-relaxed mb-10 font-body">
+              Respuesta garantizada en menos de 24 horas con presupuesto cerrado, sin sorpresas.
+            </p>
+
+            {/* Benefits with Checkmarks */}
+            <div className="space-y-5">
+              <div className="contact-animate flex items-start gap-4">
+                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[var(--color-brand)] flex items-center justify-center mt-0.5">
+                  <span className="text-[var(--color-dark)] font-bold text-sm">✓</span>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-[var(--color-ink)] mb-1">Presupuesto cerrado</h3>
+                  <p className="text-[var(--color-ink-400)] text-sm">Sin sorpresas ni costes ocultos en la factura final.</p>
+                </div>
               </div>
-              <h3 className="success-text text-3xl font-heading font-bold text-white mb-4">¡Solicitud recibida!</h3>
-              <p className="success-text text-white/60 max-w-md mx-auto leading-relaxed">
-                Hemos recibido tu mensaje. Nos pondremos en contacto en menos de 24 horas.
-              </p>
-              <div className="mt-8 pt-8 border-t border-brand/15">
-                <p className="text-brand text-sm font-semibold uppercase tracking-wider">Gracias por confiar en ALMelectricidad</p>
+
+              <div className="contact-animate flex items-start gap-4">
+                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[var(--color-brand)] flex items-center justify-center mt-0.5">
+                  <span className="text-[var(--color-dark)] font-bold text-sm">✓</span>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-[var(--color-ink)] mb-1">Respuesta en menos de 24h</h3>
+                  <p className="text-[var(--color-ink-400)] text-sm">Nos pondremos en contacto rápidamente con tu propuesta.</p>
+                </div>
+              </div>
+
+              <div className="contact-animate flex items-start gap-4">
+                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[var(--color-brand)] flex items-center justify-center mt-0.5">
+                  <span className="text-[var(--color-dark)] font-bold text-sm">✓</span>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-[var(--color-ink)] mb-1">Técnicos autorizados</h3>
+                  <p className="text-[var(--color-ink-400)] text-sm">Profesionales certificados y con amplia experiencia.</p>
+                </div>
               </div>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} noValidate className="space-y-5">
-              {/* Nombre y Email en fila */}
-              <div className="grid md:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="nombre" className="flex items-center gap-2 text-sm font-medium text-ink mb-2 font-heading tracking-wide uppercase">
-                    <User size={16} className="text-brand" />
-                    Nombre completo <span className="text-brand/60 text-xs">*</span>
-                  </label>
-                  <input
-                    id="nombre"
-                    type="text"
-                    value={formData.nombre}
-                    onChange={(e) => handleChange('nombre', e.target.value)}
-                    placeholder="Tu nombre"
-                    className={`input-field-light w-full focus:ring-2 focus:ring-brand/50 ${errors.nombre ? '!border-red-400' : ''}`}
-                  />
-                  {errors.nombre && <p className="text-red-600 text-xs mt-1">{errors.nombre}</p>}
-                </div>
 
-                <div>
-                  <label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-ink mb-2 font-heading tracking-wide uppercase">
-                    <Mail size={16} className="text-brand" />
-                    Email <span className="text-brand/60 text-xs">*</span>
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleChange('email', e.target.value)}
-                    placeholder="tu@email.com"
-                    className={`input-field-light w-full focus:ring-2 focus:ring-brand/50 ${errors.email ? '!border-red-400' : ''}`}
-                  />
-                  {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email}</p>}
-                </div>
+            {/* Footer Avatars & Text */}
+            <div className="contact-animate mt-12 flex items-center gap-3">
+              <div className="flex -space-x-3">
+                <img className="w-8 h-8 rounded-full border-2 border-[var(--color-dark-800)] object-cover" src="https://i.pravatar.cc/100?img=11" alt="Cliente" />
+                <img className="w-8 h-8 rounded-full border-2 border-[var(--color-dark-800)] object-cover" src="https://i.pravatar.cc/100?img=32" alt="Cliente" />
+                <img className="w-8 h-8 rounded-full border-2 border-[var(--color-dark-800)] object-cover" src="https://i.pravatar.cc/100?img=33" alt="Cliente" />
               </div>
-
-              {/* Empresa y Teléfono */}
-              <div className="grid md:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="empresa" className="flex items-center gap-2 text-sm font-medium text-ink mb-2 font-heading tracking-wide uppercase">
-                    <Building size={16} className="text-brand" />
-                    Empresa
-                  </label>
-                  <input
-                    id="empresa"
-                    type="text"
-                    value={formData.empresa}
-                    onChange={(e) => handleChange('empresa', e.target.value)}
-                    placeholder="Mi Empresa S.L."
-                    className="input-field-light w-full focus:ring-2 focus:ring-brand/50"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="telefono" className="flex items-center gap-2 text-sm font-medium text-ink mb-2 font-heading tracking-wide uppercase">
-                    <Phone size={16} className="text-brand" />
-                    Teléfono <span className="text-brand/60 text-xs">*</span>
-                  </label>
-                  <input
-                    id="telefono"
-                    type="tel"
-                    value={formData.telefono}
-                    onChange={(e) => handleChange('telefono', e.target.value)}
-                    placeholder="600 000 000"
-                    className={`input-field-light w-full focus:ring-2 focus:ring-brand/50 ${errors.telefono ? '!border-red-400' : ''}`}
-                  />
-                  {errors.telefono && <p className="text-red-600 text-xs mt-1">{errors.telefono}</p>}
-                </div>
-              </div>
-
-              {/* Mensaje */}
               <div>
-                <label htmlFor="mensaje" className="flex items-center gap-2 text-sm font-medium text-ink mb-2 font-heading tracking-wide uppercase">
-                  <MessageSquare size={16} className="text-brand" />
-                  ¿Qué necesitas? <span className="text-brand/60 text-xs">*</span>
-                </label>
-                <textarea
-                  id="mensaje"
-                  value={formData.mensaje}
-                  onChange={(e) => handleChange('mensaje', e.target.value)}
-                  placeholder="Ej. Gestión de leads, respuestas automáticas a clientes, integración con CRM..."
-                  rows={5}
-                  className={`input-field-light w-full resize-none focus:ring-2 focus:ring-brand/50 ${errors.mensaje ? '!border-red-400' : ''}`}
-                />
-                {errors.mensaje && <p className="text-red-600 text-xs mt-1">{errors.mensaje}</p>}
+                <p className="text-[var(--color-ink-400)] text-sm font-medium">
+                  <span className="text-[var(--color-ink)] font-bold">+120 clientes</span> confían en nosotros
+                </p>
               </div>
+            </div>
+          </div>
 
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="w-full btn-brand flex items-center justify-center gap-2 py-3 mt-8 transition-all duration-200 hover:shadow-lg hover:shadow-brand/40 active:scale-95"
+          {/* RIGHT: Form in Elevated Card */}
+          <div className="contact-animate">
+            <div
+                className="bg-gradient-to-br from-[var(--color-surface-300)]/80 to-[var(--color-surface-400)]/60 backdrop-blur-xl rounded-2xl p-8 md:p-10 border border-[var(--color-brand)]/20 shadow-[0_0_40px_rgba(245,197,24,0.15),inset_0_0_20px_rgba(245,197,24,0.05)]"
+                style={{
+                  boxShadow: '0 0 40px rgba(245, 197, 24, 0.15), inset 0 0 20px rgba(245, 197, 24, 0.05), 0 8px 32px rgba(0, 0, 0, 0.3)'
+                }}
               >
-                Solicitar Diagnóstico IA
-                <ArrowRight size={18} />
-              </button>
+                <form onSubmit={handleSubmit} noValidate className="space-y-5 font-body">
 
-              {/* Social Proof */}
-              <p className="text-center text-sm text-white/50 mt-6">
-                ✓ +120 empresas ya han automatizado su éxito
-              </p>
-            </form>
-          )}
+                  {/* Nombre */}
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="nombre" className="text-xs font-semibold text-[var(--color-ink-600)] uppercase tracking-wider">
+                      Nombre completo <span className="text-[var(--color-brand)]">*</span>
+                    </label>
+                    <div className="relative">
+                      <User size={18} className="absolute left-4 top-3.5 text-[var(--color-ink-400)]" />
+                      <input
+                        id="nombre"
+                        type="text"
+                        value={formData.nombre}
+                        onChange={(e) => handleChange('nombre', e.target.value)}
+                        placeholder="Juan García"
+                        className={`w-full bg-[var(--color-dark-800)]/50 border ${errors.nombre ? 'border-red-400/50' : 'border-[var(--color-brand)]/20'} rounded-lg pl-11 pr-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--color-brand)]/50 focus:bg-[var(--color-dark-800)]/70 transition-all`}
+                      />
+                    </div>
+                    {errors.nombre && <span className="text-red-400 text-xs">{errors.nombre}</span>}
+                  </div>
+
+                  {/* Email */}
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="email" className="text-xs font-semibold text-[var(--color-ink-600)] uppercase tracking-wider">
+                      Email <span className="text-[var(--color-brand)]">*</span>
+                    </label>
+                    <div className="relative">
+                      <Mail size={18} className="absolute left-4 top-3.5 text-[var(--color-ink-400)]" />
+                      <input
+                        id="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => handleChange('email', e.target.value)}
+                        placeholder="juan@empresa.com"
+                        className={`w-full bg-[var(--color-dark-800)]/50 border ${errors.email ? 'border-red-400/50' : 'border-[var(--color-brand)]/20'} rounded-lg pl-11 pr-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--color-brand)]/50 focus:bg-[var(--color-dark-800)]/70 transition-all`}
+                      />
+                    </div>
+                    {errors.email && <span className="text-red-400 text-xs">{errors.email}</span>}
+                  </div>
+
+                  {/* Telefono */}
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="telefono" className="text-xs font-semibold text-[var(--color-ink-600)] uppercase tracking-wider">
+                      Teléfono <span className="text-[var(--color-brand)]">*</span>
+                    </label>
+                    <div className="relative">
+                      <Phone size={18} className="absolute left-4 top-3.5 text-[var(--color-ink-400)]" />
+                      <input
+                        id="telefono"
+                        type="tel"
+                        value={formData.telefono}
+                        onChange={(e) => handleChange('telefono', e.target.value)}
+                        placeholder="600 000 000"
+                        className={`w-full bg-[var(--color-dark-800)]/50 border ${errors.telefono ? 'border-red-400/50' : 'border-[var(--color-brand)]/20'} rounded-lg pl-11 pr-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--color-brand)]/50 focus:bg-[var(--color-dark-800)]/70 transition-all`}
+                      />
+                    </div>
+                    {errors.telefono && <span className="text-red-400 text-xs">{errors.telefono}</span>}
+                  </div>
+
+                  {/* Empresa */}
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="empresa" className="text-xs font-semibold text-[var(--color-ink-600)] uppercase tracking-wider">
+                      Empresa
+                    </label>
+                    <input
+                      id="empresa"
+                      type="text"
+                      value={formData.empresa}
+                      onChange={(e) => handleChange('empresa', e.target.value)}
+                      placeholder="Mi Empresa S.L. (opcional)"
+                      className="w-full bg-[var(--color-dark-800)]/50 border border-[var(--color-brand)]/20 rounded-lg px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--color-brand)]/50 focus:bg-[var(--color-dark-800)]/70 transition-all"
+                    />
+                  </div>
+
+                  {/* Servicio Select */}
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="servicio" className="text-xs font-semibold text-[var(--color-ink-600)] uppercase tracking-wider">
+                      ¿Qué proceso eléctrico necesitas? <span className="text-[var(--color-brand)]">*</span>
+                    </label>
+                    <div className="relative">
+                      <MessageSquare size={18} className="absolute left-4 top-3.5 text-[var(--color-ink-400)] pointer-events-none" />
+                      <select
+                        id="servicio"
+                        value={formData.servicio}
+                        onChange={(e) => handleChange('servicio', e.target.value)}
+                        className={`w-full bg-[var(--color-dark-800)]/50 border ${errors.servicio ? 'border-red-400/50' : 'border-[var(--color-brand)]/20'} rounded-lg pl-11 pr-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--color-brand)]/50 focus:bg-[var(--color-dark-800)]/70 transition-all appearance-none cursor-pointer`}
+                        style={{
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.6)' d='M1 3.5L6 8l5-4.5'/%3E%3C/svg%3E")`,
+                          backgroundRepeat: 'no-repeat',
+                          backgroundPosition: 'right 1rem center',
+                          paddingRight: '2.5rem'
+                        }}
+                      >
+                        <option value="">Elige un servicio...</option>
+                        {servicios.map((s) => (
+                          <option key={s} value={s}>
+                            {s}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    {errors.servicio && <span className="text-red-400 text-xs">{errors.servicio}</span>}
+                  </div>
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="w-full bg-[var(--color-brand)] hover:bg-[var(--color-brand-dim)] text-[var(--color-dark)] font-bold py-3.5 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(245,197,24,0.4)] hover:-translate-y-1 active:translate-y-0 mt-6"
+                  >
+                    Solicitar Presupuesto
+                    <ArrowRight size={18} />
+                  </button>
+                </form>
+              </div>
+          </div>
+
         </div>
       </div>
     </section>

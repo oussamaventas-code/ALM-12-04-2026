@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Zap, Phone, ChevronDown, MapPin } from 'lucide-react';
 import gsap from 'gsap';
+import MagneticElement from './MagneticElement';
 
 const navLinks = [
   { label: 'Servicios', href: '/#servicios' },
@@ -115,13 +116,15 @@ export default function Navbar() {
         }`}
       >
         <div className="container-custom flex items-center justify-between px-6 h-[72px]">
-          <Link to="/" className="flex items-center gap-2 group shrink-0" aria-label="ALMelectricidad — Inicio">
-            <img
-              src="/LOGO Y JORGE/LOGO.JPG"
-              alt="ALMelectricidad"
-              className="h-11 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
-            />
-          </Link>
+          <MagneticElement>
+            <Link to="/" className="flex items-center gap-2 group shrink-0" aria-label="ALMelectricidad — Inicio">
+              <img
+                src="/LOGO Y JORGE/LOGO.JPG"
+                alt="ALMelectricidad"
+                className="h-11 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+              />
+            </Link>
+          </MagneticElement>
 
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) =>
@@ -133,20 +136,22 @@ export default function Navbar() {
                   onMouseEnter={() => handleDropdownEnter(link.id)}
                   onMouseLeave={handleDropdownLeave}
                 >
-                  <button
-                    className="font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.08em] text-white/70 hover:text-brand-glow px-4 py-2 transition-colors duration-300 flex items-center gap-1.5"
-                    onClick={() => setActiveDropdown(activeDropdown === link.id ? null : link.id)}
-                    aria-haspopup="true"
-                    aria-expanded={activeDropdown === link.id}
-                    aria-label={`${link.label} — ver submenú`}
-                  >
-                    {link.label}
-                    <ChevronDown
-                      size={14}
-                      aria-hidden="true"
-                      className={`transition-transform duration-300 ${activeDropdown === link.id ? 'rotate-180' : ''}`}
-                    />
-                  </button>
+                  <MagneticElement>
+                    <button
+                      className="font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.08em] text-white/70 hover:text-brand-glow px-4 py-2 transition-colors duration-300 flex items-center gap-1.5"
+                      onClick={() => setActiveDropdown(activeDropdown === link.id ? null : link.id)}
+                      aria-haspopup="true"
+                      aria-expanded={activeDropdown === link.id}
+                      aria-label={`${link.label} — ver submenú`}
+                    >
+                      {link.label}
+                      <ChevronDown
+                        size={14}
+                        aria-hidden="true"
+                        className={`transition-transform duration-300 ${activeDropdown === link.id ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+                  </MagneticElement>
 
                   <div
                     role="menu"
@@ -175,44 +180,51 @@ export default function Navbar() {
                   </div>
                 </div>
               ) : (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.08em] text-white/70 hover:text-brand-glow px-4 py-2 transition-colors duration-300 relative group"
-                >
-                  {link.label}
-                  <span className="absolute bottom-0 left-4 right-4 h-[2px] bg-brand scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                </a>
+                <MagneticElement key={link.href}>
+                  <a
+                    href={link.href}
+                    className="font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.08em] text-white/70 hover:text-brand-glow px-4 py-2 transition-colors duration-300 relative group"
+                  >
+                    {link.label}
+                    <span className="absolute bottom-0 left-4 right-4 h-[2px] bg-brand scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  </a>
+                </MagneticElement>
               )
             )}
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
-            <a
-              href="tel:+34605333108"
-              aria-label="Llamar al 605 33 31 08"
-              className="flex items-center gap-2 text-white/60 hover:text-white text-sm font-body transition-colors duration-300"
-            >
-              <Phone size={15} className="text-brand" aria-hidden="true" />
-              <span className="font-medium" aria-hidden="true">605 33 31 08</span>
-            </a>
+            <MagneticElement>
+              <a
+                href="tel:+34605333108"
+                aria-label="Llamar al 605 33 31 08"
+                className="flex items-center gap-2 text-white/60 hover:text-white text-sm font-body transition-colors duration-300"
+              >
+                <Phone size={15} className="text-brand" aria-hidden="true" />
+                <span className="font-medium" aria-hidden="true">605 33 31 08</span>
+              </a>
+            </MagneticElement>
 
-            <Link
-              to="/urgencias"
-              aria-label="Urgencias eléctricas 24 horas — contactar ahora"
-              className="relative flex items-center gap-1.5 bg-danger/90 hover:bg-danger text-white text-[0.6875rem] font-bold uppercase tracking-widest px-3 py-1.5 transition-all duration-300"
-            >
-              <span className="relative flex h-2 w-2" aria-hidden="true">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-300 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
-              </span>
-              <Zap size={11} aria-hidden="true" />
-              Urgencias 24h
-            </Link>
+            <MagneticElement>
+              <Link
+                to="/urgencias"
+                aria-label="Urgencias eléctricas 24 horas — contactar ahora"
+                className="relative flex items-center gap-1.5 bg-danger/90 hover:bg-danger text-white text-[0.6875rem] font-bold uppercase tracking-widest px-3 py-1.5 transition-all duration-300"
+              >
+                <span className="relative flex h-2 w-2" aria-hidden="true">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-300 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+                </span>
+                <Zap size={11} aria-hidden="true" />
+                Urgencias 24h
+              </Link>
+            </MagneticElement>
 
-            <a href="/#contacto" className="btn-brand !py-2.5 !px-6 !text-sm">
-              Pide presupuesto
-            </a>
+            <MagneticElement>
+              <a href="/#contacto" className="btn-brand !py-2.5 !px-6 !text-sm">
+                Pide presupuesto
+              </a>
+            </MagneticElement>
           </div>
 
           <button

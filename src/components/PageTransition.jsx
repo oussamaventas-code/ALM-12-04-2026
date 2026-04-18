@@ -30,7 +30,16 @@ export default function PageTransition() {
 
     if (isFirst.current) {
       isFirst.current = false;
-      gsap.set(overlay, { yPercent: 100 });
+      gsap.to(overlay, { 
+        autoAlpha: 0, 
+        duration: 0.8, 
+        ease: 'power2.inOut', 
+        delay: 0.2,
+        onComplete: () => {
+          // Reset state for future sweep transitions
+          gsap.set(overlay, { yPercent: 100, autoAlpha: 1 });
+        }
+      });
       return;
     }
 

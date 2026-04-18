@@ -89,7 +89,7 @@ export default function MapLocation() {
           <div className="relative h-[380px] lg:h-[460px] bg-surface">
             <iframe
               title="Ubicación ALM Electricidad"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d197576.3766566017!2d-3.8196199!3d40.4167754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422997800a3c81%3A0xc436dec1618c2269!2sMadrid%2C%20Spain!5e0!3m2!1sen!2ses!4v1680000000000!5m2!1sen!2ses"
+              src="https://maps.google.com/maps?q=C.%20Lisboa,%203,%20NAVE%2010,%2045300%20Oca%C3%B1a,%20Toledo&t=&z=14&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0, filter: 'grayscale(40%) contrast(1.1)' }}
@@ -114,10 +114,10 @@ export default function MapLocation() {
                 </span>
               </div>
               <p className="font-heading text-white font-semibold text-base leading-snug mb-1">
-                Madrid y área metropolitana
+                C. Lisboa, 3, NAVE 10
               </p>
               <p className="font-body text-sm text-white/50">
-                Instalaciones, reformas y urgencias en toda la comunidad
+                45300 Ocaña, Toledo
               </p>
             </div>
 
@@ -151,7 +151,7 @@ export default function MapLocation() {
             {/* CTAs */}
             <div className="flex flex-col gap-3">
               <a
-                href="https://www.google.com/maps/search/ALM+Electricidad+Madrid"
+                href="https://www.google.com/maps/search/?api=1&query=C.+Lisboa,+3,+NAVE+10,+45300+Oca%C3%B1a,+Toledo"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-brand hover:bg-brand-glow text-dark font-heading font-bold text-sm uppercase tracking-wide px-5 py-3 transition-all duration-300"

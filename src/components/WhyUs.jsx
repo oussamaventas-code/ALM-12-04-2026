@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,13 +8,13 @@ const StatCounter = ({ end, suffix = '', label }) => {
   const nodeRef = useRef(null);
   const gsapCtx = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const node = nodeRef.current;
     if (!node) return;
     
     const obj = { val: 0 };
     
-    gsapCtx.current = gsap.context(() => {
+    const ctx = gsap.context(() => {
       gsap.to(obj, {
         val: end,
         duration: 2.5,
@@ -29,17 +29,9 @@ const StatCounter = ({ end, suffix = '', label }) => {
         }
       });
     });
-    return () => {};
+    
+    return () => ctx.revert();
   }, [end, suffix]);
-
-  useLayoutEffect(() => {
-    return () => {
-      if (gsapCtx.current) {
-        gsapCtx.current.revert();
-        gsapCtx.current = null;
-      }
-    };
-  }, []);
 
   return (
     <div className="flex flex-col gap-1">
@@ -87,8 +79,8 @@ export default function WhyUs() {
   const progressBarRef = useRef(null);
   const gsapCtx = useRef(null);
 
-  useEffect(() => {
-    gsapCtx.current = gsap.context(() => {
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
       /* Left column entrance */
       gsap.fromTo(
         '.whyus-left',
@@ -166,16 +158,7 @@ export default function WhyUs() {
       });
     }, sectionRef);
 
-    return () => {};
-  }, []);
-
-  useLayoutEffect(() => {
-    return () => {
-      if (gsapCtx.current) {
-        gsapCtx.current.revert();
-        gsapCtx.current = null;
-      }
-    };
+    return () => ctx.revert();
   }, []);
 
   return (

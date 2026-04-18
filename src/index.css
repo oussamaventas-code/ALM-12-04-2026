@@ -111,12 +111,7 @@
     color: var(--color-ink);
   }
 
-  /* Hide native cursor on pointer devices — custom cursor replaces it */
-  @media (pointer: fine) {
-    *, *::before, *::after {
-      cursor: none !important;
-    }
-  }
+
 
   /* Grain noise overlay on body */
   body::after {
