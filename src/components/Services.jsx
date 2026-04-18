@@ -5,33 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { services } from '../data/services';
 
-const extraServices = [
-  {
-    slug: null,
-    title: 'Telecomunicaciones',
-    subtitle: 'Datos, videoporteros, TV',
-    shortDesc:
-      'Cableado de red, sistemas de internet, antenas y TV. Conexión estable y sin interrupciones para hogares y negocios.',
-    image: '/images/services/NUEVO TELECOMUNICACIONES.png',
-    href: '#contacto',
-    isLink: false,
-  },
-  {
-    slug: null,
-    title: 'Puntos de recarga VE',
-    subtitle: 'Carga rápida y segura',
-    shortDesc:
-      'Instalación en garajes privados o comunitarios con materiales certificados y asesoramiento personalizado.',
-    image: '/images/services/recarga.webp',
-    href: '#contacto',
-    isLink: false,
-  },
-];
-
-const allServices = [
-  ...services.map((s) => ({ ...s, isLink: true })),
-  ...extraServices,
-];
+const allServices = services.map((s) => ({ ...s, isLink: true }));
 
 function ServiceCard({ s, className, style }) {
   const cardContent = (

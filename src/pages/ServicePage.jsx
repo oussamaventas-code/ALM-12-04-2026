@@ -8,6 +8,8 @@ import {
   Sun,
   Lightbulb,
   FileCheck,
+  Wifi,
+  BatteryCharging,
   CheckCircle,
   ChevronDown,
   ChevronRight,
@@ -28,6 +30,8 @@ const iconMap = {
   Sun,
   Lightbulb,
   FileCheck,
+  Wifi,
+  BatteryCharging,
 };
 
 export default function ServicePage() {

@@ -9,19 +9,62 @@ import {
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Coordenadas aproximadas (SVG 800×600, España centrada en Madrid)
+/* ── Proyección geográfica real ──────────────────────────────────────────
+   Coordenadas lat/lon reales → SVG viewBox 0 0 800 600.
+   Proyección equirectangular centrada en Madrid.                        */
+const PROJECT = { cLon: -3.90, cLat: 40.45, scale: 320, yStretch: 1.25 };
+const geo = (lat, lon) => ({
+  cx: 400 + (lon - PROJECT.cLon) * PROJECT.scale,
+  cy: 300 - (lat - PROJECT.cLat) * PROJECT.scale * PROJECT.yStretch,
+});
+
+// Posiciones geográficas reales de cada zona
 const ZONE_COORDS = {
-  'madrid-centro':   { cx: 390, cy: 270 },
-  'madrid-norte':    { cx: 390, cy: 195 },
-  'madrid-sur':      { cx: 390, cy: 355 },
-  'madrid-este':     { cx: 475, cy: 270 },
-  'madrid-oeste':    { cx: 300, cy: 270 },
-  'getafe':          { cx: 410, cy: 380 },
-  'alcorcon':        { cx: 340, cy: 330 },
-  'toledo-capital':  { cx: 360, cy: 460 },
-  'talavera':        { cx: 220, cy: 450 },
-  'illescas':        { cx: 390, cy: 415 },
+  'madrid-centro':  geo(40.4168, -3.7038),
+  'madrid-norte':   geo(40.5400, -3.6500),
+  'madrid-sur':     geo(40.3300, -3.7500),
+  'madrid-este':    geo(40.4800, -3.3700),
+  'madrid-oeste':   geo(40.4400, -3.8200),
+  'getafe':         geo(40.3050, -3.7300),
+  'alcorcon':       geo(40.3450, -3.8300),
+  'toledo-capital': geo(39.8600, -4.0300),
+  'talavera':       geo(39.9600, -4.8300),
+  'illescas':       geo(40.1200, -3.8500),
 };
+
+/* ── Contorno real de la Comunidad de Madrid ─────────────────────────── */
+const MADRID_OUTLINE = [
+  [40.89,-4.52],[40.95,-4.35],[41.02,-4.15],[41.07,-3.95],
+  [41.10,-3.75],[41.12,-3.55],[41.15,-3.40],[41.08,-3.18],
+  [40.95,-3.08],[40.80,-3.05],[40.65,-3.08],[40.50,-3.10],
+  [40.38,-3.13],[40.25,-3.18],[40.12,-3.28],[40.02,-3.42],
+  [39.92,-3.55],[39.88,-3.68],[39.92,-3.85],[39.98,-4.02],
+  [40.08,-4.22],[40.20,-4.38],[40.35,-4.48],[40.50,-4.52],
+  [40.68,-4.55],[40.82,-4.55],
+].map(([lat, lon]) => geo(lat, lon));
+
+const MADRID_PATH = 'M' + MADRID_OUTLINE.map(p => `${p.cx},${p.cy}`).join(' L') + ' Z';
+
+/* ── Zona de cobertura Toledo (simplificada) ─────────────────────────── */
+const TOLEDO_COVERAGE = [
+  [40.08,-4.22],[40.02,-3.42],[39.92,-3.55],[39.88,-3.68],
+  [39.75,-3.75],[39.72,-4.00],[39.70,-4.30],[39.78,-4.60],
+  [39.85,-4.95],[39.95,-5.05],[40.05,-4.85],[40.12,-4.55],
+  [40.08,-4.22],
+].map(([lat, lon]) => geo(lat, lon));
+
+const TOLEDO_PATH = 'M' + TOLEDO_COVERAGE.map(p => `${p.cx},${p.cy}`).join(' L') + ' Z';
+
+/* ── Autopistas principales (puntos origen → destino) ─────────────── */
+const HIGHWAYS = [
+  { id: 'A-1',  label: 'A-1',  pts: [geo(40.42,-3.70), geo(40.65,-3.65), geo(40.90,-3.55)] },
+  { id: 'A-2',  label: 'A-2',  pts: [geo(40.42,-3.70), geo(40.55,-3.40), geo(40.70,-3.10)] },
+  { id: 'A-3',  label: 'A-3',  pts: [geo(40.42,-3.70), geo(40.30,-3.40), geo(40.15,-3.20)] },
+  { id: 'A-4',  label: 'A-4',  pts: [geo(40.42,-3.70), geo(40.20,-3.72), geo(39.88,-3.68)] },
+  { id: 'A-42', label: 'A-42', pts: [geo(40.42,-3.70), geo(40.15,-3.82), geo(39.86,-4.03)] },
+  { id: 'A-5',  label: 'A-5',  pts: [geo(40.42,-3.70), geo(40.35,-4.10), geo(39.96,-4.83)] },
+  { id: 'A-6',  label: 'A-6',  pts: [geo(40.42,-3.70), geo(40.60,-3.95), geo(40.85,-4.35)] },
+];
 
 const REGION_COLOR = { Madrid: '#F5C518', Toledo: '#f59e0b' };
 
@@ -128,32 +171,88 @@ export default function ZonasPage() {
               <div className="lg:col-span-3">
                 <div className="relative bg-white/3 border border-white/8 rounded-2xl p-4 overflow-hidden">
                   <svg
-                    viewBox="150 150 450 380"
+                    viewBox="50 -150 700 750"
                     className="w-full h-auto"
                     role="img"
-                    aria-label="Mapa interactivo de zonas de cobertura"
+                    aria-label="Mapa interactivo de la Comunidad de Madrid y Toledo"
                   >
-                    {/* Fondo oscuro */}
-                    <rect x="150" y="150" width="450" height="380" fill="#0b0f1a" />
+                    <defs>
+                      {/* Glow filter for active markers */}
+                      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="4" result="blur" />
+                        <feMerge>
+                          <feMergeNode in="blur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                      {/* Madrid region gradient */}
+                      <linearGradient id="madridFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#F5C518" stopOpacity="0.12" />
+                        <stop offset="100%" stopColor="#F5C518" stopOpacity="0.03" />
+                      </linearGradient>
+                      {/* Toledo region gradient */}
+                      <linearGradient id="toledoFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.08" />
+                        <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.02" />
+                      </linearGradient>
+                    </defs>
 
-                    {/* Líneas de cuadrícula sutil */}
-                    {[200,250,300,350,400,450,500].map((x) => (
-                      <line key={`v${x}`} x1={x} y1="150" x2={x} y2="530" stroke="white" strokeOpacity="0.04" strokeWidth="1"/>
-                    ))}
-                    {[200,250,300,350,400,450,500].map((y) => (
-                      <line key={`h${y}`} x1="150" y1={y} x2="600" y2={y} stroke="white" strokeOpacity="0.04" strokeWidth="1"/>
-                    ))}
+                    {/* Fondo */}
+                    <rect x="50" y="-150" width="700" height="750" fill="#0a0e18" rx="8" />
 
-                    {/* Área Madrid aprox */}
-                    <ellipse cx="390" cy="270" rx="130" ry="110" fill="#F5C518" fillOpacity="0.05" stroke="#F5C518" strokeOpacity="0.15" strokeWidth="1" strokeDasharray="4 4"/>
-                    {/* Área Toledo aprox */}
-                    <ellipse cx="330" cy="445" rx="160" ry="80" fill="#f59e0b" fillOpacity="0.04" stroke="#f59e0b" strokeOpacity="0.12" strokeWidth="1" strokeDasharray="4 4"/>
+                    {/* ── Toledo province coverage ── */}
+                    <path
+                      d={TOLEDO_PATH}
+                      fill="url(#toledoFill)"
+                      stroke="#f59e0b"
+                      strokeWidth="1.2"
+                      strokeOpacity="0.25"
+                      strokeDasharray="6 4"
+                    />
 
-                    {/* Labels regiones */}
-                    <text x="510" y="215" fill="#F5C518" fillOpacity="0.4" fontSize="10" fontFamily="sans-serif">Madrid</text>
-                    <text x="160" y="470" fill="#f59e0b" fillOpacity="0.4" fontSize="10" fontFamily="sans-serif">Toledo</text>
+                    {/* ── Comunidad de Madrid outline ── */}
+                    <path
+                      d={MADRID_PATH}
+                      fill="url(#madridFill)"
+                      stroke="#F5C518"
+                      strokeWidth="1.8"
+                      strokeOpacity="0.5"
+                      strokeLinejoin="round"
+                    />
 
-                    {/* Puntos de zona */}
+                    {/* ── Autopistas principales ── */}
+                    {HIGHWAYS.map((hw) => {
+                      const d = 'M' + hw.pts.map(p => `${p.cx},${p.cy}`).join(' L');
+                      const mid = hw.pts[1];
+                      return (
+                        <g key={hw.id}>
+                          <path d={d} fill="none" stroke="white" strokeOpacity="0.08" strokeWidth="1.5" strokeLinecap="round" />
+                          <text
+                            x={mid.cx + 6}
+                            y={mid.cy - 5}
+                            fill="white"
+                            fillOpacity="0.18"
+                            fontSize="7"
+                            fontFamily="sans-serif"
+                            fontWeight="600"
+                          >
+                            {hw.label}
+                          </text>
+                        </g>
+                      );
+                    })}
+
+                    {/* ── M-30 anillo (ring road) ── */}
+                    {(() => {
+                      const c = ZONE_COORDS['madrid-centro'];
+                      return <ellipse cx={c.cx} cy={c.cy} rx="25" ry="20" fill="none" stroke="white" strokeOpacity="0.06" strokeWidth="1" strokeDasharray="3 3" />;
+                    })()}
+
+                    {/* ── Region labels ── */}
+                    <text x={ZONE_COORDS['madrid-norte'].cx + 50} y={ZONE_COORDS['madrid-norte'].cy - 55} fill="#F5C518" fillOpacity="0.35" fontSize="11" fontFamily="sans-serif" fontWeight="bold" letterSpacing="3">COMUNIDAD DE MADRID</text>
+                    <text x={ZONE_COORDS['toledo-capital'].cx - 60} y={ZONE_COORDS['toledo-capital'].cy + 50} fill="#f59e0b" fillOpacity="0.3" fontSize="10" fontFamily="sans-serif" fontWeight="bold" letterSpacing="2">TOLEDO</text>
+
+                    {/* ── Puntos de zona (geográficos) ── */}
                     {zones.map((z) => {
                       const coord = ZONE_COORDS[z.slug];
                       if (!coord) return null;
@@ -170,32 +269,36 @@ export default function ZonasPage() {
                         >
                           {/* Halo animado */}
                           {isActive && (
-                            <circle cx={coord.cx} cy={coord.cy} r="22" fill={color} fillOpacity="0.15">
-                              <animate attributeName="r" values="18;28;18" dur="2s" repeatCount="indefinite"/>
+                            <circle cx={coord.cx} cy={coord.cy} r="22" fill={color} fillOpacity="0.15" filter="url(#glow)">
+                              <animate attributeName="r" values="16;26;16" dur="2s" repeatCount="indefinite"/>
                               <animate attributeName="fill-opacity" values="0.2;0.05;0.2" dur="2s" repeatCount="indefinite"/>
                             </circle>
                           )}
+                          {/* Punto principal */}
                           <circle
                             cx={coord.cx}
                             cy={coord.cy}
-                            r={isActive ? 12 : 9}
+                            r={isActive ? 10 : 7}
                             fill={color}
-                            fillOpacity={isActive ? 1 : 0.7}
+                            fillOpacity={isActive ? 1 : 0.75}
                             stroke={isActive ? '#fff' : color}
                             strokeWidth={isActive ? 2 : 1}
                             strokeOpacity={isActive ? 1 : 0.4}
-                            style={{ transition: 'all 0.2s ease' }}
+                            style={{ transition: 'all 0.25s ease' }}
                           />
-                          <circle cx={coord.cx} cy={coord.cy} r="3" fill="#fff" fillOpacity={isActive ? 1 : 0.6}/>
+                          {/* Centro blanco */}
+                          <circle cx={coord.cx} cy={coord.cy} r="2.5" fill="#fff" fillOpacity={isActive ? 1 : 0.6}/>
+                          {/* Label */}
                           <text
                             x={coord.cx}
-                            y={coord.cy + 22}
+                            y={coord.cy + 18}
                             textAnchor="middle"
                             fill="white"
                             fillOpacity={isActive ? 1 : 0.55}
                             fontSize="8"
                             fontFamily="sans-serif"
                             fontWeight={isActive ? 'bold' : 'normal'}
+                            style={{ transition: 'fill-opacity 0.2s' }}
                           >
                             {z.name}
                           </text>
@@ -208,11 +311,15 @@ export default function ZonasPage() {
                   <div className="flex items-center justify-center gap-6 mt-3">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-brand" />
-                      <span className="text-white/40 text-xs">Madrid</span>
+                      <span className="text-white/40 text-xs">Comunidad de Madrid</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-amber-400" />
-                      <span className="text-white/40 text-xs">Toledo</span>
+                      <span className="text-white/40 text-xs">Provincia de Toledo</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-px bg-white/20" />
+                      <span className="text-white/40 text-xs">Autopistas</span>
                     </div>
                   </div>
                 </div>
