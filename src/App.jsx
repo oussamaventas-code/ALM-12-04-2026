@@ -11,6 +11,7 @@ import WhatsAppFloat from './components/WhatsAppFloat';
 import MobileUrgencyBar from './components/MobileUrgencyBar';
 import PageTransition from './components/PageTransition';
 import CookieBanner from './components/CookieBanner';
+import PageSkeleton from './components/PageSkeleton';
 
 // HomePage carga inmediata (primera pantalla)
 import HomePage from './pages/HomePage';
@@ -29,6 +30,7 @@ const AvisoLegalPage   = lazy(() => import('./pages/AvisoLegalPage'));
 const CookiesPage      = lazy(() => import('./pages/CookiesPage'));
 const ContactoPage     = lazy(() => import('./pages/ContactoPage'));
 const HistoriaPage     = lazy(() => import('./pages/HistoriaPage'));
+const ZonasPage        = lazy(() => import('./pages/ZonasPage'));
 const NotFoundPage     = lazy(() => import('./pages/NotFoundPage'));
 
 // GSAP registrado una única vez aquí — los componentes no necesitan volver a registrarlo
@@ -104,17 +106,9 @@ function useLenis() {
   }, [location.pathname]);
 }
 
-// ── Fallback loader ─────────────────────────────────────────────────────────
-function PageLoader() {
-  return (
-    <div className="min-h-screen bg-dark flex items-center justify-center">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-10 h-10 border-2 border-brand border-t-transparent rounded-full animate-spin" />
-        <span className="text-white/40 text-sm font-body">Cargando...</span>
-      </div>
-    </div>
-  );
-}
+// ── Fallback loader — skeleton por página ────────────────────────────────────
+// PageSkeleton reemplaza el spinner genérico con un placeholder visual
+// que mantiene la estructura de la página para evitar Layout Shift.
 
 // ── Kill ScrollTrigger pins synchronously before React unmounts DOM ──────────
 // GSAP pin:true reparents nodes into .pin-spacer wrappers.
@@ -155,13 +149,14 @@ function AppShell() {
       <Navbar />
       {/* <UrgencyBanner /> */}
       <main id="main-content" className="pb-[72px] lg:pb-0">
-        <Suspense fallback={<PageLoader />}>
+        <Suspense fallback={<PageSkeleton />}>
           <Routes>
             <Route path="/"                element={<HomePage />} />
             <Route path="/urgencias"       element={<UrgenciasPage />} />
             <Route path="/patrocinios"     element={<PatrociniosPage />} />
             <Route path="/proyectos"       element={<ProyectosPage />} />
             <Route path="/servicios/:slug" element={<ServicePage />} />
+            <Route path="/zonas"           element={<ZonasPage />} />
             <Route path="/zonas/:slug"     element={<ZonePage />} />
             <Route path="/fotovoltaica"    element={<FotovoltaicaPage />} />
             <Route path="/equipo"          element={<TeamPage />} />

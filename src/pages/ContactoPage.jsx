@@ -93,6 +93,7 @@ export default function ContactoPage() {
         title="Contacto — ALMelectricidad | Electricistas Madrid y Toledo"
         description="Contacta con ALM Electricidad para solicitar presupuesto de instalación eléctrica, urgencias 24h o paneles solares en Madrid y Toledo. Respuesta garantizada en menos de 24h."
         canonical="/contacto"
+        ogImage="https://almelectricidad.com/og-contacto.png"
       />
 
       {/* Hero */}
