@@ -145,7 +145,7 @@ export default function Footer() {
           <p className="text-xs text-white/60">
             &copy; {currentYear} ALM Electricidad. Todos los derechos reservados.
             <span className="mx-2 text-white/20" aria-hidden="true">&middot;</span>
-            Dise&ntilde;o web por <span className="text-brand/70 font-semibold">Neoark Studio</span>
+            Dise&ntilde;o web por <span className="text-brand/70 font-semibold">SOMSYNGULAR</span>
           </p>
           <div className="flex items-center gap-6">
             <Link
