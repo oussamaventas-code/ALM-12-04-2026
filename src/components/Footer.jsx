@@ -10,8 +10,17 @@ import {
   Shield,
   CheckCircle,
   Accessibility,
-  Instagram,
 } from 'lucide-react';
+
+function InstagramIcon({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+    </svg>
+  );
+}
 import { services } from '../data/services';
 import { zones } from '../data/zones';
 
@@ -65,7 +74,7 @@ export default function Footer() {
                 className="w-10 h-10 rounded-full bg-white/5 hover:bg-brand hover:text-dark flex items-center justify-center transition-all duration-300"
                 aria-label="Síguenos en Instagram"
               >
-                <Instagram size={18} />
+                <InstagramIcon size={18} />
               </a>
             </div>
           </div>
