@@ -30,6 +30,7 @@ const navLinks = [
       { label: 'Patrocinios', to: '/patrocinios' },
     ],
   },
+  { label: 'Proyectos', to: '/proyectos' },
   { label: 'Contacto', href: '/#contacto' },
 ];
 
@@ -179,6 +180,16 @@ export default function Navbar() {
                     <div className="h-[2px] bg-gradient-to-r from-brand via-brand-glow to-transparent" aria-hidden="true" />
                   </div>
                 </div>
+              ) : link.to ? (
+                <MagneticElement key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.08em] text-white/70 hover:text-brand-glow px-4 py-2 transition-colors duration-300 relative group"
+                  >
+                    {link.label}
+                    <span className="absolute bottom-0 left-4 right-4 h-[2px] bg-brand scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  </Link>
+                </MagneticElement>
               ) : (
                 <MagneticElement key={link.href}>
                   <a
@@ -283,6 +294,15 @@ export default function Navbar() {
                     </div>
                   </div>
                 </div>
+              ) : link.to ? (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={closeMobile}
+                  className="mobile-nav-link font-heading text-3xl md:text-4xl font-bold text-white/90 hover:text-brand-glow transition-colors duration-300 py-4 border-b border-white/5 block"
+                >
+                  {link.label}
+                </Link>
               ) : (
                 <a
                   key={link.href}
