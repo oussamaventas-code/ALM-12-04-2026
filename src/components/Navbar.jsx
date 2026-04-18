@@ -5,7 +5,20 @@ import gsap from 'gsap';
 import MagneticElement from './MagneticElement';
 
 const navLinks = [
-  { label: 'Servicios', href: '/#servicios' },
+  {
+    label: 'Servicios',
+    id: 'servicios',
+    dropdown: [
+      { label: '⚡ Instalaciones Eléctricas',    to: '/servicios/instalaciones-electricas' },
+      { label: '🔧 Reparación de Averías 24h',   to: '/servicios/reparacion-averias' },
+      { label: '☀️ Paneles Solares',              to: '/servicios/paneles-solares' },
+      { label: '💡 Iluminación LED',              to: '/servicios/iluminacion-led' },
+      { label: '📋 Boletines y Certificados',     to: '/servicios/boletines-certificados' },
+      { label: '📡 Telecomunicaciones',           to: '/servicios/telecomunicaciones' },
+      { label: '🔌 Recarga Vehículo Eléctrico',  to: '/servicios/recarga-vehiculo-electrico' },
+      { label: '🌞 Fotovoltaica Industrial',      to: '/fotovoltaica' },
+    ],
+  },
   {
     label: 'Zonas',
     id: 'zonas',
