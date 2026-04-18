@@ -12,7 +12,7 @@ const extraServices = [
     subtitle: 'Datos, videoporteros, TV',
     shortDesc:
       'Cableado de red, sistemas de internet, antenas y TV. Conexión estable y sin interrupciones para hogares y negocios.',
-    image: '/images/services/telecomunicaciones.png',
+    image: '/images/services/NUEVO TELECOMUNICACIONES.png',
     href: '#contacto',
     isLink: false,
   },

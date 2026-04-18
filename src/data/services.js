@@ -5,7 +5,7 @@ export const services = [
     subtitle: 'Completas, reformas y adecuaciones',
     shortDesc: 'Montamos instalaciones eléctricas completas para viviendas, locales, naves y oficinas.',
     heroDesc: 'Desde el diseño del cuadro general hasta el último enchufe. Instalaciones eléctricas que pasan inspección a la primera, con material certificado y mano de obra de electricistas autorizados.',
-    image: '/images/services/instalaciones.png',
+    image: '/images/services/NUEVO INSTALACIONES ELÉCTRICAS.png',
     icon: 'Plug',
     bullets: [
       'Instalaciones completas en viviendas, locales y naves',
@@ -27,7 +27,7 @@ export const services = [
     subtitle: 'Urgencias 24h, los 7 días',
     shortDesc: 'Cortocircuitos, derivaciones y fallos eléctricos. Reparaciones rápidas con equipos calibrados.',
     heroDesc: 'Cuando se va la luz a las 3 de la mañana en tu negocio, necesitas a alguien que coja el teléfono. Atendemos urgencias eléctricas 24 horas, los 7 días de la semana, en Madrid y Toledo.',
-    image: '/images/services/averias.png',
+    image: '/images/services/NUEVO REPARACIÓN DE AVERÍAS.png',
     icon: 'Zap',
     bullets: [
       'Cortocircuitos y derivaciones',
@@ -49,7 +49,7 @@ export const services = [
     subtitle: 'Energía limpia, ahorro real',
     shortDesc: 'Paneles solares de alta eficiencia con ahorro económico desde el primer día.',
     heroDesc: 'Instalamos sistemas fotovoltaicos para empresas y particulares. Desde el estudio de tu cubierta hasta la legalización completa. Ahorro real desde el primer mes, con retorno de inversión en 4-6 años.',
-    image: '/images/services/solares.png',
+    image: '/images/services/NUEVO PANELES SOLARES.png',
     icon: 'Sun',
     bullets: [
       'Estudio personalizado de tu cubierta',
