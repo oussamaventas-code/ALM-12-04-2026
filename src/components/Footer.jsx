@@ -54,7 +54,7 @@ export default function Footer() {
 
       {/* Main 4-column grid */}
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-6">
           {/* Brand */}
           <div>
             <img
@@ -111,6 +111,29 @@ export default function Footer() {
                     className="text-sm hover:text-brand-light transition-colors duration-200"
                   >
                     {z.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Empresa */}
+          <nav aria-label="Empresa">
+            <h4 className="text-white font-heading font-bold text-sm tracking-widest uppercase mb-5">
+              Empresa
+            </h4>
+            <ul className="space-y-2.5">
+              {[
+                { label: 'Nuestra historia', to: '/sobre-nosotros' },
+                { label: 'Nuestro equipo',   to: '/equipo' },
+                { label: 'Nuestra flota',    to: '/flota' },
+                { label: 'Proyectos',        to: '/proyectos' },
+                { label: 'Contacto',         to: '/contacto' },
+                { label: 'Urgencias 24h',    to: '/urgencias' },
+              ].map((link) => (
+                <li key={link.to}>
+                  <Link to={link.to} className="text-sm hover:text-brand-light transition-colors duration-200">
+                    {link.label}
                   </Link>
                 </li>
               ))}

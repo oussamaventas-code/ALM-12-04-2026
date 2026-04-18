@@ -9,9 +9,11 @@ import Services from '../components/Services';
 
 // Below the fold — carga diferida
 const WhyUs        = lazy(() => import('../components/WhyUs'));
+const JorgeSection = lazy(() => import('../components/JorgeSection'));
 const Portfolio    = lazy(() => import('../components/Portfolio'));
 const Process      = lazy(() => import('../components/Process'));
 const Testimonials = lazy(() => import('../components/Testimonials'));
+const PricingPhilosophy = lazy(() => import('../components/PricingPhilosophy'));
 const Mistakes     = lazy(() => import('../components/Mistakes'));
 const FAQ          = lazy(() => import('../components/FAQ'));
 const MapLocation  = lazy(() => import('../components/MapLocation'));
@@ -65,16 +67,22 @@ export default function HomePage() {
         {/* 4. Por qué nosotros — diferenciación real */}
         <WhyUs />
 
-        {/* 5. Trabajo real — galería de proyectos */}
+        {/* 5. Jorge — humaniza la marca, genera confianza */}
+        <JorgeSection />
+
+        {/* 6. Trabajo real — galería de proyectos */}
         <Portfolio />
 
-        {/* 6. Cómo trabajamos — elimina el miedo al proceso */}
+        {/* 7. Cómo trabajamos — elimina el miedo al proceso */}
         <Process />
 
         {/* 8. Prueba social — testimonios con ubicación */}
         <Testimonials />
 
-        {/* 9. Derribo de objeciones — errores comunes */}
+        {/* 9. Filosofía de precio — filtro de clientes */}
+        <PricingPhilosophy />
+
+        {/* 10. Derribo de objeciones — errores comunes */}
         <Mistakes />
 
         {/* 10. FAQ — últimas dudas antes de contactar */}
