@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 
 const projects = [
@@ -197,11 +198,19 @@ function PortfolioDesktop() {
           </div>
         </div>
 
-        <div className="container-custom px-6 pb-6 shrink-0 flex items-center gap-3">
-          <div className="h-[1px] w-8 bg-brand/40" />
-          <span className="font-body text-xs text-white/30 uppercase tracking-[0.12em]">
-            Desliza para ver más proyectos
-          </span>
+        <div className="container-custom px-6 pb-6 shrink-0 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="h-[1px] w-8 bg-brand/40" />
+            <span className="font-body text-xs text-white/30 uppercase tracking-[0.12em]">
+              Desliza para ver más proyectos
+            </span>
+          </div>
+          <Link 
+            to="/proyectos" 
+            className="hidden md:inline-flex items-center justify-center bg-brand text-dark font-body font-bold text-sm px-6 py-3 hover:bg-white transition-colors duration-300"
+          >
+            Ver más trabajos realizados
+          </Link>
         </div>
       </div>
     </section>
@@ -314,11 +323,19 @@ function PortfolioMobile() {
           ))}
         </div>
 
-        <div className="mt-10 flex items-center gap-3">
-          <div className="h-[1px] w-6 bg-brand/40" />
-          <span className="font-body text-xs text-white/30 uppercase tracking-[0.12em]">
-            Desplázate para ver más proyectos
-          </span>
+        <div className="mt-10 flex flex-col gap-6">
+          <div className="flex items-center gap-3">
+            <div className="h-[1px] w-6 bg-brand/40" />
+            <span className="font-body text-xs text-white/30 uppercase tracking-[0.12em]">
+              Desplázate para ver más proyectos
+            </span>
+          </div>
+          <Link 
+            to="/proyectos" 
+            className="inline-flex items-center justify-center bg-brand text-dark font-body font-bold text-sm px-6 py-4 w-full text-center hover:bg-white transition-colors duration-300"
+          >
+            Ver más trabajos realizados
+          </Link>
         </div>
       </div>
     </section>

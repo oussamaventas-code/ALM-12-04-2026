@@ -23,6 +23,7 @@ const TeamPage         = lazy(() => import('./pages/TeamPage'));
 const FlotaPage        = lazy(() => import('./pages/FlotaPage'));
 const UrgenciasPage    = lazy(() => import('./pages/UrgenciasPage'));
 const PatrociniosPage  = lazy(() => import('./pages/PatrociniosPage'));
+const ProyectosPage    = lazy(() => import('./pages/ProyectosPage'));
 const PrivacidadPage   = lazy(() => import('./pages/PrivacidadPage'));
 const AvisoLegalPage   = lazy(() => import('./pages/AvisoLegalPage'));
 const CookiesPage      = lazy(() => import('./pages/CookiesPage'));
@@ -157,6 +158,7 @@ function AppShell() {
             <Route path="/"                element={<HomePage />} />
             <Route path="/urgencias"       element={<UrgenciasPage />} />
             <Route path="/patrocinios"     element={<PatrociniosPage />} />
+            <Route path="/proyectos"       element={<ProyectosPage />} />
             <Route path="/servicios/:slug" element={<ServicePage />} />
             <Route path="/zonas/:slug"     element={<ZonePage />} />
             <Route path="/fotovoltaica"    element={<FotovoltaicaPage />} />
