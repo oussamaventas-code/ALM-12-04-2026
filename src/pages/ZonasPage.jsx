@@ -112,7 +112,7 @@ export default function ZonasPage() {
               <div className="lg:col-span-3">
                 <div className="relative bg-[#0a0e18] border border-white/8 rounded-2xl p-2 overflow-hidden h-[400px] md:h-[500px]">
                   <iframe
-                    src="https://maps.google.com/maps?q=Comunidad%20de%20Madrid,%20Spain&t=&z=8&ie=UTF8&iwloc=&output=embed"
+                    src="https://maps.google.com/maps?q=Calle%20Lisboa,%203,%2045300%20Oca%C3%B1a,%20Toledo&t=&z=9&ie=UTF8&iwloc=&output=embed"
                     width="100%"
                     height="100%"
                     style={{ border: 0, borderRadius: '0.5rem' }}
@@ -172,11 +172,38 @@ export default function ZonasPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-white/3 border border-white/8 rounded-2xl p-6 text-center">
-                    <MapPin size={32} className="text-white/20 mx-auto mb-4" />
-                    <p className="text-white/40 text-sm">Haz clic en cualquier punto del mapa para ver los detalles de esa zona</p>
-                    <div className="mt-6 space-y-2">
-                      {zones.slice(0, 4).map((z) => (
+                  <div className="flex flex-col gap-4">
+                    {/* Tarjeta de Sede Central */}
+                    <div className="bg-brand/5 border border-brand/20 rounded-2xl p-6 relative overflow-hidden">
+                      <div className="absolute right-0 top-0 w-32 h-32 bg-brand/10 blur-[50px] pointer-events-none rounded-full translate-x-1/2 -translate-y-1/2" />
+                      
+                      <div className="flex items-center gap-3 mb-4 relative z-10">
+                        <div className="w-10 h-10 bg-brand/10 rounded-full flex items-center justify-center flex-shrink-0">
+                          <MapPin className="text-brand" size={20} />
+                        </div>
+                        <div>
+                          <span className="text-brand text-[10px] uppercase tracking-widest font-bold">Nuestra Base</span>
+                          <h3 className="font-heading font-bold text-white text-lg leading-tight mt-0.5">Sede Central</h3>
+                        </div>
+                      </div>
+                      
+                      <p className="text-white/80 text-sm font-body mb-3 relative z-10">
+                        <strong>C. Lisboa, 3, NAVE 10</strong><br />
+                        45300 Ocaña, Toledo
+                      </p>
+                      
+                      <p className="text-white/50 text-xs leading-relaxed relative z-10">
+                        Desde nuestra base operativa nos desplazamos a todas las zonas de Madrid y Toledo. El tiempo de respuesta y llegada dependerá de la distancia desde este punto hasta tu ubicación.
+                      </p>
+                    </div>
+
+                    {/* Lista de zonas por defecto */}
+                    <div className="bg-white/3 border border-white/8 rounded-2xl p-6">
+                      <div className="text-center mb-5">
+                        <p className="text-white/70 text-sm font-medium">Selecciona una zona en el mapa o en la lista inferior para ver los detalles.</p>
+                      </div>
+                      <div className="space-y-2">
+                        {zones.slice(0, 5).map((z) => (
                         <button
                           key={z.slug}
                           onClick={() => setActive(z.slug)}
@@ -186,8 +213,9 @@ export default function ZonasPage() {
                           <span className="text-brand/60 text-xs">{z.responseTime}</span>
                         </button>
                       ))}
-                      <p className="text-white/30 text-xs pt-1">+{zones.length - 4} zonas más en el mapa</p>
+                      <p className="text-white/30 text-xs pt-2 text-center">+{zones.length - 5} zonas más en la lista inferior</p>
                     </div>
+                  </div>
                   </div>
                 )}
               </div>
