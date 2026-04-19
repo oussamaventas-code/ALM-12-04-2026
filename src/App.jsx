@@ -12,6 +12,7 @@ import MobileUrgencyBar from './components/MobileUrgencyBar';
 import PageTransition from './components/PageTransition';
 import CookieBanner from './components/CookieBanner';
 import PageSkeleton from './components/PageSkeleton';
+import Analytics from './components/Analytics';
 
 // HomePage carga inmediata (primera pantalla)
 import HomePage from './pages/HomePage';
@@ -179,5 +180,10 @@ function AppShell() {
 }
 
 export default function App() {
-  return <AppShell />;
+  return (
+    <>
+      <Analytics />
+      <AppShell />
+    </>
+  );
 }

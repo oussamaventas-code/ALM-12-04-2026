@@ -105,8 +105,32 @@ export default function JorgeSection() {
             </div>
           </div>
 
-          {/* Columna derecha — valores */}
+          {/* Columna derecha — valores e imagen */}
           <div className="js-right">
+            {/* Imagen de Jorge */}
+            <div className="relative rounded-2xl overflow-hidden border border-white/10 aspect-[3/4] md:aspect-[4/5] mb-8 group shadow-2xl shadow-brand/5">
+              <div className="absolute inset-0 bg-brand/10 group-hover:bg-transparent transition-colors duration-500 z-10 mix-blend-overlay" aria-hidden="true"></div>
+              <img 
+                src="/LOGO Y JORGE/JORGE.PNG" 
+                alt="Jorge Hernández García, fundador de ALM Electricidad" 
+                className="w-full h-full object-cover object-center filter grayscale-[30%] group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                loading="lazy"
+              />
+              {/* Overlay inferior para fusionar con el fondo */}
+              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-dark via-dark/50 to-transparent z-20" aria-hidden="true"></div>
+              
+              {/* Badge superpuesto en la imagen */}
+              <div className="absolute bottom-6 left-6 z-30 flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-brand flex items-center justify-center text-dark font-bold text-xl border-4 border-dark">
+                  J
+                </div>
+                <div>
+                  <p className="text-white font-heading font-bold text-lg leading-tight">Jorge Hernández</p>
+                  <p className="text-brand text-sm font-semibold">Fundador</p>
+                </div>
+              </div>
+            </div>
+
             {/* Tarjeta visual "ciclismo" */}
             <div className="relative bg-gradient-to-br from-brand/10 to-transparent border border-brand/20 rounded-2xl p-7 mb-6 overflow-hidden">
               <div className="absolute -top-8 -right-8 w-32 h-32 bg-brand/8 rounded-full blur-2xl" aria-hidden="true" />

@@ -24,7 +24,7 @@ Sin embargo, dado los riesgos inherentes, no podemos garantizar una seguridad ab
   },
   {
     title: 'Responsable de Reclamaciones / Delegado de Protección de Datos',
-    content: `Si tiene alguna consulta o preocupación sobre el procesamiento de su información que tengamos, puede escribir a nuestro Responsable de Reclamaciones en ALM Electricidad, Vivaldi, 87, email: contacto@almelectricidad.com. Atenderemos sus inquietudes de acuerdo con la legislación aplicable.`,
+    content: `Si tiene alguna consulta o preocupación sobre el procesamiento de su información que tengamos, puede escribir a nuestro Responsable de Reclamaciones en Jorge Hernández García (ALM Electricidad), C. Lisboa, 3, NAVE 10, 45300 Ocaña, Toledo, email: contacto@almelectricidad.com. Atenderemos sus inquietudes de acuerdo con la legislación aplicable.`,
   },
   {
     title: 'Modificaciones de esta Política',
@@ -91,7 +91,7 @@ export default function PrivacidadPage() {
             <div className="bg-dark border border-brand/10 p-6 md:p-8 mb-12">
               <h2 className="font-heading font-bold text-white text-lg mb-3">¿Qué cubre esta política?</h2>
               <p className="text-white/55 font-body text-sm leading-relaxed">
-                Esta Política de Privacidad describe las políticas de <strong className="text-white/80">ALM Electricidad</strong>, Vivaldi, 87, España 45340, Spain, sobre la recopilación, uso y divulgación de su información que recopilamos cuando utiliza nuestro sitio web{' '}
+                Esta Política de Privacidad describe las políticas de <strong className="text-white/80">Jorge Hernández García (ALM Electricidad)</strong>, C. Lisboa, 3, NAVE 10, 45300 Ocaña, Toledo, sobre la recopilación, uso y divulgación de su información que recopilamos cuando utiliza nuestro sitio web{' '}
                 <a href="https://almelectricidad.com" className="text-brand hover:text-brand-light transition-colors" target="_blank" rel="noopener noreferrer">
                   almelectricidad.com
                 </a>{' '}
@@ -143,7 +143,7 @@ export default function PrivacidadPage() {
                 </a>
                 <span className="flex items-center gap-3 text-white/50 text-sm">
                   <MapPin size={16} className="text-brand shrink-0" />
-                  Vivaldi, 87 — 45340, Spain
+                  C. Lisboa, 3, NAVE 10 — 45300 Ocaña, Toledo
                 </span>
               </div>
             </div>

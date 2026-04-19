@@ -48,6 +48,14 @@ const teamMembers = [
     cert: 'Instalador Autorizado REBT',
     image: '/images/team/EQUIPO PARA PAGINA/MELO.png',
   },
+  {
+    name: 'Melisa',
+    role: 'Administración & RRHH',
+    specialty: 'Gestión administrativa · Recursos Humanos',
+    experience: 'Nueva incorporación',
+    cert: 'Gestión de equipo y coordinación',
+    image: '/images/team/EQUIPO PARA PAGINA/MELISA.png',
+  },
 ];
 
 const values = [
@@ -270,7 +278,7 @@ export default function TeamPage() {
               HABLEMOS DE TU PROYECTO
             </h2>
             <p className="text-dark/70 font-body text-base mb-8 text-center">
-              5 técnicos especializados. Sin bots, sin esperas.
+              6 profesionales especializados. Sin bots, sin esperas.
             </p>
             <div className="flex flex-col w-full gap-3 max-w-xs">
               <a
@@ -344,7 +352,7 @@ export default function TeamPage() {
                 HABLEMOS DE TU PROYECTO
               </h2>
               <p className="text-dark/70 font-body text-xl md:text-2xl mb-10 max-w-2xl font-medium">
-                5 técnicos especializados listos para atenderte. Sin intermediarios, sin bots.
+                6 profesionales especializados listos para atenderte. Sin intermediarios, sin bots.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a

@@ -6,6 +6,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 const teamMembers = [
   {
+    name: 'Jorge',
+    role: 'Instalador Jefe',
+    image: '/images/team/EQUIPO PARA PAGINA/JORGE.png',
+  },
+  {
     name: 'Dani',
     role: 'Especialista Técnico',
     image: '/images/team/EQUIPO PARA PAGINA/DANI.png',
@@ -21,14 +26,14 @@ const teamMembers = [
     image: '/images/team/EQUIPO PARA PAGINA/JEFFERSON.png',
   },
   {
-    name: 'Jorge',
-    role: 'Instalador Jefe',
-    image: '/images/team/EQUIPO PARA PAGINA/JORGE.png',
-  },
-  {
     name: 'Melo',
     role: 'Técnico Especialista',
     image: '/images/team/EQUIPO PARA PAGINA/MELO.png',
+  },
+  {
+    name: 'Melisa',
+    role: 'Administración & RRHH',
+    image: '/images/team/EQUIPO PARA PAGINA/MELISA.png',
   },
 ];
 
@@ -94,7 +99,7 @@ export default function TeamSection() {
         </div>
 
         {/* Team Grid */}
-        <div className="team-members-grid grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="team-members-grid grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
           {teamMembers.map((member) => (
             <div
               key={member.name}

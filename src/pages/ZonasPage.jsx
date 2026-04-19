@@ -9,65 +9,6 @@ import {
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-/* ── Proyección geográfica real ──────────────────────────────────────────
-   Coordenadas lat/lon reales → SVG viewBox 0 0 800 600.
-   Proyección equirectangular centrada en Madrid.                        */
-const PROJECT = { cLon: -3.90, cLat: 40.45, scale: 320, yStretch: 1.25 };
-const geo = (lat, lon) => ({
-  cx: 400 + (lon - PROJECT.cLon) * PROJECT.scale,
-  cy: 300 - (lat - PROJECT.cLat) * PROJECT.scale * PROJECT.yStretch,
-});
-
-// Posiciones geográficas reales de cada zona
-const ZONE_COORDS = {
-  'madrid-centro':  geo(40.4168, -3.7038),
-  'madrid-norte':   geo(40.5400, -3.6500),
-  'madrid-sur':     geo(40.3300, -3.7500),
-  'madrid-este':    geo(40.4800, -3.3700),
-  'madrid-oeste':   geo(40.4400, -3.8200),
-  'getafe':         geo(40.3050, -3.7300),
-  'alcorcon':       geo(40.3450, -3.8300),
-  'toledo-capital': geo(39.8600, -4.0300),
-  'talavera':       geo(39.9600, -4.8300),
-  'illescas':       geo(40.1200, -3.8500),
-};
-
-/* ── Contorno real de la Comunidad de Madrid ─────────────────────────── */
-const MADRID_OUTLINE = [
-  [40.89,-4.52],[40.95,-4.35],[41.02,-4.15],[41.07,-3.95],
-  [41.10,-3.75],[41.12,-3.55],[41.15,-3.40],[41.08,-3.18],
-  [40.95,-3.08],[40.80,-3.05],[40.65,-3.08],[40.50,-3.10],
-  [40.38,-3.13],[40.25,-3.18],[40.12,-3.28],[40.02,-3.42],
-  [39.92,-3.55],[39.88,-3.68],[39.92,-3.85],[39.98,-4.02],
-  [40.08,-4.22],[40.20,-4.38],[40.35,-4.48],[40.50,-4.52],
-  [40.68,-4.55],[40.82,-4.55],
-].map(([lat, lon]) => geo(lat, lon));
-
-const MADRID_PATH = 'M' + MADRID_OUTLINE.map(p => `${p.cx},${p.cy}`).join(' L') + ' Z';
-
-/* ── Zona de cobertura Toledo (simplificada) ─────────────────────────── */
-const TOLEDO_COVERAGE = [
-  [40.08,-4.22],[40.02,-3.42],[39.92,-3.55],[39.88,-3.68],
-  [39.75,-3.75],[39.72,-4.00],[39.70,-4.30],[39.78,-4.60],
-  [39.85,-4.95],[39.95,-5.05],[40.05,-4.85],[40.12,-4.55],
-  [40.08,-4.22],
-].map(([lat, lon]) => geo(lat, lon));
-
-const TOLEDO_PATH = 'M' + TOLEDO_COVERAGE.map(p => `${p.cx},${p.cy}`).join(' L') + ' Z';
-
-/* ── Autopistas principales (puntos origen → destino) ─────────────── */
-const HIGHWAYS = [
-  { id: 'A-1',  label: 'A-1',  pts: [geo(40.42,-3.70), geo(40.65,-3.65), geo(40.90,-3.55)] },
-  { id: 'A-2',  label: 'A-2',  pts: [geo(40.42,-3.70), geo(40.55,-3.40), geo(40.70,-3.10)] },
-  { id: 'A-3',  label: 'A-3',  pts: [geo(40.42,-3.70), geo(40.30,-3.40), geo(40.15,-3.20)] },
-  { id: 'A-4',  label: 'A-4',  pts: [geo(40.42,-3.70), geo(40.20,-3.72), geo(39.88,-3.68)] },
-  { id: 'A-42', label: 'A-42', pts: [geo(40.42,-3.70), geo(40.15,-3.82), geo(39.86,-4.03)] },
-  { id: 'A-5',  label: 'A-5',  pts: [geo(40.42,-3.70), geo(40.35,-4.10), geo(39.96,-4.83)] },
-  { id: 'A-6',  label: 'A-6',  pts: [geo(40.42,-3.70), geo(40.60,-3.95), geo(40.85,-4.35)] },
-];
-
-const REGION_COLOR = { Madrid: '#F5C518', Toledo: '#f59e0b' };
-
 const highlights = [
   { icon: Zap,           title: 'Urgencias 24h',       desc: 'Respuesta garantizada en cualquier zona de cobertura' },
   { icon: Clock,         title: 'Presupuesto en 24h',  desc: 'Estudio y propuesta económica en menos de un día laborable' },
@@ -162,166 +103,24 @@ export default function ZonasPage() {
           <div className="container-custom px-6">
             <div className="text-center mb-12">
               <h2 className="section-title">Selecciona tu zona</h2>
-              <p className="section-subtitle">Haz clic en cualquier punto del mapa para ver los detalles</p>
+              <p className="section-subtitle">Selecciona tu zona en la lista o explora nuestro mapa de cobertura</p>
             </div>
 
             <div className="max-w-5xl mx-auto grid lg:grid-cols-5 gap-8 items-start">
 
-              {/* SVG Map */}
+              {/* Google Maps Embed */}
               <div className="lg:col-span-3">
-                <div className="relative bg-white/3 border border-white/8 rounded-2xl p-4 overflow-hidden">
-                  <svg
-                    viewBox="50 -150 700 750"
-                    className="w-full h-auto"
-                    role="img"
-                    aria-label="Mapa interactivo de la Comunidad de Madrid y Toledo"
-                  >
-                    <defs>
-                      {/* Glow filter for active markers */}
-                      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                        <feGaussianBlur stdDeviation="4" result="blur" />
-                        <feMerge>
-                          <feMergeNode in="blur" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                      {/* Madrid region gradient */}
-                      <linearGradient id="madridFill" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#F5C518" stopOpacity="0.12" />
-                        <stop offset="100%" stopColor="#F5C518" stopOpacity="0.03" />
-                      </linearGradient>
-                      {/* Toledo region gradient */}
-                      <linearGradient id="toledoFill" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.08" />
-                        <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.02" />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Fondo */}
-                    <rect x="50" y="-150" width="700" height="750" fill="#0a0e18" rx="8" />
-
-                    {/* ── Toledo province coverage ── */}
-                    <path
-                      d={TOLEDO_PATH}
-                      fill="url(#toledoFill)"
-                      stroke="#f59e0b"
-                      strokeWidth="1.2"
-                      strokeOpacity="0.25"
-                      strokeDasharray="6 4"
-                    />
-
-                    {/* ── Comunidad de Madrid outline ── */}
-                    <path
-                      d={MADRID_PATH}
-                      fill="url(#madridFill)"
-                      stroke="#F5C518"
-                      strokeWidth="1.8"
-                      strokeOpacity="0.5"
-                      strokeLinejoin="round"
-                    />
-
-                    {/* ── Autopistas principales ── */}
-                    {HIGHWAYS.map((hw) => {
-                      const d = 'M' + hw.pts.map(p => `${p.cx},${p.cy}`).join(' L');
-                      const mid = hw.pts[1];
-                      return (
-                        <g key={hw.id}>
-                          <path d={d} fill="none" stroke="white" strokeOpacity="0.08" strokeWidth="1.5" strokeLinecap="round" />
-                          <text
-                            x={mid.cx + 6}
-                            y={mid.cy - 5}
-                            fill="white"
-                            fillOpacity="0.18"
-                            fontSize="7"
-                            fontFamily="sans-serif"
-                            fontWeight="600"
-                          >
-                            {hw.label}
-                          </text>
-                        </g>
-                      );
-                    })}
-
-                    {/* ── M-30 anillo (ring road) ── */}
-                    {(() => {
-                      const c = ZONE_COORDS['madrid-centro'];
-                      return <ellipse cx={c.cx} cy={c.cy} rx="25" ry="20" fill="none" stroke="white" strokeOpacity="0.06" strokeWidth="1" strokeDasharray="3 3" />;
-                    })()}
-
-                    {/* ── Region labels ── */}
-                    <text x={ZONE_COORDS['madrid-norte'].cx + 50} y={ZONE_COORDS['madrid-norte'].cy - 55} fill="#F5C518" fillOpacity="0.35" fontSize="11" fontFamily="sans-serif" fontWeight="bold" letterSpacing="3">COMUNIDAD DE MADRID</text>
-                    <text x={ZONE_COORDS['toledo-capital'].cx - 60} y={ZONE_COORDS['toledo-capital'].cy + 50} fill="#f59e0b" fillOpacity="0.3" fontSize="10" fontFamily="sans-serif" fontWeight="bold" letterSpacing="2">TOLEDO</text>
-
-                    {/* ── Puntos de zona (geográficos) ── */}
-                    {zones.map((z) => {
-                      const coord = ZONE_COORDS[z.slug];
-                      if (!coord) return null;
-                      const isActive = active === z.slug;
-                      const color = REGION_COLOR[z.region];
-                      return (
-                        <g
-                          key={z.slug}
-                          className="cursor-pointer"
-                          onClick={() => setActive(isActive ? null : z.slug)}
-                          role="button"
-                          aria-label={`Ver zona ${z.name}`}
-                          aria-pressed={isActive}
-                        >
-                          {/* Halo animado */}
-                          {isActive && (
-                            <circle cx={coord.cx} cy={coord.cy} r="22" fill={color} fillOpacity="0.15" filter="url(#glow)">
-                              <animate attributeName="r" values="16;26;16" dur="2s" repeatCount="indefinite"/>
-                              <animate attributeName="fill-opacity" values="0.2;0.05;0.2" dur="2s" repeatCount="indefinite"/>
-                            </circle>
-                          )}
-                          {/* Punto principal */}
-                          <circle
-                            cx={coord.cx}
-                            cy={coord.cy}
-                            r={isActive ? 10 : 7}
-                            fill={color}
-                            fillOpacity={isActive ? 1 : 0.75}
-                            stroke={isActive ? '#fff' : color}
-                            strokeWidth={isActive ? 2 : 1}
-                            strokeOpacity={isActive ? 1 : 0.4}
-                            style={{ transition: 'all 0.25s ease' }}
-                          />
-                          {/* Centro blanco */}
-                          <circle cx={coord.cx} cy={coord.cy} r="2.5" fill="#fff" fillOpacity={isActive ? 1 : 0.6}/>
-                          {/* Label */}
-                          <text
-                            x={coord.cx}
-                            y={coord.cy + 18}
-                            textAnchor="middle"
-                            fill="white"
-                            fillOpacity={isActive ? 1 : 0.55}
-                            fontSize="8"
-                            fontFamily="sans-serif"
-                            fontWeight={isActive ? 'bold' : 'normal'}
-                            style={{ transition: 'fill-opacity 0.2s' }}
-                          >
-                            {z.name}
-                          </text>
-                        </g>
-                      );
-                    })}
-                  </svg>
-
-                  {/* Leyenda */}
-                  <div className="flex items-center justify-center gap-6 mt-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-brand" />
-                      <span className="text-white/40 text-xs">Comunidad de Madrid</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-amber-400" />
-                      <span className="text-white/40 text-xs">Provincia de Toledo</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-px bg-white/20" />
-                      <span className="text-white/40 text-xs">Autopistas</span>
-                    </div>
-                  </div>
+                <div className="relative bg-[#0a0e18] border border-white/8 rounded-2xl p-2 overflow-hidden h-[400px] md:h-[500px]">
+                  <iframe
+                    src="https://maps.google.com/maps?q=Comunidad%20de%20Madrid,%20Spain&t=&z=8&ie=UTF8&iwloc=&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, borderRadius: '0.5rem' }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Mapa de cobertura ALM Electricidad"
+                  ></iframe>
                 </div>
               </div>
 

@@ -7,7 +7,7 @@ const sections = [
     title: 'Datos del Titular',
     content: [
       'En cumplimiento de lo establecido en la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSI-CE), así como de la normativa vigente de protección de datos, se facilitan los siguientes datos identificativos del titular del sitio web:',
-      '• Denominación social: ALM Electricidad\n• Dirección: Vivaldi, 87, 45340, España\n• Teléfono: +34 605 333 108\n• Email: contacto@almelectricidad.com\n• Sitio web: https://almelectricidad.com',
+      '• Denominación social: Jorge Hernández García (ALM Electricidad)\n• Dirección: C. Lisboa, 3, NAVE 10, 45300 Ocaña, Toledo\n• Teléfono: +34 605 333 108\n• Email: contacto@almelectricidad.com\n• Sitio web: https://almelectricidad.com',
     ],
   },
   {
@@ -138,7 +138,7 @@ export default function AvisoLegalPage() {
                 </a>
                 <span className="flex items-center gap-3 text-white/50 text-sm">
                   <MapPin size={16} className="text-brand shrink-0" />
-                  Vivaldi, 87 — 45340, Spain
+                  C. Lisboa, 3, NAVE 10 — 45300 Ocaña, Toledo
                 </span>
               </div>
             </div>
