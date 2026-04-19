@@ -127,7 +127,6 @@ export default function Hero() {
           loop
           playsInline
           preload="auto"
-          poster="/hero-bg.png"
           className="absolute inset-0 w-full h-full object-cover scale-110"
         >
           <source
