@@ -41,10 +41,15 @@ export default function FinalCTA() {
 
       <div className="relative max-w-4xl mx-auto px-6 text-center">
         {/* Heading */}
-        <h2 className="finalcta-heading text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-white leading-tight mb-10">
+        <h2 className="finalcta-heading text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-white leading-tight mb-4">
           Convierte tu instalaci&oacute;n el&eacute;ctrica en una{' '}
-          <span className="text-gradient-gold">ventaja competitiva</span>
+          <span className="text-brand">ventaja competitiva</span>
         </h2>
+        
+        {/* Subtitle support */}
+        <p className="finalcta-heading text-white/70 text-lg md:text-xl font-body max-w-2xl mx-auto mb-10">
+          Dejamos tu instalación lista para pasar cualquier inspección, sin chapuzas ni sobrecostes. Llámanos ahora y solucionamos tu problema.
+        </p>
 
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
@@ -71,11 +76,11 @@ export default function FinalCTA() {
         </div>
 
         {/* Bottom badges */}
-        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
+        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 mt-6">
           {badges.map((badge) => (
-            <div key={badge.text} className="finalcta-badge flex items-center gap-2 text-white/60">
-              <badge.icon size={16} className="text-brand-light" />
-              <span className="text-sm font-heading tracking-wide">{badge.text}</span>
+            <div key={badge.text} className="finalcta-badge flex items-center gap-2.5 text-white/80">
+              <badge.icon size={20} className="text-brand" />
+              <span className="text-base font-heading font-medium tracking-wide">{badge.text}</span>
             </div>
           ))}
         </div>
