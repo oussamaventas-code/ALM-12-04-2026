@@ -188,7 +188,7 @@ export default function Footer() {
           <p className="text-xs text-white/60">
             &copy; {currentYear} ALM Electricidad. Todos los derechos reservados.
             <span className="mx-2 text-white/20" aria-hidden="true">&middot;</span>
-            Dise&ntilde;o web por <span className="text-brand/70 font-semibold">SOMSYNGULAR</span>
+            Dise&ntilde;o web por <a href="https://somsyngular.com" target="_blank" rel="noopener noreferrer" className="text-brand/70 font-semibold hover:text-brand transition-colors" aria-label="Visitar sitio web de SOMSYNGULAR">SOMSYNGULAR</a>
           </p>
           <div className="flex items-center gap-6">
             <Link
