@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Send, Phone, MessageCircle, ChevronDown, ArrowDown } from 'lucide-react';
+import { Send, Phone, MessageCircle, ChevronDown, ArrowDown, CheckCircle } from 'lucide-react';
 import gsap from 'gsap';
 import MagneticElement from './MagneticElement';
 
@@ -27,7 +27,9 @@ export default function Hero() {
     telefono: '',
     tipo: '',
   });
-
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -70,17 +72,41 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
+  const validateForm = () => {
+    const errs = {};
+    if (!formData.nombre.trim()) errs.nombre = 'El nombre es obligatorio';
+    if (!formData.telefono.trim()) errs.telefono = 'El teléfono es obligatorio';
+    else if (!/^[0-9+\s()-]{6,}$/.test(formData.telefono.trim())) errs.telefono = 'Introduce un teléfono válido';
+    if (!formData.tipo) errs.tipo = 'Selecciona el tipo de proyecto';
+    return errs;
+  };
+
+  const clearFieldError = (field) => {
+    if (formErrors[field]) setFormErrors(prev => ({ ...prev, [field]: '' }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const parts = [`Hola, soy ${formData.nombre}`];
-    if (formData.empresa) parts[0] += ` de ${formData.empresa}`;
-    parts.push(`Necesito info sobre: ${formData.tipo}`);
-    parts.push(`Mi teléfono: ${formData.telefono}`);
-    const msg = parts.join('. ') + '.';
-    window.open(
-      `https://wa.me/34605333108?text=${encodeURIComponent(msg)}`,
-      '_blank'
-    );
+    const errs = validateForm();
+    if (Object.keys(errs).length > 0) {
+      setFormErrors(errs);
+      return;
+    }
+    setIsSubmitting(true);
+    setTimeout(() => {
+      const parts = [`Hola, soy ${formData.nombre}`];
+      if (formData.empresa) parts[0] += ` de ${formData.empresa}`;
+      parts.push(`Necesito info sobre: ${formData.tipo}`);
+      parts.push(`Mi teléfono: ${formData.telefono}`);
+      const msg = parts.join('. ') + '.';
+      window.open(
+        `https://wa.me/34605333108?text=${encodeURIComponent(msg)}`,
+        '_blank',
+        'noopener,noreferrer'
+      );
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }, 600);
   };
 
   return (
@@ -113,7 +139,6 @@ export default function Hero() {
             src="/videos/HERO PARA PC.mp4"
             type="video/mp4"
           />
-          <track kind="captions" src="/videos/empty.vtt" srclang="es" label="Sin subtítulos" default />
         </video>
 
         {/* Overlays for legibility */}
@@ -160,7 +185,7 @@ export default function Hero() {
                 <a
                   href="https://wa.me/34605333108"
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   className="hero-cta-btn btn-whatsapp !py-3.5 !px-7"
                 >
                   <MessageCircle size={18} />
@@ -183,96 +208,131 @@ export default function Hero() {
           {/* Solo visible en desktop (≥ lg) donde el grid de 2 cols está activo */}
           {/* En móvil/tablet: el copy y sus CTAs de WhatsApp/llamada son suficientes */}
           <div className="hero-form hidden lg:block" style={{ minHeight: '480px' }}>
-            <form
-              onSubmit={handleSubmit}
-              className="animate-pulse-glow bg-black/15 backdrop-blur-sm border border-white/[0.08] p-6 md:p-8 space-y-4"
-            >
-              {/* Form header */}
-              <div className="mb-2">
-                <p className="font-heading text-xl font-bold text-white">
-                  Cuéntanos qué necesitas
-                </p>
-                <p className="text-white/65 text-sm font-body mt-1">
-                  Te respondemos en menos de 24h. De verdad.
-                </p>
-              </div>
+            <div className="bg-black/15 backdrop-blur-sm border border-white/[0.08] p-6 md:p-8">
+              {isSubmitted ? (
+                <div className="flex flex-col items-center justify-center gap-5 py-8 text-center animate-fadeInUp">
+                  <div className="w-16 h-16 rounded-full bg-success/10 border border-success/30 flex items-center justify-center">
+                    <CheckCircle size={32} className="text-success" />
+                  </div>
+                  <div>
+                    <p className="font-heading text-xl font-bold text-white">¡Enviado!</p>
+                    <p className="text-white/65 text-sm font-body mt-2 leading-relaxed">
+                      Se ha abierto WhatsApp con tu consulta.<br />
+                      Te respondemos en menos de 24h.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsSubmitted(false);
+                      setFormErrors({});
+                      setFormData({ nombre: '', empresa: '', telefono: '', tipo: '' });
+                    }}
+                    className="text-brand text-sm font-body hover:text-brand-light transition-colors underline underline-offset-2"
+                  >
+                    Enviar otra consulta
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} noValidate className="space-y-4">
+                  {/* Form header */}
+                  <div className="mb-2">
+                    <p className="font-heading text-xl font-bold text-white">
+                      Cuéntanos qué necesitas
+                    </p>
+                    <p className="text-white/65 text-sm font-body mt-1">
+                      Te respondemos en menos de 24h. De verdad.
+                    </p>
+                  </div>
 
-              {/* Nombre */}
-              <input
-                type="text"
-                placeholder="Tu nombre"
-                className="input-field"
-                value={formData.nombre}
-                onChange={(e) =>
-                  setFormData({ ...formData, nombre: e.target.value })
-                }
-                required
-              />
+                  {/* Nombre */}
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Tu nombre"
+                      className={`input-field ${formErrors.nombre ? '!border-red-400/60' : ''}`}
+                      value={formData.nombre}
+                      onChange={(e) => { setFormData({ ...formData, nombre: e.target.value }); clearFieldError('nombre'); }}
+                    />
+                    {formErrors.nombre && <p className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.nombre}</p>}
+                  </div>
 
-              {/* Empresa */}
-              <input
-                type="text"
-                placeholder="Empresa (opcional)"
-                className="input-field"
-                value={formData.empresa}
-                onChange={(e) =>
-                  setFormData({ ...formData, empresa: e.target.value })
-                }
-              />
+                  {/* Empresa */}
+                  <input
+                    type="text"
+                    placeholder="Empresa (opcional)"
+                    className="input-field"
+                    value={formData.empresa}
+                    onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
+                  />
 
-              {/* Teléfono */}
-              <input
-                type="tel"
-                placeholder="Teléfono de contacto"
-                className="input-field"
-                value={formData.telefono}
-                onChange={(e) =>
-                  setFormData({ ...formData, telefono: e.target.value })
-                }
-                required
-              />
+                  {/* Teléfono */}
+                  <div>
+                    <input
+                      type="tel"
+                      placeholder="Teléfono de contacto"
+                      className={`input-field ${formErrors.telefono ? '!border-red-400/60' : ''}`}
+                      value={formData.telefono}
+                      onChange={(e) => { setFormData({ ...formData, telefono: e.target.value }); clearFieldError('telefono'); }}
+                    />
+                    {formErrors.telefono && <p className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.telefono}</p>}
+                  </div>
 
-              {/* Tipo de proyecto */}
-              <div className="relative">
-                <label htmlFor="tipo-proyecto" className="sr-only">Tipo de proyecto</label>
-                <select
-                  id="tipo-proyecto"
-                  className="input-field appearance-none cursor-pointer"
-                  value={formData.tipo}
-                  onChange={(e) =>
-                    setFormData({ ...formData, tipo: e.target.value })
-                  }
-                  required
-                >
-                  <option value="" disabled>
-                    Tipo de proyecto
-                  </option>
-                  {projectTypes.map((t) => (
-                    <option key={t} value={t} className="bg-dark text-white">
-                      {t}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown
-                  size={18}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
-                />
-              </div>
+                  {/* Tipo de proyecto */}
+                  <div>
+                    <div className="relative">
+                      <label htmlFor="tipo-proyecto" className="sr-only">Tipo de proyecto</label>
+                      <select
+                        id="tipo-proyecto"
+                        className={`input-field appearance-none cursor-pointer ${formErrors.tipo ? '!border-red-400/60' : ''}`}
+                        value={formData.tipo}
+                        onChange={(e) => { setFormData({ ...formData, tipo: e.target.value }); clearFieldError('tipo'); }}
+                      >
+                        <option value="" disabled>
+                          Tipo de proyecto
+                        </option>
+                        {projectTypes.map((t) => (
+                          <option key={t} value={t} className="bg-dark text-white">
+                            {t}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown
+                        size={18}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
+                      />
+                    </div>
+                    {formErrors.tipo && <p className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.tipo}</p>}
+                  </div>
 
-              {/* Submit */}
-              <button
-                type="submit"
-                className="btn-brand w-full justify-center !py-3.5 mt-2"
-              >
-                <Send size={18} />
-                Enviar por WhatsApp
-              </button>
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="btn-brand w-full justify-center !py-3.5 mt-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:!transform-none disabled:!shadow-none"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Enviando...
+                      </>
+                    ) : (
+                      <>
+                        <Send size={18} />
+                        Enviar por WhatsApp
+                      </>
+                    )}
+                  </button>
 
-              <p className="text-white/30 text-xs text-center font-body">
-                Sin compromiso. Respondemos incluso fuera de horario si es
-                urgente.
-              </p>
-            </form>
+                  <p className="text-white/50 text-xs text-center font-body">
+                    Sin compromiso. Respondemos incluso fuera de horario si es urgente.
+                  </p>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -280,7 +340,6 @@ export default function Hero() {
       {/* ── Scroll indicator ── */}
       <div className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
         <span className="text-white/60 text-xs font-body uppercase tracking-[0.15em]">
-
           Descubre más
         </span>
         <ArrowDown size={18} className="text-brand animate-bounce" />

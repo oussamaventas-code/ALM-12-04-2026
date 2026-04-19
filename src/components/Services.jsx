@@ -7,7 +7,7 @@ import { services } from '../data/services';
 
 const allServices = services.map((s) => ({ ...s, isLink: true }));
 
-function ServiceCard({ s, className, style }) {
+function ServiceCard({ s, className, style, alwaysShowOverlay = false }) {
   const cardContent = (
     <>
       {/* Image — full card */}
@@ -22,7 +22,7 @@ function ServiceCard({ s, className, style }) {
       />
 
       {/* Hover overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-7 z-10">
+      <div className={`absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-transparent transition-opacity duration-500 flex flex-col justify-end p-7 z-10 ${alwaysShowOverlay ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
         <span className="font-body text-xs font-semibold uppercase tracking-[0.15em] text-brand">
           {s.subtitle}
         </span>
@@ -39,7 +39,7 @@ function ServiceCard({ s, className, style }) {
       </div>
 
       {/* Always-visible bottom bar */}
-      <div className="absolute bottom-0 left-0 right-0 bg-dark/85 backdrop-blur-sm px-5 py-3 group-hover:opacity-0 transition-opacity duration-300 z-10">
+      <div className={`absolute bottom-0 left-0 right-0 bg-dark/85 backdrop-blur-sm px-5 py-3 transition-opacity duration-300 z-10 ${alwaysShowOverlay ? 'opacity-0' : 'group-hover:opacity-0'}`}>
         <div className="flex items-center justify-between">
           <span className="font-body text-[10px] font-semibold uppercase tracking-[0.12em] text-brand">
             {s.subtitle}
@@ -246,6 +246,7 @@ function ServicesMobile() {
               <ServiceCard
                 s={s}
                 className="service-card-v relative shrink-0 overflow-hidden cursor-pointer block w-full h-[320px]"
+                alwaysShowOverlay
               />
               <div className="absolute top-4 left-4 font-heading font-black text-5xl text-white/[0.07] leading-none select-none pointer-events-none group-hover:text-white/[0.12] transition-colors duration-500 z-10">
                 {String(i + 1).padStart(2, '0')}

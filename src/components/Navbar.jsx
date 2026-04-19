@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Zap, Phone, ChevronDown, MapPin } from 'lucide-react';
+import { Menu, X, Zap, Phone, ChevronDown, MapPin, Wrench, Sun, Lightbulb, FileText, Wifi, PlugZap, Factory, BookOpen, Users, Truck, AlertCircle, Award, Globe } from 'lucide-react';
 import gsap from 'gsap';
 import MagneticElement from './MagneticElement';
 
@@ -9,40 +9,40 @@ const navLinks = [
     label: 'Servicios',
     id: 'servicios',
     dropdown: [
-      { label: '⚡ Instalaciones Eléctricas',    to: '/servicios/instalaciones-electricas' },
-      { label: '🔧 Reparación de Averías 24h',   to: '/servicios/reparacion-averias' },
-      { label: '☀️ Paneles Solares',              to: '/servicios/paneles-solares' },
-      { label: '💡 Iluminación LED',              to: '/servicios/iluminacion-led' },
-      { label: '📋 Boletines y Certificados',     to: '/servicios/boletines-certificados' },
-      { label: '📡 Telecomunicaciones',           to: '/servicios/telecomunicaciones' },
-      { label: '🔌 Recarga Vehículo Eléctrico',  to: '/servicios/recarga-vehiculo-electrico' },
-      { label: '🌞 Fotovoltaica Industrial',      to: '/fotovoltaica' },
+      { label: 'Instalaciones Eléctricas',   to: '/servicios/instalaciones-electricas', icon: Zap },
+      { label: 'Reparación de Averías 24h',  to: '/servicios/reparacion-averias', icon: Wrench },
+      { label: 'Paneles Solares',             to: '/servicios/paneles-solares', icon: Sun },
+      { label: 'Iluminación LED',             to: '/servicios/iluminacion-led', icon: Lightbulb },
+      { label: 'Boletines y Certificados',    to: '/servicios/boletines-certificados', icon: FileText },
+      { label: 'Telecomunicaciones',          to: '/servicios/telecomunicaciones', icon: Wifi },
+      { label: 'Recarga Vehículo Eléctrico', to: '/servicios/recarga-vehiculo-electrico', icon: PlugZap },
+      { label: 'Fotovoltaica Industrial',     to: '/fotovoltaica', icon: Factory },
     ],
   },
   {
     label: 'Zonas',
     id: 'zonas',
     dropdown: [
-      { label: '🗺️ Ver todas las zonas', to: '/zonas' },
-      { label: 'Madrid Centro', to: '/zonas/madrid-centro' },
-      { label: 'Madrid Norte',  to: '/zonas/madrid-norte' },
-      { label: 'Madrid Sur',    to: '/zonas/madrid-sur' },
-      { label: 'Madrid Este',   to: '/zonas/madrid-este' },
-      { label: 'Madrid Oeste',  to: '/zonas/madrid-oeste' },
-      { label: 'Getafe',        to: '/zonas/getafe' },
-      { label: 'Alcorcon',      to: '/zonas/alcorcon' },
-      { label: 'Toledo',        to: '/zonas/toledo-capital' },
+      { label: 'Ver todas las zonas', to: '/zonas', icon: Globe },
+      { label: 'Madrid Centro', to: '/zonas/madrid-centro', icon: MapPin },
+      { label: 'Madrid Norte',  to: '/zonas/madrid-norte', icon: MapPin },
+      { label: 'Madrid Sur',    to: '/zonas/madrid-sur', icon: MapPin },
+      { label: 'Madrid Este',   to: '/zonas/madrid-este', icon: MapPin },
+      { label: 'Madrid Oeste',  to: '/zonas/madrid-oeste', icon: MapPin },
+      { label: 'Getafe',        to: '/zonas/getafe', icon: MapPin },
+      { label: 'Alcorcon',      to: '/zonas/alcorcon', icon: MapPin },
+      { label: 'Toledo',        to: '/zonas/toledo-capital', icon: MapPin },
     ],
   },
   {
     label: 'Nosotros',
     id: 'nosotros',
     dropdown: [
-      { label: 'Nuestra Historia', to: '/sobre-nosotros' },
-      { label: 'Nuestro Equipo',   to: '/equipo' },
-      { label: 'Nuestra Flota',   to: '/flota' },
-      { label: 'Urgencias 24h',   to: '/urgencias' },
-      { label: 'Patrocinios',     to: '/patrocinios' },
+      { label: 'Nuestra Historia', to: '/sobre-nosotros', icon: BookOpen },
+      { label: 'Nuestro Equipo',   to: '/equipo', icon: Users },
+      { label: 'Nuestra Flota',    to: '/flota', icon: Truck },
+      { label: 'Urgencias 24h',    to: '/urgencias', icon: AlertCircle },
+      { label: 'Patrocinios',      to: '/patrocinios', icon: Award },
     ],
   },
   { label: 'Proyectos', to: '/proyectos' },
@@ -189,7 +189,7 @@ export default function Navbar() {
                           onClick={() => setActiveDropdown(null)}
                           className="flex items-center gap-2.5 px-5 py-2.5 text-sm text-white/60 hover:text-brand-glow hover:bg-white/5 transition-all duration-200 font-body"
                         >
-                          <MapPin size={13} className="text-brand/50" aria-hidden="true" />
+                          <item.icon size={13} className="text-brand/50" aria-hidden="true" />
                           {item.label}
                         </Link>
                       ))}
@@ -304,7 +304,7 @@ export default function Navbar() {
                           onClick={closeMobile}
                           className="flex items-center gap-2 text-white/50 hover:text-brand-glow text-lg py-2 transition-colors font-body"
                         >
-                          <MapPin size={14} className="text-brand/40" />
+                          <item.icon size={14} className="text-brand/40" />
                           {item.label}
                         </Link>
                       ))}

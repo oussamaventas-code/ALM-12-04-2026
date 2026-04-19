@@ -134,7 +134,7 @@ export default function Metrics() {
               <p className="font-body text-sm font-semibold text-white/80 tracking-wide uppercase" aria-hidden="true">
                 {m.label}
               </p>
-              <p className="font-body text-xs text-white/35 mt-1" aria-hidden="true">
+              <p className="font-body text-xs text-white/50 mt-1" aria-hidden="true">
                 {m.sub}
               </p>
             </div>

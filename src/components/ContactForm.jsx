@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowRight, User, Mail, Phone, MessageSquare } from 'lucide-react';
+import { ArrowRight, User, Mail, Phone, MessageSquare, CheckCircle } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,6 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 export default function ContactForm() {
   const sectionRef = useRef(null);
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -59,17 +61,22 @@ export default function ContactForm() {
     return Object.keys(e).length === 0;
   }, [formData]);
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    if (!validate()) return;
-    handleWhatsApp();
-  }, [validate]);
-
-  const handleWhatsApp = () => {
+  const handleWhatsApp = useCallback(() => {
     const message = `Hola, me gustaría solicitar un presupuesto. Nombre: ${formData.nombre}, Email: ${formData.email}, Teléfono: ${formData.telefono}${formData.empresa ? `, Empresa: ${formData.empresa}` : ''}, Servicio: ${formData.servicio}`;
     const whatsappUrl = `https://wa.me/34605333108?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
-  };
+  }, [formData]);
+
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    setIsSubmitting(true);
+    setTimeout(() => {
+      handleWhatsApp();
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }, 600);
+  }, [validate, handleWhatsApp]);
 
   return (
     <section
@@ -156,6 +163,27 @@ export default function ContactForm() {
                   boxShadow: '0 0 40px rgba(245, 197, 24, 0.15), inset 0 0 20px rgba(245, 197, 24, 0.05), 0 8px 32px rgba(0, 0, 0, 0.3)'
                 }}
               >
+                {isSubmitted ? (
+                  <div className="flex flex-col items-center justify-center gap-5 py-10 text-center animate-fadeInUp">
+                    <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center">
+                      <CheckCircle size={32} className="text-green-400" />
+                    </div>
+                    <div>
+                      <p className="font-heading text-2xl font-bold text-[var(--color-ink)] mb-2">¡Solicitud enviada!</p>
+                      <p className="font-body text-[var(--color-ink-400)] text-sm leading-relaxed">
+                        Se ha abierto WhatsApp con tu consulta.<br />
+                        Te respondemos en menos de 24h.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => { setIsSubmitted(false); setFormData({ nombre: '', email: '', telefono: '', empresa: '', servicio: '' }); }}
+                      className="text-[var(--color-brand)] text-sm font-body hover:text-[var(--color-brand-light)] transition-colors underline underline-offset-2"
+                    >
+                      Enviar otra consulta
+                    </button>
+                  </div>
+                ) : (
                 <form onSubmit={handleSubmit} noValidate className="space-y-5 font-body">
 
                   {/* Nombre */}
@@ -263,12 +291,26 @@ export default function ContactForm() {
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full bg-[var(--color-brand)] hover:bg-[var(--color-brand-dim)] text-[var(--color-dark)] font-bold py-3.5 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(245,197,24,0.4)] hover:-translate-y-1 active:translate-y-0 mt-6"
+                    disabled={isSubmitting}
+                    className="w-full bg-[var(--color-brand)] hover:bg-[var(--color-brand-dim)] text-[var(--color-dark)] font-bold py-3.5 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(245,197,24,0.4)] hover:-translate-y-1 active:translate-y-0 mt-6 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
                   >
-                    Solicitar Presupuesto
-                    <ArrowRight size={18} />
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Enviando...
+                      </>
+                    ) : (
+                      <>
+                        Solicitar Presupuesto
+                        <ArrowRight size={18} />
+                      </>
+                    )}
                   </button>
                 </form>
+                )}
               </div>
           </div>
 

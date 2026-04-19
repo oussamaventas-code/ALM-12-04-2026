@@ -37,7 +37,7 @@
   /* ── BLANCO (texto, 20%) ── */
   --color-ink:          #F2F2F0;   /* texto principal */
   --color-ink-600:      #C0C0CA;   /* texto secundario (más legible) */
-  --color-ink-400:      #7A7A84;   /* texto muted (mejorado) */
+  --color-ink-400:      #8C8C96;   /* texto muted (mejorado) */
   --color-ink-300:      #4A4A54;   /* bordes suaves (más visibles) */
 
   /* aliases */
@@ -367,6 +367,19 @@
     box-shadow: 0 8px 28px rgba(245, 197, 24, 0.4);
   }
 
+  .btn-brand:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(245, 197, 24, 0.2);
+  }
+
+  .btn-brand:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
   .btn-accent {
     display: inline-flex;
     align-items: center;
@@ -438,6 +451,19 @@
     box-shadow: 0 8px 28px rgba(245, 197, 24, 0.4);
   }
 
+  .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(245, 197, 24, 0.2);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
   .btn-secondary {
     display: inline-flex;
     align-items: center;
@@ -480,6 +506,19 @@
     background: #1da851;
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+  }
+
+  .btn-whatsapp:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  .btn-whatsapp:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    pointer-events: none;
   }
 
   /* ─── Inputs ─── */
