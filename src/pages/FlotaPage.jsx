@@ -13,14 +13,14 @@ const vehicles = [
     type: 'Taller Móvil',
     desc: 'Equipada con herramienta de precisión y material de instalación completo para obras residenciales y comerciales.',
     specs: ['Material para cuadros eléctricos completos', 'Herramienta de verificación y certificación', 'Cable prefijado en bobinas para respuesta rápida'],
-    image: '/images/flota/Professional_commercial_fleet_202604082305.png',
+    image: '/images/flota/Professional_commercial_fleet_202604082305.webp',
   },
   {
     name: 'Furgoneta Técnica 02',
     type: 'Urgencias y Averías',
     desc: 'Unidad de respuesta rápida 24h para urgencias. Equipada con material de reposición inmediata.',
     specs: ['Material de reposición inmediata', 'Diagnóstico de averías en campo', 'Operativa 24h / 365 días'],
-    image: '/images/flota/Professional_3_4_side_202604082308.png',
+    image: '/images/flota/Professional_3_4_side_202604082308.webp',
   },
   {
     name: 'Furgoneta Técnica 03',
@@ -206,6 +206,8 @@ export default function FlotaPage() {
                 <img
                   src={v.image}
                   alt={v.name}
+                  width="400"
+                  height="260"
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-contain"
@@ -272,6 +274,8 @@ export default function FlotaPage() {
                 <img
                   src={v.image}
                   alt={v.name}
+                  width="1280"
+                  height="720"
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover md:object-contain relative z-0 transition-transform duration-700 hover:scale-[1.03]"

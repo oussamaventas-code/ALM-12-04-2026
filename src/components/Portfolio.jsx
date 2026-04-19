@@ -155,6 +155,8 @@ function PortfolioDesktop() {
                 <img
                   src={p.image}
                   alt={p.title}
+                  width="520"
+                  height="700"
                   loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -282,6 +284,8 @@ function PortfolioMobile() {
               <img
                 src={p.image}
                 alt={p.title}
+                width="400"
+                height="300"
                 loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />

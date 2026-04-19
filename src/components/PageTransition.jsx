@@ -87,6 +87,8 @@ export default function PageTransition() {
         ref={logoRef}
         src="/LOGO Y JORGE/LOGO.JPG"
         alt=""
+        width="320"
+        height="64"
         className="h-16 w-auto object-contain opacity-0"
         style={{ filter: 'brightness(1.1)' }}
       />

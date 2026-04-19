@@ -137,6 +137,8 @@ export default function Navbar() {
               <img
                 src="/LOGO Y JORGE/LOGO.JPG"
                 alt="ALMelectricidad"
+                width="220"
+                height="44"
                 className="h-11 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
               />
             </Link>

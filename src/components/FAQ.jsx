@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+
 const faqs = [
   {
     question: '¿Cuánto cuesta una instalación eléctrica?',
@@ -51,7 +52,6 @@ const faqs = [
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
   const sectionRef = useRef(null);
-  const answersRef = useRef({});
 
   const toggle = (i) => {
     setOpenIndex((prev) => (prev === i ? null : i));
@@ -60,31 +60,6 @@ export default function FAQ() {
   /* IDs únicos para aria-controls / id pairs */
   const qId = (i) => `faq-question-${i}`;
   const aId = (i) => `faq-answer-${i}`;
-
-  /* Animate answer open/close */
-  useEffect(() => {
-    faqs.forEach((_, i) => {
-      const el = answersRef.current[i];
-      if (!el) return;
-
-      if (openIndex === i) {
-        gsap.set(el, { display: 'block' });
-        gsap.fromTo(
-          el,
-          { height: 0, autoAlpha: 0 },
-          { height: 'auto', autoAlpha: 1, duration: 0.4, ease: 'power2.out' }
-        );
-      } else {
-        gsap.to(el, {
-          height: 0,
-          autoAlpha: 0,
-          duration: 0.3,
-          ease: 'power2.in',
-          onComplete: () => gsap.set(el, { display: 'none' }),
-        });
-      }
-    });
-  }, [openIndex]);
 
   /* Entrance animation */
   useEffect(() => {
@@ -211,21 +186,24 @@ export default function FAQ() {
                     />
                   </button>
 
-                  {/* Answer panel */}
+                  {/* Answer panel — grid-template-rows para expand/collapse sin reflow */}
                   <div
                     id={aId(i)}
-                    ref={(el) => (answersRef.current[i] = el)}
                     role="region"
                     aria-labelledby={qId(i)}
-                    className="overflow-hidden border-t border-brand/20"
-                    style={{ display: 'none', height: 0 }}
+                    className="border-t border-brand/20"
+                    style={{
+                      display: 'grid',
+                      gridTemplateRows: isOpen ? '1fr' : '0fr',
+                      transition: 'grid-template-rows 0.35s ease',
+                    }}
                   >
-                    <div className="px-6 py-5 bg-brand/5">
-                      <p
-                        className="font-body text-sm leading-relaxed max-w-xl text-white/70"
-                      >
-                        {faq.answer}
-                      </p>
+                    <div className="overflow-hidden">
+                      <div className="px-6 py-5 bg-brand/5">
+                        <p className="font-body text-sm leading-relaxed max-w-xl text-white/70">
+                          {faq.answer}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -86,7 +86,9 @@ export default function Team() {
               <img
                 src="/LOGO Y JORGE/JORGE.PNG"
                 alt="Jorge Hernández García — Instalador Electricista Autorizado"
-                loading="lazy"
+                width="600"
+                height="800"
+                fetchPriority="high"
                 className="w-full h-full object-cover"
               />
               {/* Gradient veil */}

@@ -118,6 +118,8 @@ function PatrociniosDesktop() {
                 <img
                   src={step.img}
                   alt={step.title}
+                  width="1280"
+                  height="720"
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-contain relative z-0 transition-transform duration-700 hover:scale-[1.03]"
@@ -189,6 +191,8 @@ function PatrociniosMobile() {
             <img
               src={step.img}
               alt={step.title}
+              width="400"
+              height="300"
               loading="lazy"
               decoding="async"
               className="w-full h-full object-cover transition-transform duration-700"

@@ -140,6 +140,7 @@ export default function Hero() {
           loop
           playsInline
           preload="auto"
+          poster="/hero-bg.png"
           className="absolute inset-0 w-full h-full object-cover scale-110"
         >
           <source
@@ -151,6 +152,7 @@ export default function Hero() {
             src="/videos/HERO PARA PC.mp4"
             type="video/mp4"
           />
+          <track kind="captions" src="/videos/empty.vtt" srclang="es" label="Sin subtítulos" default />
         </video>
 
         {/* Overlays for legibility */}
@@ -197,7 +199,7 @@ export default function Hero() {
             </h1>
 
             {/* Subtitle */}
-            <p className="hero-subtitle font-body text-lg text-white/55 max-w-lg leading-relaxed mb-10">
+            <p className="hero-subtitle font-body text-lg text-white/75 max-w-lg leading-relaxed mb-10">
               Somos electricistas de verdad. Hacemos instalaciones seguras,
               limpias y que pasan inspección a la primera. Si algo no queda
               perfecto, volvemos sin coste. Así de simple.
@@ -231,16 +233,16 @@ export default function Hero() {
           {/* ── Right — Contact form ── */}
           {/* Solo visible en desktop (≥ lg) donde el grid de 2 cols está activo */}
           {/* En móvil/tablet: el copy y sus CTAs de WhatsApp/llamada son suficientes */}
-          <div className="hero-form hidden lg:block">
+          <div className="hero-form hidden lg:block" style={{ minHeight: '480px' }}>
             <form
               onSubmit={handleSubmit}
               className="animate-pulse-glow bg-black/15 backdrop-blur-sm border border-white/[0.08] p-6 md:p-8 space-y-4"
             >
               {/* Form header */}
               <div className="mb-2">
-                <h3 className="font-heading text-xl font-bold text-white">
+                <p className="font-heading text-xl font-bold text-white">
                   Cuéntanos qué necesitas
-                </h3>
+                </p>
                 <p className="text-white/65 text-sm font-body mt-1">
                   Te respondemos en menos de 24h. De verdad.
                 </p>
@@ -283,7 +285,9 @@ export default function Hero() {
 
               {/* Tipo de proyecto */}
               <div className="relative">
+                <label htmlFor="tipo-proyecto" className="sr-only">Tipo de proyecto</label>
                 <select
+                  id="tipo-proyecto"
                   className="input-field appearance-none cursor-pointer"
                   value={formData.tipo}
                   onChange={(e) =>

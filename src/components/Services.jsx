@@ -14,6 +14,8 @@ function ServiceCard({ s, className, style }) {
       <img
         src={s.image}
         alt={s.title}
+        width="520"
+        height="780"
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         loading="lazy"
         decoding="async"
