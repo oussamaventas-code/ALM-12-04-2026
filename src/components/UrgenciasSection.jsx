@@ -173,6 +173,8 @@ export default function UrgenciasSection() {
                 <img 
                   src={step.img} 
                   alt={step.title} 
+                  width="1280"
+                  height="800"
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover scale-105" 

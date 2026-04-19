@@ -32,44 +32,63 @@ export default function Hero() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Title word-by-word clip-path reveal
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    // ── QW-2: Defer GSAP hero timeline until after the browser is idle ─────
+    // requestIdleCallback cede el control al navegador para que calcule el LCP
+    // antes de que GSAP ocupe el main thread con clip-path y easings.
+    // Fallback a setTimeout(300) para Safari que no soporta rIC.
+    const scheduleAnim = (cb) =>
+      typeof requestIdleCallback !== 'undefined'
+        ? requestIdleCallback(cb, { timeout: 800 })
+        : setTimeout(cb, 300);
 
-      tl.from('.hero-badge', { y: 30, opacity: 0, duration: 0.8, delay: 0.3 });
+    let idleHandle;
+    let ctx;
 
-      // Animate each title line with clip-path (inverse text reveal)
-      gsap.utils.toArray('.hero-title-line').forEach((line, i) => {
-        tl.fromTo(
-          line,
-          { clipPath: 'inset(100% 0 0 0)', y: 40 },
-          { clipPath: 'inset(0% 0 0 0)', y: 0, duration: 1.1, ease: 'power4.out' },
-          `-=${i === 0 ? 0 : 0.8}`
-        );
-      });
+    idleHandle = scheduleAnim(() => {
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-      tl.from('.hero-subtitle', { y: 30, opacity: 0, duration: 0.8 }, '-=0.3')
-        .from('.hero-cta-btn', { y: 20, opacity: 0, duration: 0.5, stagger: 0.1 }, '-=0.4')
-        .from('.hero-form', { y: 50, opacity: 0, duration: 0.9 }, '-=0.6')
-        .from('.hero-scroll', { y: 15, opacity: 0, duration: 0.6 }, '-=0.2');
+        tl.from('.hero-badge', { y: 30, opacity: 0, duration: 0.8 });
 
-      // Parallax on video
-      if (bgRef.current) {
-        gsap.to(bgRef.current, {
-          yPercent: 18,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-          },
+        // Clip-path reveal en cada línea del título
+        gsap.utils.toArray('.hero-title-line').forEach((line, i) => {
+          tl.fromTo(
+            line,
+            { clipPath: 'inset(100% 0 0 0)', y: 40 },
+            { clipPath: 'inset(0% 0 0 0)', y: 0, duration: 1.1, ease: 'power4.out' },
+            `-=${i === 0 ? 0 : 0.8}`
+          );
         });
+
+        tl.from('.hero-subtitle', { y: 30, opacity: 0, duration: 0.8 }, '-=0.3')
+          .from('.hero-cta-btn', { y: 20, opacity: 0, duration: 0.5, stagger: 0.1 }, '-=0.4')
+          .from('.hero-form', { y: 50, opacity: 0, duration: 0.9 }, '-=0.6')
+          .from('.hero-scroll', { y: 15, opacity: 0, duration: 0.6 }, '-=0.2');
+
+        // Parallax en el video/fondo — solo desktop donde el video existe
+        if (bgRef.current) {
+          gsap.to(bgRef.current, {
+            yPercent: 18,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: heroRef.current,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: true,
+            },
+          });
+        }
+      }, heroRef);
+    });
+
+    return () => {
+      if (typeof requestIdleCallback !== 'undefined') {
+        cancelIdleCallback(idleHandle);
+      } else {
+        clearTimeout(idleHandle);
       }
-
-    }, heroRef);
-
-    return () => ctx.revert();
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   const validateForm = () => {
@@ -116,24 +135,29 @@ export default function Hero() {
     >
       {/* ── Video Background ── */}
       <div ref={bgRef} className="absolute inset-0 z-0">
-        {/* Fallback CSS — visible cuando el video no carga (móvil, conexión lenta) */}
-        <div className="absolute inset-0 w-full h-full bg-dark bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#1a2235] to-[#0a0e17]" />
+        {/* ── QW-1: Imagen de fallback — visible en móvil y como placeholder en desktop ── */}
+        {/* QW-6: fetchpriority="high" acelera el LCP en móvil donde no hay video */}
+        <img
+          src="/hero-bg.png"
+          alt=""
+          aria-hidden="true"
+          fetchpriority="high"
+          className="absolute inset-0 w-full h-full object-cover"
+          width="1920"
+          height="1080"
+        />
 
-        {/* Video — se superpone sobre la imagen cuando carga */}
-        {/* En móvil carga el video ligero, en PC el de calidad */}
+        {/* ── QW-1: preload="none" — el video NO bloquea el bandwidth inicial ── */}
+        {/* Solo se descarga cuando el navegador lo decide, no en el critical path */}
+        {/* La image tag de arriba actúa como poster de alta calidad mientras carga */}
         <video
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover scale-110"
+          preload="none"
+          className="absolute inset-0 w-full h-full object-cover scale-110 hidden md:block"
         >
-          <source
-            media="(max-width: 768px)"
-            src="/videos/HERO MOVIL.mp4"
-            type="video/mp4"
-          />
           <source
             src="/videos/HERO PARA PC.mp4"
             type="video/mp4"

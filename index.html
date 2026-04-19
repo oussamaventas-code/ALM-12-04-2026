@@ -23,8 +23,9 @@
     <meta name="twitter:description" content="Instalaciones eléctricas, urgencias 24h y paneles solares. Más de 10 años de experiencia." />
     <meta name="twitter:image"       content="https://almelectricidad.com/og-image.png" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-    <link rel="preload" href="/videos/HERO PARA PC.mp4" as="video" type="video/mp4" media="(min-width: 1024px)" />
-    <link rel="preload" href="/videos/HERO MOVIL.mp4" as="video" type="video/mp4" media="(max-width: 1023px)" />
+    <!-- QW-3: Preload de imagen hero (LCP en móvil) en lugar de preloads de video -->
+    <!-- Los videos tienen preload="none" — los preload tags previos los descargaban igualmente -->
+    <link rel="preload" href="/hero-bg.png" as="image" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />

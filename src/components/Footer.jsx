@@ -60,7 +60,10 @@ export default function Footer() {
             <img
               src="/LOGO Y JORGE/LOGO.JPG"
               alt="ALM Electricidad"
+              width="200"
+              height="64"
               loading="lazy"
+              decoding="async"
               className="h-16 w-auto object-contain mb-5 brightness-110"
             />
             <p className="text-sm leading-relaxed mb-4">
