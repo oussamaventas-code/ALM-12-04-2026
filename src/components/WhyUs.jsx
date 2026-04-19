@@ -1,32 +1,36 @@
 import { useLayoutEffect, useRef } from 'react';
+import { MessageCircle, Users, ClipboardCheck, Wallet, ShieldCheck, Zap } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// gsap.registerPlugin ya registrado globalmente en App.jsx
 
 const reasons = [
   {
     num: '01',
+    icon: Users,
     title: 'Segunda generación de electricistas',
     desc: 'Esto no lo aprendimos ayer. Llevamos el oficio en la familia y cada año sumamos formación nueva.',
   },
   {
     num: '02',
+    icon: ClipboardCheck,
     title: '100% inspecciones aprobadas',
     desc: 'Ni una sola inspección fallida. Trabajamos para que pase a la primera, sin dramas ni revisitas.',
   },
   {
     num: '03',
+    icon: Wallet,
     title: 'Precio cerrado sin sorpresas',
     desc: 'Te damos un número antes de empezar y es ese. Nada de "me ha surgido un imprevisto" a mitad de obra.',
   },
   {
     num: '04',
+    icon: ShieldCheck,
     title: 'Garantía por escrito en cada trabajo',
     desc: 'Todo queda firmado. Si algo falla dentro de la garantía, volvemos y lo arreglamos sin coste.',
   },
   {
     num: '05',
+    icon: Zap,
     title: 'Urgencias 24h los 365 días',
     desc: 'Da igual que sea domingo a las tres de la mañana. Nos llamas, respondemos y vamos.',
   },
@@ -35,12 +39,9 @@ const reasons = [
 export default function WhyUs() {
   const sectionRef = useRef(null);
   const bigNumRef = useRef(null);
-  const progressBarRef = useRef(null);
-  const gsapCtx = useRef(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      /* Left column entrance */
       gsap.fromTo(
         '.whyus-left',
         { x: -40, autoAlpha: 0 },
@@ -57,7 +58,6 @@ export default function WhyUs() {
         }
       );
 
-      /* Stagger reason rows */
       gsap.fromTo(
         '.reason-row',
         { x: 30, autoAlpha: 0 },
@@ -75,7 +75,6 @@ export default function WhyUs() {
         }
       );
 
-      /* Big number parallax */
       if (bigNumRef.current) {
         gsap.to(bigNumRef.current, {
           y: -80,
@@ -89,7 +88,6 @@ export default function WhyUs() {
         });
       }
 
-      /* Scrub: highlight active reason + fill progress bar */
       const rowEls = gsap.utils.toArray('.reason-row');
       ScrollTrigger.create({
         trigger: '.reason-list',
@@ -98,13 +96,6 @@ export default function WhyUs() {
         scrub: 1,
         onUpdate: (self) => {
           const p = self.progress;
-
-          // Progress bar height
-          if (progressBarRef.current) {
-            progressBarRef.current.style.transform = `scaleY(${p})`;
-          }
-
-          // Activate each row as the scroll reaches it
           rowEls.forEach((row, i) => {
             const threshold = i / (rowEls.length - 1);
             if (p >= threshold - 0.08) {
@@ -122,7 +113,6 @@ export default function WhyUs() {
 
   return (
     <section ref={sectionRef} className="relative section-padding bg-surface overflow-hidden">
-      {/* Decorative big number with parallax */}
       <div
         ref={bigNumRef}
         className="absolute top-8 right-8 big-number-dark opacity-30 select-none pointer-events-none hidden lg:block"
@@ -132,16 +122,15 @@ export default function WhyUs() {
       </div>
 
       <div className="container-custom px-6">
-        {/* Asymmetric grid: left headline, right reasons */}
         <div className="grid lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-24 items-start">
-          {/* Left side — headline block */}
+          {/* Left side */}
           <div className="whyus-left lg:sticky lg:top-32">
             <span className="section-label mb-6">Por qué elegirnos</span>
 
             <h2 className="section-title mt-4">
               No somos los más baratos.
               <br />
-              <span className="text-gradient-brand">Somos los que no fallan.</span>
+              <span className="text-brand">Somos los que no fallan.</span>
             </h2>
 
             <p className="section-subtitle mt-6">
@@ -151,7 +140,7 @@ export default function WhyUs() {
 
             <div className="mt-8 h-[3px] w-12 bg-brand" />
 
-            {/* Trust pillars — distintos a los de Metrics */}
+            {/* Stats */}
             <div className="grid grid-cols-2 gap-6 mt-10">
               <div className="flex flex-col gap-1">
                 <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">24h</span>
@@ -162,59 +151,65 @@ export default function WhyUs() {
                 <span className="font-body text-xs text-ink-600 uppercase tracking-widest font-bold">Inspecciones fallidas</span>
               </div>
               <div className="flex flex-col gap-1">
-                <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">60'</span>
-                <span className="font-body text-xs text-ink-600 uppercase tracking-widest font-bold">Tiempo respuesta urgencia</span>
+                <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">&lt;60 MIN</span>
+                <span className="font-body text-xs text-ink-600 uppercase tracking-widest font-bold">Respuesta urgencia</span>
               </div>
               <div className="flex flex-col gap-1">
-                <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">2ª</span>
-                <span className="font-body text-xs text-ink-600 uppercase tracking-widest font-bold">Generación de electricistas</span>
+                <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">2ª GEN</span>
+                <span className="font-body text-xs text-ink-600 uppercase tracking-widest font-bold">De electricistas</span>
               </div>
             </div>
 
-            {/* Vertical progress bar */}
-            <div className="hidden lg:block mt-12 relative">
-              <div className="relative h-32 w-[2px] bg-white/[0.06] rounded-full overflow-hidden">
-                <div
-                  ref={progressBarRef}
-                  className="absolute inset-0 origin-top rounded-full"
-                  style={{
-                    background: 'linear-gradient(180deg, var(--color-brand), var(--color-brand-light))',
-                    transform: 'scaleY(0)',
-                    willChange: 'transform',
-                  }}
-                />
-              </div>
-              <p className="mt-3 text-xs font-body text-white/45 uppercase tracking-widest">
-                Progreso
-              </p>
+            {/* CTA */}
+            <div className="hidden lg:block mt-12">
+              <a
+                href="https://wa.me/34605333108"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-whatsapp !py-3 !px-6 inline-flex"
+              >
+                <MessageCircle size={16} />
+                ¿Hablamos? Escríbenos ya
+              </a>
             </div>
           </div>
 
-          {/* Right side — numbered reason list */}
+          {/* Right side — reason list with icons */}
           <div className="reason-list space-y-0">
-            {reasons.map((r, i) => (
-              <div
-                key={i}
-                className="reason-row group border-l-[3px] border-transparent transition-all duration-400 pl-6 py-6 cursor-default [&.reason-active]:border-brand [&.reason-active]:[box-shadow:-4px_0_12px_-4px_var(--color-brand)]"
-                style={{ borderBottom: '1px solid var(--color-surface-300)' }}
-              >
-                <div className="flex items-start gap-5">
-                  {/* Number */}
-                  <span className="font-heading text-2xl font-extrabold text-surface-400 transition-colors duration-400 shrink-0 mt-0.5 group-hover:text-brand [.reason-active_&]:text-brand">
-                    {r.num}
-                  </span>
+            {reasons.map((r, i) => {
+              const Icon = r.icon;
+              return (
+                <div
+                  key={i}
+                  className="reason-row group border-l-[3px] border-transparent transition-all duration-400 pl-6 py-6 cursor-default [&.reason-active]:border-brand [&.reason-active]:bg-brand/[0.04] [&.reason-active]:[box-shadow:-4px_0_16px_-4px_var(--color-brand)]"
+                  style={{ borderBottom: '1px solid var(--color-surface-300)' }}
+                >
+                  <div className="flex items-start gap-5">
+                    {/* Icon box + number */}
+                    <div className="shrink-0 mt-0.5 flex flex-col items-center gap-1.5">
+                      <div className="w-9 h-9 border border-surface-400 flex items-center justify-center transition-all duration-400 group-hover:border-brand group-hover:bg-brand/10 [.reason-active_&]:border-brand [.reason-active_&]:bg-brand/10">
+                        <Icon
+                          size={17}
+                          className="text-surface-400 transition-colors duration-400 group-hover:text-brand [.reason-active_&]:text-brand"
+                        />
+                      </div>
+                      <span className="font-heading text-xs font-extrabold text-surface-400 transition-colors duration-400 group-hover:text-brand [.reason-active_&]:text-brand">
+                        {r.num}
+                      </span>
+                    </div>
 
-                  <div>
-                    <h3 className="font-heading text-lg font-bold text-ink transition-colors duration-400 leading-snug group-hover:text-brand [.reason-active_&]:text-brand">
-                      {r.title}
-                    </h3>
-                    <p className="font-body text-sm text-ink-400 mt-1.5 leading-relaxed max-w-md">
-                      {r.desc}
-                    </p>
+                    <div>
+                      <h3 className="font-heading text-lg font-bold text-ink transition-colors duration-400 leading-snug group-hover:text-brand [.reason-active_&]:text-brand">
+                        {r.title}
+                      </h3>
+                      <p className="font-body text-sm text-ink-400 mt-1.5 leading-relaxed max-w-md">
+                        {r.desc}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
