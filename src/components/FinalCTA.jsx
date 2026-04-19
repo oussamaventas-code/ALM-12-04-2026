@@ -24,9 +24,9 @@ export default function FinalCTA() {
         defaults: { ease: 'power3.out' },
       });
 
-      tl.from('.finalcta-heading', { y: 50, opacity: 0, duration: 0.8 })
-        .from('.finalcta-btn', { y: 30, opacity: 0, duration: 0.5, stagger: 0.12 }, '-=0.3')
-        .from('.finalcta-badge', { y: 20, opacity: 0, duration: 0.4, stagger: 0.1 }, '-=0.2');
+      tl.fromTo('.finalcta-heading', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 })
+        .fromTo('.finalcta-btn', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.12 }, '-=0.3')
+        .fromTo('.finalcta-badge', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, stagger: 0.1 }, '-=0.2');
     }, sectionRef);
 
     return () => ctx.revert();
@@ -52,7 +52,7 @@ export default function FinalCTA() {
         </p>
 
         {/* CTA buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14 relative z-10">
           <a href="#contacto" className="finalcta-btn btn-brand flex items-center gap-2 text-base">
             <Send size={18} />
             Cu&eacute;ntanos qu&eacute; necesitas

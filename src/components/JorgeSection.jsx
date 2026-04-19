@@ -111,8 +111,8 @@ export default function JorgeSection() {
             <div className="relative rounded-2xl overflow-hidden border border-white/10 aspect-[3/4] md:aspect-[4/5] mb-8 group shadow-2xl shadow-brand/5">
               <div className="absolute inset-0 bg-brand/10 group-hover:bg-transparent transition-colors duration-500 z-10 mix-blend-overlay" aria-hidden="true"></div>
               <img 
-                src="/LOGO Y JORGE/JORGE.PNG" 
-                alt="Jorge Hernández García, fundador de ALM Electricidad" 
+                src="/images/team/jorge-y-melisa.webp" 
+                alt="Jorge y Melisa, ALM Electricidad" 
                 className="w-full h-full object-cover object-center filter grayscale-[30%] group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
                 loading="lazy"
               />
@@ -125,8 +125,8 @@ export default function JorgeSection() {
                   J
                 </div>
                 <div>
-                  <p className="text-white font-heading font-bold text-lg leading-tight">Jorge Hernández</p>
-                  <p className="text-brand text-sm font-semibold">Fundador</p>
+                  <p className="text-white font-heading font-bold text-lg leading-tight">Jorge y Melisa</p>
+                  <p className="text-brand text-sm font-semibold">ALM Electricidad</p>
                 </div>
               </div>
             </div>
