@@ -97,7 +97,7 @@ export default function Testimonials() {
       tweenRef.current = gsap.to(marqueeRef.current, {
         xPercent: -50,
         repeat: -1,
-        duration: 30,
+        duration: 60,
         ease: 'none',
       });
     }, sectionRef);

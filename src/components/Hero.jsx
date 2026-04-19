@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, forwardRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Send, Phone, MessageCircle, ChevronDown, ArrowDown } from 'lucide-react';
 import gsap from 'gsap';
 import MagneticElement from './MagneticElement';
@@ -16,28 +16,11 @@ const projectTypes = [
   'Otro',
 ];
 
-// Small bolt SVG for particles
-const Bolt = forwardRef(function Bolt({ style, className }, ref) {
-  return (
-    <svg
-      ref={ref}
-      viewBox="0 0 12 20"
-      fill="currentColor"
-      className={className}
-      style={style}
-      aria-hidden="true"
-    >
-      <path d="M7 0L0 11h5l-1 9 8-12H7L8 0z" />
-    </svg>
-  );
-});
 
-const PARTICLE_COUNT = 12;
 
 export default function Hero() {
   const heroRef = useRef(null);
   const bgRef = useRef(null);
-  const particlesRef = useRef([]);
   const [formData, setFormData] = useState({
     nombre: '',
     empresa: '',
@@ -82,28 +65,6 @@ export default function Hero() {
         });
       }
 
-      // Floating bolt particles
-      particlesRef.current.forEach((el) => {
-        if (!el) return;
-        gsap.set(el, {
-          x: gsap.utils.random(0, window.innerWidth),
-          y: gsap.utils.random(0, window.innerHeight),
-          opacity: gsap.utils.random(0.05, 0.25),
-          scale: gsap.utils.random(0.5, 1.5),
-          rotation: gsap.utils.random(-30, 30),
-        });
-        gsap.to(el, {
-          y: `-=${gsap.utils.random(60, 140)}`,
-          x: `+=${gsap.utils.random(-40, 40)}`,
-          opacity: gsap.utils.random(0.03, 0.18),
-          rotation: `+=${gsap.utils.random(-20, 20)}`,
-          duration: gsap.utils.random(6, 14),
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          delay: gsap.utils.random(0, 5),
-        });
-      });
     }, heroRef);
 
     return () => ctx.revert();
@@ -158,18 +119,6 @@ export default function Hero() {
         {/* Overlays for legibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-dark/85 via-dark/40 to-dark/10" />
         <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-dark/20" />
-      </div>
-
-      {/* ── Floating bolt particles ── */}
-      <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-        {Array.from({ length: PARTICLE_COUNT }).map((_, i) => (
-          <Bolt
-            key={i}
-            ref={(el) => { particlesRef.current[i] = el; }}
-            className="absolute w-3 h-5 text-brand"
-            style={{ willChange: 'transform, opacity' }}
-          />
-        ))}
       </div>
 
       {/* ── Content ── */}
