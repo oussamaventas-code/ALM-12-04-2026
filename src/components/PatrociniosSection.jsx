@@ -69,24 +69,21 @@ function PatrociniosDesktop() {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const slides = gsap.utils.toArray('.patrocinios-slide-desktop');
-      if (slides.length > 0 && containerRef.current && trackRef.current) {
-        
-        const totalMovement = () => window.innerWidth * (slides.length - 1);
-
-        const pinAnimation = gsap.to(trackRef.current, {
-          x: () => -totalMovement(),
+      if (slides.length > 0 && containerRef.current) {
+        const pinAnimation = gsap.to(slides, {
+          xPercent: -100 * (slides.length - 1),
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
             pin: true,
+            pinType: 'transform',
             scrub: 1,
-            invalidateOnRefresh: true,
             snap: {
               snapTo: 1 / (slides.length - 1),
               duration: 0.1,
               ease: "power1.inOut"
             },
-            end: () => `+=${totalMovement()}`
+            end: () => `+=${containerRef.current.offsetWidth * slides.length}`
           }
         });
 
@@ -116,7 +113,7 @@ function PatrociniosDesktop() {
   return (
     <div className="hidden lg:block w-full">
       <div ref={containerRef} className="h-screen w-full flex overflow-hidden bg-ink relative z-30">
-        <div ref={trackRef} className="flex h-full will-change-transform items-center w-max">
+        <div ref={trackRef} className="flex h-full will-change-transform items-center">
           {patrociniosSteps.map((step, i) => (
             <div key={i} className="patrocinios-slide-desktop w-screen h-full flex flex-col items-center justify-center px-12 shrink-0 relative">
               <div className="slide-img-container relative w-full flex items-center justify-center aspect-video rounded-[2rem] overflow-hidden shadow-2xl border border-surface/10 bg-dark-800">
