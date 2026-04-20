@@ -156,7 +156,7 @@ export default function Hero() {
           loop
           playsInline
           preload="none"
-          className="absolute inset-0 w-full h-full object-cover scale-110 hidden md:block"
+          className="absolute inset-0 w-full h-full object-cover scale-110"
         >
           <source
             src="/videos/HERO PARA PC.mp4"
