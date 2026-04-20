@@ -69,43 +69,49 @@ function PatrociniosDesktop() {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const slides = gsap.utils.toArray('.patrocinios-slide-desktop');
-      if (slides.length > 0 && containerRef.current) {
-        const pinAnimation = gsap.to(slides, {
-          xPercent: -100 * (slides.length - 1),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            pin: true,
-            pinType: 'transform',
-            scrub: 1,
-            snap: {
-              snapTo: 1 / (slides.length - 1),
-              duration: 0.1,
-              ease: "power1.inOut"
-            },
-            end: () => `+=${containerRef.current.offsetWidth * slides.length}`
-          }
-        });
+      const track = trackRef.current;
+      const container = containerRef.current;
+      if (!slides.length || !track || !container) return;
 
-        slides.forEach((slide) => {
-          const title = slide.querySelector('.slide-title');
-          const imgContainer = slide.querySelector('.slide-img-container');
-          if (title && imgContainer) {
-            gsap.fromTo(title,
-              { y: 50, opacity: 0 },
-              { y: 0, opacity: 1, duration: 1,
-                scrollTrigger: { trigger: slide, start: 'left center', containerAnimation: pinAnimation, toggleActions: "play none none reverse" }
-              }
-            );
-            gsap.fromTo(imgContainer,
-              { scale: 0.8, opacity: 0 },
-              { scale: 1, opacity: 1, duration: 1,
-                scrollTrigger: { trigger: slide, start: 'left 80%', containerAnimation: pinAnimation, toggleActions: "play none none reverse" }
-              }
-            );
-          }
-        });
-      }
+      const totalWidth = (slides.length - 1) * container.offsetWidth;
+
+      const pinAnimation = gsap.to(track, {
+        x: -totalWidth,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: container,
+          pin: true,
+          pinType: 'transform',
+          scrub: 1,
+          snap: {
+            snapTo: 1 / (slides.length - 1),
+            duration: 0.3,
+            ease: "power1.inOut"
+          },
+          end: `+=${totalWidth}`
+        }
+      });
+
+      slides.forEach((slide) => {
+        const title = slide.querySelector('.slide-title');
+        const imgContainer = slide.querySelector('.slide-img-container');
+        if (title) {
+          gsap.fromTo(title,
+            { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1,
+              scrollTrigger: { trigger: slide, start: 'left center', containerAnimation: pinAnimation, toggleActions: "play none none reverse" }
+            }
+          );
+        }
+        if (imgContainer) {
+          gsap.fromTo(imgContainer,
+            { scale: 0.8, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 1,
+              scrollTrigger: { trigger: slide, start: 'left 80%', containerAnimation: pinAnimation, toggleActions: "play none none reverse" }
+            }
+          );
+        }
+      });
     }, containerRef);
     return () => ctx.revert();
   }, []);
