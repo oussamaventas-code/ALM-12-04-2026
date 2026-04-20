@@ -71,10 +71,10 @@ function PatrociniosDesktop() {
       const slides = gsap.utils.toArray('.patrocinios-slide-desktop');
       if (slides.length > 0 && containerRef.current && trackRef.current) {
         
-        const getScrollAmount = () => trackRef.current.scrollWidth - window.innerWidth;
+        const totalMovement = () => window.innerWidth * (slides.length - 1);
 
         const pinAnimation = gsap.to(trackRef.current, {
-          x: () => -getScrollAmount(),
+          x: () => -totalMovement(),
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
@@ -86,7 +86,7 @@ function PatrociniosDesktop() {
               duration: 0.1,
               ease: "power1.inOut"
             },
-            end: () => `+=${getScrollAmount()}`
+            end: () => `+=${totalMovement()}`
           }
         });
 
