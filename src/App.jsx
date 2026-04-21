@@ -2,17 +2,17 @@ import { useEffect, useLayoutEffect, useRef, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from 'lenis';
 
 import Navbar from './components/Navbar';
-import UrgencyBanner from './components/UrgencyBanner';
 import Footer from './components/Footer';
-import WhatsAppFloat from './components/WhatsAppFloat';
-import MobileUrgencyBar from './components/MobileUrgencyBar';
 import PageTransition from './components/PageTransition';
-import CookieBanner from './components/CookieBanner';
 import PageSkeleton from './components/PageSkeleton';
 import Analytics from './components/Analytics';
+
+// Diferidos: no bloquean el primer render ni el LCP
+const WhatsAppFloat    = lazy(() => import('./components/WhatsAppFloat'));
+const MobileUrgencyBar = lazy(() => import('./components/MobileUrgencyBar'));
+const CookieBanner     = lazy(() => import('./components/CookieBanner'));
 
 // HomePage carga inmediata (primera pantalla)
 import HomePage from './pages/HomePage';
@@ -67,9 +67,14 @@ function useLenis() {
 
     let tickerFn;
     let lenis;
+    let cancelled = false;
 
     // Diferir Lenis hasta después de la carga inicial para no bloquear el TBT
-    const timer = setTimeout(() => {
+    // Dynamic import: Lenis sale del critical path y se descarga solo cuando hace falta
+    const timer = setTimeout(async () => {
+      const { default: Lenis } = await import('lenis');
+      if (cancelled) return;
+
       lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -87,6 +92,7 @@ function useLenis() {
     }, 300); // 300ms tras el primer render — fuera del critical path
 
     return () => {
+      cancelled = true;
       clearTimeout(timer);
       if (tickerFn) gsap.ticker.remove(tickerFn);
       if (lenis) lenis.destroy();
@@ -172,9 +178,11 @@ function AppShell() {
         </Suspense>
       </main>
       <Footer />
-      <WhatsAppFloat />
-      <MobileUrgencyBar />
-      <CookieBanner />
+      <Suspense fallback={null}>
+        <WhatsAppFloat />
+        <MobileUrgencyBar />
+        <CookieBanner />
+      </Suspense>
     </div>
   );
 }
