@@ -47,6 +47,9 @@ function PortfolioDesktop() {
   const titleRef = useRef(null);
 
   useLayoutEffect(() => {
+    // No registrar ScrollTriggers en móvil — el componente está oculto (hidden lg:block)
+    if (!window.matchMedia('(min-width: 1024px)').matches) return;
+
     const ctx = gsap.context(() => {
       const track = trackRef.current;
       const section = sectionRef.current;
@@ -289,7 +292,7 @@ function PortfolioMobile() {
                 loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-5">
+              <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-transparent opacity-0 group-hover:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-5">
                 <span
                   className="font-body text-xs font-semibold uppercase tracking-[0.15em]"
                   style={{ color: 'var(--color-brand-light)' }}
@@ -303,7 +306,7 @@ function PortfolioMobile() {
                   {p.result}
                 </p>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-dark/85 backdrop-blur-sm px-4 py-2 group-hover:opacity-0 transition-opacity duration-400">
+              <div className="absolute bottom-0 left-0 right-0 bg-dark/85 backdrop-blur-sm px-4 py-2 group-hover:opacity-0 [@media(hover:none)]:hidden transition-opacity duration-400">
                 <div className="flex items-center justify-between">
                   <span
                     className="font-body text-[9px] font-semibold uppercase tracking-[0.12em]"

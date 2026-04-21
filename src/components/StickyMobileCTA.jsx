@@ -5,7 +5,7 @@ export default function StickyMobileCTA() {
     <div
       role="complementary"
       aria-label="Botón de llamada rápida"
-      className="fixed bottom-0 left-0 right-0 z-[100] md:hidden"
+      className="sticky-cta-mobile fixed bottom-0 left-0 right-0 z-[100] md:hidden"
     >
       <div className="bg-dark/95 backdrop-blur-md border-t border-white/5 px-4 pt-3 pb-5 flex items-center justify-between shadow-[0_-12px_40px_rgba(0,0,0,0.6)]">
         <div className="flex flex-col">

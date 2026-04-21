@@ -154,7 +154,7 @@ export default function FAQ() {
                     onClick={() => toggle(i)}
                     aria-expanded={isOpen}
                     aria-controls={aId(i)}
-                    className="w-full flex items-center justify-between gap-4 py-6 px-6 text-left cursor-pointer group transition-all duration-300 hover:bg-white/[0.03]"
+                    className="w-full flex items-center justify-between gap-4 py-6 px-6 text-left cursor-pointer group transition-all duration-300 hover:bg-white/[0.03] active:bg-white/[0.08]"
                     style={{
                       borderLeft: isOpen
                         ? '4px solid var(--color-brand)'

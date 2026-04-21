@@ -99,7 +99,7 @@ export default function ContactForm() {
 
           {/* LEFT: Headlines & Benefits */}
           <div className="flex flex-col justify-center">
-            <h2 className="contact-animate text-3xl md:text-5xl font-bold text-[var(--color-ink)] mb-6 leading-[1.15] tracking-tight font-heading">
+            <h2 className="contact-animate text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-ink)] mb-6 leading-[1.15] tracking-tight font-heading">
               ¿Necesitas un presupuesto rápido?
             </h2>
 
@@ -196,6 +196,7 @@ export default function ContactForm() {
                       <input
                         id="nombre"
                         type="text"
+                        autoComplete="name"
                         value={formData.nombre}
                         onChange={(e) => handleChange('nombre', e.target.value)}
                         placeholder="Juan García"
@@ -215,6 +216,8 @@ export default function ContactForm() {
                       <input
                         id="email"
                         type="email"
+                        autoComplete="email"
+                        inputMode="email"
                         value={formData.email}
                         onChange={(e) => handleChange('email', e.target.value)}
                         placeholder="juan@empresa.com"
@@ -234,6 +237,8 @@ export default function ContactForm() {
                       <input
                         id="telefono"
                         type="tel"
+                        autoComplete="tel"
+                        inputMode="tel"
                         value={formData.telefono}
                         onChange={(e) => handleChange('telefono', e.target.value)}
                         placeholder="600 000 000"
@@ -251,6 +256,7 @@ export default function ContactForm() {
                     <input
                       id="empresa"
                       type="text"
+                      autoComplete="organization"
                       value={formData.empresa}
                       onChange={(e) => handleChange('empresa', e.target.value)}
                       placeholder="Mi Empresa S.L. (opcional)"

@@ -65,8 +65,8 @@ export default function Hero() {
           .from('.hero-form', { y: 50, opacity: 0, duration: 0.9 }, '-=0.6')
           .from('.hero-scroll', { y: 15, opacity: 0, duration: 0.6 }, '-=0.2');
 
-        // Parallax en el video/fondo — solo desktop donde el video existe
-        if (bgRef.current) {
+        // Parallax solo en desktop — en móvil es overhead sin beneficio visual
+        if (bgRef.current && window.matchMedia('(min-width: 1024px)').matches) {
           gsap.to(bgRef.current, {
             yPercent: 18,
             ease: 'none',
@@ -159,6 +159,11 @@ export default function Hero() {
           className="absolute inset-0 w-full h-full object-cover scale-110"
         >
           <source
+            media="(max-width: 1023px)"
+            src="/videos/HERO MOVIL.mp4"
+            type="video/mp4"
+          />
+          <source
             src="/videos/HERO PARA PC.mp4"
             type="video/mp4"
           />
@@ -183,7 +188,7 @@ export default function Hero() {
             </div>
 
             {/* Headline — each line has clip-path reveal */}
-            <h1 className="font-heading font-extrabold text-white leading-[1.06] tracking-tight mb-7 overflow-hidden" style={{ fontSize: 'clamp(3.2rem, 7vw, 6.5rem)' }}>
+            <h1 className="font-heading font-extrabold text-white leading-[1.06] tracking-tight mb-7 overflow-hidden" style={{ fontSize: 'clamp(2.4rem, 7vw, 6.5rem)' }}>
               <span className="hero-title-line block">
                 Instalaciones eléctricas
               </span>
@@ -273,6 +278,7 @@ export default function Hero() {
                     <input
                       type="text"
                       placeholder="Tu nombre"
+                      autoComplete="name"
                       className={`input-field ${formErrors.nombre ? '!border-red-400/60' : ''}`}
                       value={formData.nombre}
                       onChange={(e) => { setFormData({ ...formData, nombre: e.target.value }); clearFieldError('nombre'); }}
@@ -284,6 +290,7 @@ export default function Hero() {
                   <input
                     type="text"
                     placeholder="Empresa (opcional)"
+                    autoComplete="organization"
                     className="input-field"
                     value={formData.empresa}
                     onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
@@ -294,6 +301,8 @@ export default function Hero() {
                     <input
                       type="tel"
                       placeholder="Teléfono de contacto"
+                      autoComplete="tel"
+                      inputMode="tel"
                       className={`input-field ${formErrors.telefono ? '!border-red-400/60' : ''}`}
                       value={formData.telefono}
                       onChange={(e) => { setFormData({ ...formData, telefono: e.target.value }); clearFieldError('telefono'); }}

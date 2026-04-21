@@ -33,13 +33,13 @@ export default function MobileUrgencyBar() {
       ref={barRef}
       role="complementary"
       aria-label="Barra de urgencias eléctricas"
-      className="fixed bottom-0 left-0 right-0 z-[49] lg:hidden"
+      className="sticky-urgency-mobile fixed bottom-[76px] md:bottom-0 left-0 right-0 z-[101] lg:hidden"
       style={{ transform: 'translateY(100%)', opacity: 0 }}
     >
       <a
         href="tel:+34605333108"
         aria-label="Urgencia eléctrica — Llamar al 605 33 31 08"
-        className="flex items-center justify-center gap-3 bg-danger text-white py-2.5 px-4 w-full font-heading font-bold text-xs uppercase tracking-wider shadow-[0_-4px_24px_rgba(220,38,38,0.4)]"
+        className="flex items-center justify-center gap-3 bg-danger text-white py-3.5 px-4 w-full font-heading font-bold text-xs uppercase tracking-wider shadow-[0_-4px_24px_rgba(220,38,38,0.4)]"
       >
         <span className="relative flex h-2.5 w-2.5 shrink-0" aria-hidden="true">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-70" />

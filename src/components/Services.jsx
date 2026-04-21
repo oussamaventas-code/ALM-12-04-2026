@@ -72,6 +72,9 @@ function ServicesDesktop() {
   const titleRef = useRef(null);
 
   useLayoutEffect(() => {
+    // No registrar ScrollTriggers en móvil — el componente está oculto (hidden lg:block)
+    if (!window.matchMedia('(min-width: 1024px)').matches) return;
+
     const timer = setTimeout(() => ScrollTrigger.refresh(), 100);
 
     const ctx = gsap.context(() => {

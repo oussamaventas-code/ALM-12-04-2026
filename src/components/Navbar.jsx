@@ -68,10 +68,15 @@ export default function Navbar() {
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = 'hidden';
+      document.body.classList.add('nav-open');
     } else {
       document.body.style.overflow = '';
+      document.body.classList.remove('nav-open');
     }
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+      document.body.classList.remove('nav-open');
+    };
   }, [mobileOpen]);
 
   useEffect(() => {

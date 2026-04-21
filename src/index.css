@@ -135,6 +135,12 @@
     border-radius: 2px;
   }
 
+  /* Ocultar CTAs móviles cuando el menú hamburguesa está abierto (evita z-index conflict) */
+  body.nav-open .sticky-cta-mobile,
+  body.nav-open .sticky-urgency-mobile {
+    display: none;
+  }
+
   /* Reset forzado para el cursor de puntero */
   button, [role="button"], a, [tabindex]:not([tabindex="-1"]) {
     cursor: pointer;
