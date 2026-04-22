@@ -180,7 +180,7 @@ function ServicesDesktop() {
                   style={{ width: 'clamp(300px, 35vw, 520px)', height: '70vh' }}
                 />
                 {/* Card number */}
-                <div className="absolute top-4 left-4 font-heading font-black text-5xl text-white/[0.07] leading-none select-none pointer-events-none group-hover:text-white/[0.12] transition-colors duration-500 z-10">
+                <div className="absolute top-4 left-4 font-heading font-black text-5xl text-white/[0.12] leading-none select-none pointer-events-none group-hover:text-white/20 transition-colors duration-500 z-10">
                   {String(i + 1).padStart(2, '0')}
                 </div>
               </div>
@@ -194,7 +194,7 @@ function ServicesDesktop() {
         {/* Scroll hint */}
         <div className="max-w-7xl mx-auto w-full px-6 pb-6 shrink-0 flex items-center gap-3">
           <div className="h-[1px] w-8 bg-brand/40" />
-          <span className="font-body text-xs text-white/30 uppercase tracking-[0.12em]">
+          <span className="font-body text-xs text-white/50 uppercase tracking-[0.12em]">
             Desliza para ver todos los servicios
           </span>
         </div>

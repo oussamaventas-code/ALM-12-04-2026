@@ -93,7 +93,7 @@ export default function Metrics() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-dark py-24 md:py-32 overflow-hidden"
+      className="relative bg-dark py-20 md:py-24 lg:py-20 overflow-hidden"
       aria-label="Métricas de confianza"
     >
       {/* Ambient amber glow */}

@@ -130,7 +130,7 @@ export default function Navbar() {
       <nav
         ref={navRef}
         aria-label="Navegación principal"
-        className={`fixed top-[3px] left-0 w-full z-50 transition-all duration-500 ${
+        className={`fixed top-[3px] lg:top-0 left-0 w-full z-50 transition-all duration-500 ${
           scrolled
             ? 'bg-dark/90 backdrop-blur-xl shadow-lg shadow-black/30'
             : 'bg-transparent'

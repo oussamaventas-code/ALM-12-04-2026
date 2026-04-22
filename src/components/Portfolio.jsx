@@ -194,7 +194,7 @@ function PortfolioDesktop() {
                   className="absolute top-0 left-0 w-[3px] h-full scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-bottom"
                   style={{ background: 'var(--color-brand)' }}
                 />
-                <div className="absolute top-4 left-4 font-heading font-black text-5xl text-white/[0.07] leading-none select-none pointer-events-none group-hover:text-white/[0.12] transition-colors duration-500">
+                <div className="absolute top-4 left-4 font-heading font-black text-5xl text-white/[0.12] leading-none select-none pointer-events-none group-hover:text-white/20 transition-colors duration-500">
                   {String(i + 1).padStart(2, '0')}
                 </div>
               </div>
@@ -206,7 +206,7 @@ function PortfolioDesktop() {
         <div className="container-custom px-6 pb-6 shrink-0 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="h-[1px] w-8 bg-brand/40" />
-            <span className="font-body text-xs text-white/30 uppercase tracking-[0.12em]">
+            <span className="font-body text-xs text-white/50 uppercase tracking-[0.12em]">
               Desliza para ver más proyectos
             </span>
           </div>

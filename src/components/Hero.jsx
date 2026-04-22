@@ -175,20 +175,19 @@ export default function Hero() {
       </div>
 
       {/* ── Content ── */}
-      <div className="relative z-10 container-custom px-6 pt-32 pb-24">
-        <div className="grid lg:grid-cols-[1fr_420px] gap-12 lg:gap-16 items-center">
-          {/* ── Left — Copy ── */}
+      <div className="relative z-10 container-custom px-6 pt-32 pb-16">
+        <div className="grid lg:grid-cols-[1fr_420px] gap-8 lg:gap-12 items-start">
           <div>
             {/* Badge */}
-            <div className="hero-badge inline-flex items-center gap-2.5 border border-brand/30 bg-brand/10 px-4 py-2 mb-8">
+            <div className="hero-badge inline-flex items-center gap-2.5 border border-brand/30 bg-brand/10 px-4 py-2 mb-6">
               <span className="w-2 h-2 bg-brand rounded-full animate-pulse" />
               <span className="text-brand-glow text-xs font-body font-semibold uppercase tracking-[0.12em]">
                 Instaladores eléctricos autorizados del REBT
               </span>
             </div>
 
-            {/* Headline — each line has clip-path reveal */}
-            <h1 className="font-heading font-extrabold text-white leading-[1.06] tracking-tight mb-7 overflow-hidden" style={{ fontSize: 'clamp(2.4rem, 7vw, 6.5rem)' }}>
+            {/* Headline */}
+            <h1 className="font-heading font-extrabold text-white leading-[1.06] tracking-tight overflow-hidden mb-8 lg:mb-10" style={{ fontSize: 'clamp(2.4rem, 7vw, 5rem)' }}>
               <span className="hero-title-line block">
                 Instalaciones eléctricas
               </span>
@@ -201,7 +200,7 @@ export default function Hero() {
             </h1>
 
             {/* Subtitle */}
-            <p className="hero-subtitle font-body text-lg text-white/75 max-w-lg leading-relaxed mb-10">
+            <p className="hero-subtitle font-body text-lg text-white/75 max-w-lg leading-relaxed mb-8">
               Somos electricistas de verdad. Hacemos instalaciones seguras,
               limpias y que pasan inspección a la primera. Si algo no queda
               perfecto, volvemos sin coste. Así de simple.
@@ -232,11 +231,9 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ── Right — Contact form ── */}
-          {/* Solo visible en desktop (≥ lg) donde el grid de 2 cols está activo */}
-          {/* En móvil/tablet: el copy y sus CTAs de WhatsApp/llamada son suficientes */}
-          <div className="hero-form hidden lg:block" style={{ minHeight: '480px' }}>
-            <div className="bg-black/15 backdrop-blur-sm border border-white/[0.08] p-6 md:p-8">
+          {/* Contact form — desktop only */}
+          <div className="hero-form hidden lg:block">
+            <div className="bg-black/20 backdrop-blur-md border border-white/[0.14] p-6 md:p-8">
               {isSubmitted ? (
                 <div className="flex flex-col items-center justify-center gap-5 py-8 text-center animate-fadeInUp">
                   <div className="w-16 h-16 rounded-full bg-success/10 border border-success/30 flex items-center justify-center">

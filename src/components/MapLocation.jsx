@@ -107,7 +107,7 @@ export default function MapLocation() {
     <section
       id="ubicacion"
       ref={sectionRef}
-      className="py-24 md:py-32 bg-dark overflow-hidden"
+      className="relative py-24 md:py-32 bg-dark overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}

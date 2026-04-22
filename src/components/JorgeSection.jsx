@@ -27,7 +27,7 @@ export default function JorgeSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding bg-dark overflow-hidden" aria-labelledby="jorge-heading">
+    <section ref={sectionRef} className="relative section-padding bg-dark overflow-hidden" aria-labelledby="jorge-heading">
       {/* Fondo sutil */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-brand/4 rounded-full blur-[150px]" />

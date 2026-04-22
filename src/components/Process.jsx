@@ -144,7 +144,7 @@ export default function Process() {
     <section
       id="proceso"
       ref={sectionRef}
-      className="pt-20 pb-4 md:pt-28 md:pb-6 lg:pt-36 lg:pb-8 bg-dark overflow-hidden"
+      className="pt-20 pb-4 md:pt-28 md:pb-6 lg:pt-24 lg:pb-8 bg-dark overflow-hidden"
     >
       <div className="container-custom px-6">
 
