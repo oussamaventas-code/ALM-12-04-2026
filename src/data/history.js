@@ -11,22 +11,6 @@ export const historyMilestones = [
     color: 'brand',
   },
   {
-    year: '2019–2022',
-    tag: 'Crecimiento',
-    title: 'De autónomo a empresa',
-    desc: 'Años de aprendizaje real: primeros contratos industriales, primeras instalaciones fotovoltaicas, primer equipo. La calidad del trabajo empieza a hablar sola. Los clientes repiten y recomiendan.',
-    icon: 'TrendingUp',
-    color: 'brand',
-  },
-  {
-    year: '2022',
-    tag: 'El punto de inflexión',
-    title: 'Una separación necesaria',
-    desc: 'Los caminos de Jorge y su hermano se separan. Una decisión difícil, pero honesta. A veces lo más profesional es reconocer que dos personas no pueden construir juntas. Jorge lo asume con calma y sigue adelante.',
-    icon: 'GitBranch',
-    color: 'white',
-  },
-  {
     year: '2023',
     tag: 'Renacimiento',
     title: 'ALM nace de lo más importante',
