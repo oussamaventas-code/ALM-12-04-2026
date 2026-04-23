@@ -5,9 +5,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // gsap.registerPlugin ya registrado globalmente en App.jsx
 
 const metrics = [
-  { value: 10, suffix: '+', prefix: '', label: 'Años currando sin parar', sub: 'Segunda generación' },
+  { value: 8, suffix: '+', prefix: '', label: 'Años en el oficio', sub: 'Desde 2018, segunda generación' },
   { value: 500, suffix: '+', prefix: '', label: 'Proyectos terminados', sub: 'Residencial e industrial' },
-  { value: 100, suffix: '%', prefix: '', label: 'Pasan inspección a la primera', sub: 'Sin repetir visitas' },
+  { value: 100, suffix: '%', prefix: '', label: 'Precio cerrado siempre', sub: 'Sin costes que no esperabas' },
   { value: 24, suffix: 'h', prefix: '<', label: 'Te respondemos (o antes)', sub: 'Urgencias 365 días' },
 ];
 

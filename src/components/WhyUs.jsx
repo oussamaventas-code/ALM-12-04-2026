@@ -13,8 +13,8 @@ const reasons = [
   {
     num: '02',
     icon: ClipboardCheck,
-    title: '100% inspecciones aprobadas',
-    desc: 'Ni una sola inspección fallida. Trabajamos para que pase a la primera, sin dramas ni revisitas.',
+    title: 'Instalaciones que pasan inspección',
+    desc: 'Seguimos el REBT al detalle y tomamos el tiempo que hace falta. Sin atajos que luego dan problemas con la aseguradora.',
   },
   {
     num: '03',
@@ -118,7 +118,7 @@ export default function WhyUs() {
         className="absolute top-8 right-8 big-number-dark opacity-30 select-none pointer-events-none hidden lg:block"
         style={{ willChange: 'transform' }}
       >
-        10+
+        8+
       </div>
 
       <div className="container-custom px-6">
@@ -130,12 +130,12 @@ export default function WhyUs() {
             <h2 className="section-title mt-4">
               No somos los más baratos.
               <br />
-              <span className="text-brand">Somos los que no fallan.</span>
+              <span className="text-brand">Somos los que no toman atajos.</span>
             </h2>
 
             <p className="section-subtitle mt-6">
-              Lo que nos diferencia no es una promesa bonita — es que cada inspección pasa, cada plazo se
-              cumple y cada cliente repite.
+              Lo que nos diferencia no es una promesa bonita — es que hacemos el trabajo con calma,
+              sin atajos, y cuando algo no sale como debería, lo resolvemos.
             </p>
 
             <div className="mt-8 h-[3px] w-12 bg-brand" />
@@ -147,8 +147,8 @@ export default function WhyUs() {
                 <span className="font-body text-xs text-ink-600 uppercase tracking-widest font-bold">Disponibilidad real</span>
               </div>
               <div className="flex flex-col gap-1">
-                <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">0</span>
-                <span className="font-body text-xs text-ink-600 uppercase tracking-widest font-bold">Inspecciones fallidas</span>
+                <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">100%</span>
+                <span className="font-body text-xs text-ink-600 uppercase tracking-widest font-bold">Precio cerrado</span>
               </div>
               <div className="flex flex-col gap-1">
                 <span className="font-heading text-3xl lg:text-4xl font-extrabold text-brand">&lt;60 MIN</span>

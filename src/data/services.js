@@ -5,7 +5,7 @@ export const services = [
     subtitle: 'Completas, reformas y adecuaciones',
     shortDesc: 'Montamos instalaciones eléctricas completas para viviendas, locales, naves y oficinas.',
     heroDesc: 'Desde el diseño del cuadro general hasta el último enchufe. Instalaciones eléctricas que pasan inspección a la primera, con material certificado y mano de obra de electricistas autorizados.',
-    image: '/images/services/NUEVO INSTALACIONES ELÉCTRICAS.png',
+    image: '/images/services/NUEVO INSTALACIONES ELÉCTRICAS.webp',
     icon: 'Plug',
     bullets: [
       'Instalaciones completas en viviendas, locales y naves',
@@ -27,7 +27,7 @@ export const services = [
     subtitle: 'Urgencias 24h, los 7 días',
     shortDesc: 'Cortocircuitos, derivaciones y fallos eléctricos. Reparaciones rápidas con equipos calibrados.',
     heroDesc: 'Cuando se va la luz a las 3 de la mañana en tu negocio, necesitas a alguien que coja el teléfono. Atendemos urgencias eléctricas 24 horas, los 7 días de la semana, en Madrid y Toledo.',
-    image: '/images/services/NUEVO REPARACIÓN DE AVERÍAS.png',
+    image: '/images/services/NUEVO REPARACIÓN DE AVERÍAS.webp',
     icon: 'Zap',
     bullets: [
       'Cortocircuitos y derivaciones',
@@ -49,7 +49,7 @@ export const services = [
     subtitle: 'Energía limpia, ahorro real',
     shortDesc: 'Paneles solares de alta eficiencia con ahorro económico desde el primer día.',
     heroDesc: 'Instalamos sistemas fotovoltaicos para empresas y particulares. Desde el estudio de tu cubierta hasta la legalización completa. Ahorro real desde el primer mes, con retorno de inversión en 4-6 años.',
-    image: '/images/services/NUEVO PANELES SOLARES.png',
+    image: '/images/services/NUEVO PANELES SOLARES.webp',
     icon: 'Sun',
     bullets: [
       'Estudio personalizado de tu cubierta',
@@ -71,7 +71,7 @@ export const services = [
     subtitle: 'Moderniza tu espacio y ahorra',
     shortDesc: 'Sistemas LED modernos y eficientes que reducen tu factura con acabado profesional.',
     heroDesc: 'Cambiamos tu iluminación antigua por LED de última generación. Menos consumo, mejor luz, más vida útil. Para comercios, oficinas, naves industriales y viviendas.',
-    image: '/images/services/iluminacion.png',
+    image: '/images/services/iluminacion.webp',
     icon: 'Lightbulb',
     bullets: [
       'Ahorro de hasta el 80% en iluminación',
@@ -115,7 +115,7 @@ export const services = [
     subtitle: 'Redes, datos y conectividad profesional',
     shortDesc: 'Cableado de red, redes Wi-Fi, videoporteros y control de accesos. Crimpado UTP/FTP profesional.',
     heroDesc: 'Las redes son la especialidad técnica favorita de Jorge. Desde el crimpado de un cable UTP hasta el diseño completo de una red corporativa. Instalaciones limpias, bien etiquetadas y con documentación incluida.',
-    image: '/images/services/telecomunicaciones.png',
+    image: '/images/services/telecomunicaciones.webp',
     icon: 'Wifi',
     bullets: [
       'Cableado UTP/FTP con crimpado profesional',
@@ -137,7 +137,7 @@ export const services = [
     subtitle: 'Instalación de puntos de recarga',
     shortDesc: 'Puntos de recarga domésticos y profesionales para flotas y parking. Instalación certificada.',
     heroDesc: 'El vehículo eléctrico necesita una instalación eléctrica preparada. Instalamos puntos de recarga Modo 3 en viviendas, garajes, empresas y flotas. Todo legalizado y con la potencia adecuada para tu caso.',
-    image: '/images/services/recarga.png',
+    image: '/images/services/recarga.webp',
     icon: 'BatteryCharging',
     bullets: [
       'Wallbox doméstico Modo 3',

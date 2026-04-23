@@ -42,18 +42,18 @@ export default function FinalCTA() {
       <div className="relative max-w-4xl mx-auto px-6 text-center">
         {/* Heading */}
         <h2 className="finalcta-heading text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-white leading-tight mb-4">
-          Convierte tu instalaci&oacute;n el&eacute;ctrica en una{' '}
-          <span className="text-brand">ventaja competitiva</span>
+          ¿Necesitas un electricista{' '}
+          <span className="text-brand">en quien confiar?</span>
         </h2>
-        
+
         {/* Subtitle support */}
         <p className="finalcta-heading text-white/70 text-lg md:text-xl font-body max-w-2xl mx-auto mb-10">
-          Dejamos tu instalación lista para pasar cualquier inspección, sin chapuzas ni sobrecostes. Llámanos ahora y solucionamos tu problema.
+          Cuéntanos qué necesitas. Presupuesto cerrado, sin sorpresas y sin compromiso. Si no podemos ayudarte, te lo decimos.
         </p>
 
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14 relative z-10">
-          <a href="#contacto" className="finalcta-btn btn-brand flex items-center gap-2 text-base">
+          <a href="/contacto" className="finalcta-btn btn-brand flex items-center gap-2 text-base">
             <Send size={18} />
             Cu&eacute;ntanos qu&eacute; necesitas
           </a>

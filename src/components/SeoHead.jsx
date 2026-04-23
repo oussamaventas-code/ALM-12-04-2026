@@ -32,10 +32,10 @@ export default function SeoHead({ title, description, canonical, schema, ogImage
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image"       content={image} />
 
-      {/* Schema.org */}
-      {schema && (
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      )}
+      {/* Schema.org — acepta objeto único o array de schemas */}
+      {schema && (Array.isArray(schema) ? schema : [schema]).map((s, i) => (
+        <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
+      ))}
     </Helmet>
   );
 }

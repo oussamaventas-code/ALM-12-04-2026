@@ -8,9 +8,9 @@ gsap.registerPlugin(ScrollTrigger);
 const features = [
   {
     icon: Shield,
-    title: 'Todo en regla, siempre',
+    title: 'Todo en regla, sin atajos',
     description:
-      'Cada instalación cumple normativa al pie de la letra. No hacemos ñapas ni dejamos nada a medias. Cuando viene la inspección, pasa a la primera.',
+      'Cada instalación cumple normativa. No hacemos ñapas ni dejamos nada a medias. Cuando llega la inspección, ya está todo preparado.',
     detail: 'REBT, BT, ITC... lo que haga falta',
   },
   {

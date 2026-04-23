@@ -30,6 +30,8 @@ export default function Hero() {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const imgFallbackRef = useRef(null);
 
   useEffect(() => {
     // ── QW-2: Defer GSAP hero timeline until after the browser is idle ─────
@@ -138,25 +140,25 @@ export default function Hero() {
         {/* ── QW-1: Imagen de fallback — visible en móvil y como placeholder en desktop ── */}
         {/* QW-6: fetchpriority="high" acelera el LCP en móvil donde no hay video */}
         <img
+          ref={imgFallbackRef}
           src="/hero-bg.png"
           alt=""
           aria-hidden="true"
-          fetchpriority="high"
-          className="absolute inset-0 w-full h-full object-cover"
+          fetchPriority="high"
+          className="absolute inset-0 w-full h-full object-cover object-[70%_center] lg:object-center transition-opacity duration-700"
+          style={{ opacity: videoReady ? 0 : 1 }}
           width="1920"
           height="1080"
         />
 
-        {/* ── QW-1: preload="none" — el video NO bloquea el bandwidth inicial ── */}
-        {/* Solo se descarga cuando el navegador lo decide, no en el critical path */}
-        {/* La image tag de arriba actúa como poster de alta calidad mientras carga */}
         <video
           autoPlay
           muted
           loop
           playsInline
-          preload="none"
-          className="absolute inset-0 w-full h-full object-cover scale-110"
+          preload="auto"
+          onCanPlay={() => setVideoReady(true)}
+          className="absolute inset-0 w-full h-full object-cover object-[70%_center] lg:object-center lg:scale-110"
         >
           <source
             media="(max-width: 1023px)"
@@ -202,8 +204,8 @@ export default function Hero() {
             {/* Subtitle */}
             <p className="hero-subtitle font-body text-lg text-white/75 max-w-lg leading-relaxed mb-8">
               Somos electricistas de verdad. Hacemos instalaciones seguras,
-              limpias y que pasan inspección a la primera. Si algo no queda
-              perfecto, volvemos sin coste. Así de simple.
+              limpias y que cumplen la normativa. Si algo no queda como
+              esperabas, volvemos a revisarlo sin coste. Somos personas, no robots.
             </p>
 
             {/* CTAs */}
@@ -277,10 +279,12 @@ export default function Hero() {
                       placeholder="Tu nombre"
                       autoComplete="name"
                       className={`input-field ${formErrors.nombre ? '!border-red-400/60' : ''}`}
+                      aria-invalid={!!formErrors.nombre}
+                      aria-describedby={formErrors.nombre ? 'err-nombre' : undefined}
                       value={formData.nombre}
                       onChange={(e) => { setFormData({ ...formData, nombre: e.target.value }); clearFieldError('nombre'); }}
                     />
-                    {formErrors.nombre && <p className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.nombre}</p>}
+                    {formErrors.nombre && <p id="err-nombre" className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.nombre}</p>}
                   </div>
 
                   {/* Empresa */}
@@ -301,10 +305,12 @@ export default function Hero() {
                       autoComplete="tel"
                       inputMode="tel"
                       className={`input-field ${formErrors.telefono ? '!border-red-400/60' : ''}`}
+                      aria-invalid={!!formErrors.telefono}
+                      aria-describedby={formErrors.telefono ? 'err-telefono' : undefined}
                       value={formData.telefono}
                       onChange={(e) => { setFormData({ ...formData, telefono: e.target.value }); clearFieldError('telefono'); }}
                     />
-                    {formErrors.telefono && <p className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.telefono}</p>}
+                    {formErrors.telefono && <p id="err-telefono" className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.telefono}</p>}
                   </div>
 
                   {/* Tipo de proyecto */}
@@ -314,6 +320,8 @@ export default function Hero() {
                       <select
                         id="tipo-proyecto"
                         className={`input-field appearance-none cursor-pointer ${formErrors.tipo ? '!border-red-400/60' : ''}`}
+                        aria-invalid={!!formErrors.tipo}
+                        aria-describedby={formErrors.tipo ? 'err-tipo' : undefined}
                         value={formData.tipo}
                         onChange={(e) => { setFormData({ ...formData, tipo: e.target.value }); clearFieldError('tipo'); }}
                       >
@@ -331,7 +339,7 @@ export default function Hero() {
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
                       />
                     </div>
-                    {formErrors.tipo && <p className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.tipo}</p>}
+                    {formErrors.tipo && <p id="err-tipo" className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.tipo}</p>}
                   </div>
 
                   {/* Submit */}

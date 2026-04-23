@@ -66,7 +66,7 @@ export default function JorgeSection() {
             </div>
 
             <p className="text-white/65 leading-relaxed mb-5">
-              Jorge lleva más de seis años en el sector eléctrico — no porque no encontrara otra cosa,
+              Jorge lleva desde 2018 en el sector eléctrico — no porque no encontrara otra cosa,
               sino porque le apasiona resolver problemas reales con las manos. Empezó solo, sin red de contactos,
               y construyó la empresa a base de que los clientes volvieran y recomendaran.
             </p>
@@ -111,7 +111,7 @@ export default function JorgeSection() {
             <div className="relative rounded-2xl overflow-hidden border border-white/10 aspect-[3/4] md:aspect-[4/5] mb-8 group shadow-2xl shadow-brand/5">
               <div className="absolute inset-0 bg-brand/10 group-hover:bg-transparent transition-colors duration-500 z-10 mix-blend-overlay" aria-hidden="true"></div>
               <img 
-                src="/images/team/jorge-y-melisa.png" 
+                src="/images/team/jorge-y-melisa.webp" 
                 alt="Jorge y Melisa, ALM Electricidad" 
                 width="600"
                 height="800"

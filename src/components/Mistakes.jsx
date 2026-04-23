@@ -68,8 +68,8 @@ export default function Mistakes() {
             Errores que evitamos en cada instalación
           </h2>
           <p className="section-subtitle mt-2">
-            Después de 10 años, hemos visto de todo. Estas son las cosas que
-            nunca vas a encontrar en nuestro trabajo.
+            Llevamos en esto desde 2018 y hemos visto de todo. Estas son las cosas que
+            intentamos evitar en cada trabajo.
           </p>
         </div>
 

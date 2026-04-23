@@ -258,7 +258,7 @@ export default function Process() {
             </p>
           </div>
           <a
-            href="#contacto"
+            href="/contacto"
             className="btn-brand shrink-0 group flex items-center gap-3 !px-8 !py-4"
           >
             Pide presupuesto ahora

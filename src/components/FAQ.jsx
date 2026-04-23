@@ -25,7 +25,7 @@ const faqs = [
   {
     question: '¿Pasáis las inspecciones de industria?',
     answer:
-      '100% de nuestras instalaciones pasan a la primera. Es nuestro estándar de trabajo y no aceptamos menos.',
+      'Trabajamos para que pase a la primera. Seguimos el REBT al detalle y nos tomamos el tiempo necesario para hacerlo bien. Si por alguna razón hubiera una revisión, la resolvemos sin coste para ti.',
   },
   {
     question: '¿Qué garantía tienen vuestros trabajos?',

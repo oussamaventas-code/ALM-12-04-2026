@@ -4,40 +4,40 @@ import gsap from 'gsap';
 
 const projects = [
   {
-    image: '/images/portfolio/bbf912ac-5634-4e6f-ad8d-b83fdf356274.JPG',
-    title: 'Instalación eléctrica completa',
-    type: 'Industrial',
-    result: 'Canalización y cableado profesional. Inspección superada a la primera.',
-  },
-  {
-    image: '/images/portfolio/f015c7ac-f508-4a30-bde0-3dfdb7713f23.JPG',
-    title: 'Cuadro general de distribución',
-    type: 'Alta potencia',
-    result: 'Cuadro eléctrico certificado con protecciones de última generación.',
-  },
-  {
-    image: '/images/portfolio/8217e1cb-136f-4b3c-88ca-fb7cda38d8aa.JPG',
-    title: 'Reforma eléctrica integral',
-    type: 'Rehabilitación',
-    result: 'Adecuación completa a normativa REBT vigente.',
-  },
-  {
-    image: '/images/portfolio/e6948f9c-0f62-4771-bf42-8c308b96c351.JPG',
-    title: 'Canalización en nave industrial',
-    type: 'Industrial',
-    result: 'Tendido de bandejas y cableado certificado BT.',
-  },
-  {
-    image: '/images/portfolio/2d9c7fe9-ebf3-43e6-ae41-41f8e990bf8c.JPG',
-    title: 'Instalación en local comercial',
-    type: 'Comercial',
-    result: 'Iluminación LED + cuadro seccional. Ahorro del 65% en factura.',
-  },
-  {
-    image: '/images/portfolio/0c1c3c06-f1d5-4f04-91a8-1381e29dd650.JPG',
-    title: 'Conexión y puesta en servicio',
+    image: '/images/portfolio/bbf912ac-5634-4e6f-ad8d-b83fdf356274.webp',
+    title: 'Revisión de armario exterior',
     type: 'Mantenimiento',
-    result: 'Revisión completa y certificación de la instalación existente.',
+    result: 'Medición y diagnóstico en armario de distribución exterior. Trabajo certificado.',
+  },
+  {
+    image: '/images/portfolio/f015c7ac-f508-4a30-bde0-3dfdb7713f23.webp',
+    title: 'Instalación fotovoltaica residencial',
+    type: 'Autoconsumo',
+    result: 'Paneles solares de alta eficiencia en cubierta inclinada. Legalización incluida.',
+  },
+  {
+    image: '/images/portfolio/8217e1cb-136f-4b3c-88ca-fb7cda38d8aa.webp',
+    title: 'Cuadros eléctricos en nave industrial',
+    type: 'Industrial',
+    result: 'Instalación de cuadros de mando y protecciones en nave. Certificado REBT.',
+  },
+  {
+    image: '/images/portfolio/e6948f9c-0f62-4771-bf42-8c308b96c351.webp',
+    title: 'Autoconsumo en vivienda unifamiliar',
+    type: 'Autoconsumo',
+    result: 'Sistema fotovoltaico en tejado. Ahorro desde el primer mes.',
+  },
+  {
+    image: '/images/portfolio/2d9c7fe9-ebf3-43e6-ae41-41f8e990bf8c.webp',
+    title: 'Cuadro de distribución exterior',
+    type: 'Alta potencia',
+    result: 'Cuadro eléctrico con protecciones de última generación instalado en exterior.',
+  },
+  {
+    image: '/images/portfolio/0c1c3c06-f1d5-4f04-91a8-1381e29dd650.webp',
+    title: 'Solar en cubierta plana comercial',
+    type: 'Autoconsumo',
+    result: 'Instalación fotovoltaica para autoconsumo en cubierta de edificio comercial.',
   },
 ];
 
@@ -64,8 +64,7 @@ function PortfolioDesktop() {
           trigger: section,
           start: 'top top',
           end: () => `+=${Math.abs(getScrollAmount())}`,
-          // Pin se libera exactamente cuando la última tarjeta entra en pantalla
-          scrub: 1,
+          scrub: 0.5,
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
@@ -80,8 +79,7 @@ function PortfolioDesktop() {
           trigger: section,
           start: 'top top',
           end: () => `+=${Math.abs(getScrollAmount())}`,
-          // Pin se libera exactamente cuando la última tarjeta entra en pantalla
-          scrub: 1,
+          scrub: 0.5,
           invalidateOnRefresh: true,
         },
       });
@@ -90,18 +88,17 @@ function PortfolioDesktop() {
       gsap.utils.toArray('.portfolio-card').forEach((card, i) => {
         gsap.fromTo(
           card,
-          { y: -60, autoAlpha: 0, rotation: -3 + (i % 2 === 0 ? -1 : 1) * 1.5 },
+          { y: 30, autoAlpha: 0 },
           {
             y: 0,
             autoAlpha: 1,
-            rotation: 0,
-            duration: 0.85,
-            ease: 'power3.out',
-            delay: i * 0.08,
+            duration: 0.6,
+            ease: 'power2.out',
+            delay: i * 0.05,
             scrollTrigger: {
               trigger: card,
               containerAnimation: horizontalTween,
-              start: 'left 85%',
+              start: 'left 90%',
               once: true,
             },
           }
@@ -160,7 +157,8 @@ function PortfolioDesktop() {
                   alt={p.title}
                   width="520"
                   height="700"
-                  loading="lazy"
+                  loading="eager"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-7">

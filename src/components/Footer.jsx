@@ -58,7 +58,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <img
-              src="/LOGO Y JORGE/LOGO.JPG"
+              src="/LOGO Y JORGE/LOGO.webp"
               alt="ALM Electricidad"
               width="200"
               height="64"

@@ -28,29 +28,113 @@ export default function HomePage() {
     ScrollTrigger.refresh();
   }, []);
 
-  const schemaData = {
+  const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "ElectricalContractor",
     "name": "ALM Electricidad",
+    "url": "https://almelectricidad.com",
     "telephone": "+34605333108",
-    "areaServed": ["Madrid", "Toledo"],
+    "email": "contacto@almelectricidad.com",
+    "foundingDate": "2018",
+    "description": "Electricistas en Madrid y Toledo. Instalaciones eléctricas, fotovoltaica, urgencias 24h. Presupuesto cerrado sin sorpresas.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Madrid",
+      "addressRegion": "Madrid",
+      "addressCountry": "ES"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Madrid" },
+      { "@type": "City", "name": "Toledo" }
+    ],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "08:00",
+        "closes": "20:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday","Sunday"],
+        "opens": "00:00",
+        "closes": "23:59",
+        "description": "Urgencias 24h"
+      }
+    ],
+    "priceRange": "€€",
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "5",
       "reviewCount": "18"
-    }
+    },
+    "sameAs": [
+      "https://wa.me/34605333108"
+    ]
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cuánto cuesta una instalación eléctrica?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depende del tipo y tamaño del proyecto. Lo que sí hacemos siempre es darte un presupuesto cerrado antes de empezar, sin sorpresas ni costes ocultos."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Trabajáis en toda la Comunidad de Madrid?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí, cubrimos Madrid, Toledo y alrededores. Si tu proyecto está en la zona, nos desplazamos sin problema."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Tenéis servicio de urgencias?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí, 24 horas los 365 días del año. Nos llamas, respondemos y vamos."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Pasáis las inspecciones de industria?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Trabajamos para que pase a la primera. Seguimos el REBT al detalle y nos tomamos el tiempo necesario para hacerlo bien. Si por alguna razón hubiera una revisión, la resolvemos sin coste para ti."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué garantía tienen vuestros trabajos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Mínimo 30 días en cualquier trabajo. Según el tipo de instalación, la garantía puede llegar hasta 2 años. Todo queda por escrito."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuánto se tarda en recibir el presupuesto?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Normalmente en menos de 24 horas. Dependiendo de la complejidad, a veces el mismo día."
+        }
+      }
+    ]
   };
 
   return (
     <>
       <SeoHead
-        title="ALMelectricidad — Instalaciones Eléctricas Profesionales en Madrid y Toledo"
-        description="Electricistas profesionales para empresas y particulares en Madrid y Toledo. Instalaciones eléctricas, fotovoltaica y urgencias 24h. Presupuesto cerrado en menos de 24h."
+        title="Electricistas en Madrid y Toledo — ALM Electricidad | Presupuesto sin compromiso"
+        description="Electricistas en Madrid y Toledo desde 2018. Instalaciones eléctricas, fotovoltaica y urgencias 24h. Precio cerrado antes de empezar, sin sorpresas."
         canonical="/"
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        schema={[localBusinessSchema, faqSchema]}
       />
 
       {/* 1. Primer impacto: vídeo + copy + formulario rápido */}
