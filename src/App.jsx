@@ -11,7 +11,6 @@ import Analytics from './components/Analytics';
 
 // Diferidos: no bloquean el primer render ni el LCP
 const WhatsAppFloat    = lazy(() => import('./components/WhatsAppFloat'));
-const MobileUrgencyBar = lazy(() => import('./components/MobileUrgencyBar'));
 const CookieBanner     = lazy(() => import('./components/CookieBanner'));
 
 // HomePage carga inmediata (primera pantalla)
@@ -180,7 +179,6 @@ function AppShell() {
       <Footer />
       <Suspense fallback={null}>
         <WhatsAppFloat />
-        <MobileUrgencyBar />
         <CookieBanner />
       </Suspense>
     </div>
