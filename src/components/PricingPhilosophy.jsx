@@ -68,12 +68,12 @@ export default function PricingPhilosophy() {
             <span className="text-brand text-xs font-semibold uppercase tracking-widest">Transparencia total</span>
           </div>
           <h2 id="pricing-philosophy-heading" className="section-title">
-            No somos para todos.{' '}
-            <span className="text-gradient-gold">Y está bien.</span>
+            Cómo entendemos{' '}
+            <span className="text-gradient-gold">el precio.</span>
           </h2>
           <p className="section-subtitle">
-            Si buscas el presupuesto más barato, seguramente hay alguien que te lo da.
-            Nosotros no competimos por precio — competimos por tranquilidad.
+            Trabajamos con precios cerrados desde el principio. Lo que te decimos
+            es lo que pagas, sin sorpresas a mitad de obra.
           </p>
         </div>
 
@@ -117,26 +117,6 @@ export default function PricingPhilosophy() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Texto filosofía */}
-        <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-6 mb-14">
-          <div className="bg-white/4 border border-white/8 rounded-xl p-6">
-            <h3 className="font-heading font-bold text-white mb-3">¿Somos para ti?</h3>
-            <p className="text-white/60 text-sm leading-relaxed">
-              Trabajamos con personas que valoran la tranquilidad de saber que el trabajo está bien hecho.
-              Que prefieren pagar un precio justo ahora antes que pagar dos veces después.
-              Que quieren una instalación que pase inspección a la primera y no de problemas en cinco años.
-            </p>
-          </div>
-          <div className="bg-brand/8 border border-brand/20 rounded-xl p-6">
-            <h3 className="font-heading font-bold text-white mb-3">El coste real de lo barato</h3>
-            <p className="text-white/60 text-sm leading-relaxed">
-              Un cuadro mal hecho, un cable sin certificar, una instalación que no pasa la inspección —
-              arreglarlo siempre cuesta más que haberlo hecho bien la primera vez.
-              En el mundo eléctrico, "el dinero del pobre va dos veces" no es un dicho, es una realidad diaria.
-            </p>
           </div>
         </div>
 

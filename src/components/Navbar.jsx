@@ -11,6 +11,7 @@ const navLinks = [
     dropdown: [
       { label: 'Instalaciones Eléctricas',   to: '/servicios/instalaciones-electricas', icon: Zap },
       { label: 'Reparación de Averías 24h',  to: '/servicios/reparacion-averias', icon: Wrench },
+      { label: 'Urgencias 24h',               to: '/urgencias', icon: AlertCircle },
       { label: 'Paneles Solares',             to: '/servicios/paneles-solares', icon: Sun },
       { label: 'Iluminación LED',             to: '/servicios/iluminacion-led', icon: Lightbulb },
       { label: 'Boletines y Certificados',    to: '/servicios/boletines-certificados', icon: FileText },
@@ -41,7 +42,6 @@ const navLinks = [
       { label: 'Nuestra Historia', to: '/sobre-nosotros', icon: BookOpen },
       { label: 'Nuestro Equipo',   to: '/equipo', icon: Users },
       { label: 'Nuestra Flota',    to: '/flota', icon: Truck },
-      { label: 'Urgencias 24h',    to: '/urgencias', icon: AlertCircle },
       { label: 'Patrocinios',      to: '/patrocinios', icon: Award },
     ],
   },
@@ -140,7 +140,7 @@ export default function Navbar() {
           <MagneticElement>
             <Link to="/" className="flex items-center gap-2 group shrink-0" aria-label="ALMelectricidad — Inicio">
               <img
-                src="/LOGO Y JORGE/LOGO.JPG"
+                src="/LOGO Y JORGE/LOGO.webp"
                 alt="ALMelectricidad"
                 width="220"
                 height="44"

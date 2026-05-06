@@ -148,7 +148,7 @@ export default function Hero() {
         {/* QW-6: fetchpriority="high" acelera el LCP en móvil donde no hay video */}
         <img
           ref={imgFallbackRef}
-          src="/hero-bg.png"
+          src="/hero-bg.webp"
           alt=""
           aria-hidden="true"
           fetchPriority="high"

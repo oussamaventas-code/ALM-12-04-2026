@@ -14,7 +14,7 @@ const teamMembers = [
     specialty: 'Instalaciones industriales · Fotovoltaica',
     experience: '+15 años',
     cert: 'Instalador Autorizado REBT',
-    image: '/images/team/EQUIPO PARA PAGINA/JORGE.png',
+    image: '/images/team/EQUIPO PARA PAGINA/JORGE.webp',
   },
   {
     name: 'Dani',
@@ -22,7 +22,7 @@ const teamMembers = [
     specialty: 'Domótica · Cuadros eléctricos',
     experience: '+10 años',
     cert: 'Certificado SEC · Nivel 2',
-    image: '/images/team/EQUIPO PARA PAGINA/DANI.png',
+    image: '/images/team/EQUIPO PARA PAGINA/DANI.webp',
   },
   {
     name: 'Isma',
@@ -30,7 +30,7 @@ const teamMembers = [
     specialty: 'Renovaciones · Alarmas · VE',
     experience: '+7 años',
     cert: 'Formación continua AMPERE',
-    image: '/images/team/EQUIPO PARA PAGINA/ISMA.png',
+    image: '/images/team/EQUIPO PARA PAGINA/ISMA.webp',
   },
   {
     name: 'Jefferson',
@@ -38,7 +38,7 @@ const teamMembers = [
     specialty: 'Residencial · Telecomunicaciones',
     experience: '+5 años',
     cert: 'Habilitado RITE',
-    image: '/images/team/EQUIPO PARA PAGINA/JEFFERSON.png',
+    image: '/images/team/EQUIPO PARA PAGINA/JEFFERSON.webp',
   },
   {
     name: 'Melo',
@@ -46,7 +46,7 @@ const teamMembers = [
     specialty: 'Fotovoltaica · Instalaciones industriales',
     experience: '+5 años',
     cert: 'Instalador Autorizado REBT',
-    image: '/images/team/EQUIPO PARA PAGINA/MELO.png',
+    image: '/images/team/EQUIPO PARA PAGINA/MELO.webp',
   },
   {
     name: 'Melisa',
@@ -54,7 +54,7 @@ const teamMembers = [
     specialty: 'Gestión administrativa · Recursos Humanos',
     experience: 'Nueva incorporación',
     cert: 'Gestión de equipo y coordinación',
-    image: '/images/team/EQUIPO PARA PAGINA/MELISA.png',
+    image: '/images/team/EQUIPO PARA PAGINA/MELISA.webp',
   },
 ];
 

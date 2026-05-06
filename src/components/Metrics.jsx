@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 const metrics = [
   { value: 8, suffix: '+', prefix: '', label: 'Años en el oficio', sub: 'Desde 2018, segunda generación' },
   { value: 500, suffix: '+', prefix: '', label: 'Proyectos terminados', sub: 'Residencial e industrial' },
-  { value: 100, suffix: '%', prefix: '', label: 'Precio cerrado siempre', sub: 'Sin costes que no esperabas' },
+  { value: 100, suffix: '%', prefix: '', label: 'Precio cerrado de inicio', sub: 'Sin costes que no esperabas' },
   { value: 24, suffix: 'h', prefix: '<', label: 'Te respondemos (o antes)', sub: 'Urgencias 365 días' },
 ];
 

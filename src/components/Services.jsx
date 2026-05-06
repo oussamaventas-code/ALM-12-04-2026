@@ -159,7 +159,7 @@ function ServicesDesktop() {
               </h2>
             </div>
             <p className="section-subtitle hidden md:block max-w-xs text-right">
-              Materiales de máxima calidad,
+              Materiales de buenas marcas,
               <br />
               normativa al día y trato cercano.
             </p>

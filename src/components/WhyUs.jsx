@@ -128,14 +128,22 @@ export default function WhyUs() {
             <span className="section-label mb-6">Por qué elegirnos</span>
 
             <h2 className="section-title mt-4">
-              No somos los más baratos.
+              Instalaciones eléctricas
               <br />
-              <span className="text-brand">Somos los que no toman atajos.</span>
+              <span className="text-brand">en Madrid y Toledo</span>
             </h2>
 
             <p className="section-subtitle mt-6">
-              Lo que nos diferencia no es una promesa bonita — es que hacemos el trabajo con calma,
-              sin atajos, y cuando algo no sale como debería, lo resolvemos.
+              En ALMelectricidad ofrecemos soluciones eléctricas integrales para viviendas, empresas
+              e industria, con un enfoque claro: seguridad, eficiencia y cuidado en cada instalación.
+              Somos instaladores autorizados y trabajamos conforme al Reglamento Electrotécnico
+              de Baja Tensión (REBT), para que la instalación quede segura, legal y duradera.
+            </p>
+
+            <p className="font-body text-base text-ink-500 mt-5 leading-relaxed max-w-md">
+              Trabajamos con un objetivo sencillo: cuidar cada detalle desde el inicio hasta la
+              puesta en marcha. No solo instalamos — intentamos que tu instalación consuma menos,
+              funcione mejor y te dé tranquilidad a largo plazo.
             </p>
 
             <div className="mt-8 h-[3px] w-12 bg-brand" />

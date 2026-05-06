@@ -85,7 +85,7 @@ export default function PageTransition() {
       {/* Logo */}
       <img
         ref={logoRef}
-        src="/LOGO Y JORGE/LOGO.JPG"
+        src="/LOGO Y JORGE/LOGO.webp"
         alt=""
         width="320"
         height="64"
