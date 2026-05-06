@@ -113,21 +113,28 @@ export default function Hero() {
       setFormErrors(errs);
       return;
     }
+
+    // ── Construir mensaje y abrir WhatsApp SÍNCRONO ───────────────────────
+    // Safari/iOS bloquea window.open() si se llama desde un setTimeout,
+    // porque pierde la "user activation". Por eso disparamos el open
+    // inmediatamente dentro del handler y el feedback visual va aparte.
+    const parts = [`Hola, soy ${formData.nombre}`];
+    if (formData.empresa) parts[0] += ` de ${formData.empresa}`;
+    parts.push(`Necesito info sobre: ${formData.tipo}`);
+    parts.push(`Mi teléfono: ${formData.telefono}`);
+    const msg = parts.join('. ') + '.';
+    window.open(
+      `https://wa.me/34605333108?text=${encodeURIComponent(msg)}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
+
+    // Feedback visual breve después
     setIsSubmitting(true);
     setTimeout(() => {
-      const parts = [`Hola, soy ${formData.nombre}`];
-      if (formData.empresa) parts[0] += ` de ${formData.empresa}`;
-      parts.push(`Necesito info sobre: ${formData.tipo}`);
-      parts.push(`Mi teléfono: ${formData.telefono}`);
-      const msg = parts.join('. ') + '.';
-      window.open(
-        `https://wa.me/34605333108?text=${encodeURIComponent(msg)}`,
-        '_blank',
-        'noopener,noreferrer'
-      );
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 600);
+    }, 400);
   };
 
   return (
@@ -197,15 +204,14 @@ export default function Hero() {
                 bien hechas
               </span>
               <span className="hero-title-line block text-white/90">
-                sin sorpresas ni líos raros
+                en Madrid y Toledo
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="hero-subtitle font-body text-lg text-white/75 max-w-lg leading-relaxed mb-8">
-              Somos electricistas de verdad. Hacemos instalaciones seguras,
-              limpias y que cumplen la normativa. Si algo no queda como
-              esperabas, volvemos a revisarlo sin coste. Somos personas, no robots.
+              Hacemos instalaciones seguras, limpias y conformes a la normativa.
+              Si algo no queda como esperabas, volvemos a revisarlo sin coste.
             </p>
 
             {/* CTAs */}
@@ -234,8 +240,8 @@ export default function Hero() {
           </div>
 
           {/* Contact form — desktop only */}
-          <div className="hero-form hidden lg:block">
-            <div className="bg-black/20 backdrop-blur-md border border-white/[0.14] p-6 md:p-8">
+          <div className="hero-form hidden lg:block group">
+            <div className="bg-black/20 backdrop-blur-md border border-white/[0.14] p-6 md:p-8 opacity-40 group-hover:opacity-100 transition-opacity duration-500">
               {isSubmitted ? (
                 <div className="flex flex-col items-center justify-center gap-5 py-8 text-center animate-fadeInUp">
                   <div className="w-16 h-16 rounded-full bg-success/10 border border-success/30 flex items-center justify-center">

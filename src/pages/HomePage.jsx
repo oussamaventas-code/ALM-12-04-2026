@@ -28,51 +28,8 @@ export default function HomePage() {
     ScrollTrigger.refresh();
   }, []);
 
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "ElectricalContractor",
-    "name": "ALM Electricidad",
-    "url": "https://almelectricidad.com",
-    "telephone": "+34605333108",
-    "email": "contacto@almelectricidad.com",
-    "foundingDate": "2018",
-    "description": "Electricistas en Madrid y Toledo. Instalaciones eléctricas, fotovoltaica, urgencias 24h. Presupuesto cerrado sin sorpresas.",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Madrid",
-      "addressRegion": "Madrid",
-      "addressCountry": "ES"
-    },
-    "areaServed": [
-      { "@type": "City", "name": "Madrid" },
-      { "@type": "City", "name": "Toledo" }
-    ],
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-        "opens": "08:00",
-        "closes": "20:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Saturday","Sunday"],
-        "opens": "00:00",
-        "closes": "23:59",
-        "description": "Urgencias 24h"
-      }
-    ],
-    "priceRange": "€€",
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "reviewCount": "18"
-    },
-    "sameAs": [
-      "https://wa.me/34605333108"
-    ]
-  };
-
+  // El schema LocalBusiness/Electrician vive en index.html para que esté
+  // disponible incluso antes de hidratar React. Aquí solo añadimos el FAQPage.
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -134,7 +91,7 @@ export default function HomePage() {
         title="Electricistas en Madrid y Toledo — ALM Electricidad | Presupuesto sin compromiso"
         description="Electricistas en Madrid y Toledo desde 2018. Instalaciones eléctricas, fotovoltaica y urgencias 24h. Precio cerrado antes de empezar, sin sorpresas."
         canonical="/"
-        schema={[localBusinessSchema, faqSchema]}
+        schema={[faqSchema]}
       />
 
       {/* 1. Primer impacto: vídeo + copy + formulario rápido */}

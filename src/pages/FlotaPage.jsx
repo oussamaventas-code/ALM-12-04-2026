@@ -155,7 +155,7 @@ export default function FlotaPage() {
     <div className="overflow-x-hidden">
       <SeoHead
         title="Nuestra Flota y Equipamiento — ALMelectricidad"
-        description="Vehículos y herramientas especializadas para instalaciones eléctricas profesionales en Madrid y Toledo. Equipamiento de máxima calidad."
+        description="Vehículos y herramientas especializadas para instalaciones eléctricas en Madrid y Toledo. Equipamiento profesional para llegar bien preparados a cada trabajo."
         canonical="/flota"
       />
 

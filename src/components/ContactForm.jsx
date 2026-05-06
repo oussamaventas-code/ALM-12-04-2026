@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowRight, User, Mail, Phone, MessageSquare, CheckCircle } from 'lucide-react';
+import { ArrowRight, User, Mail, Phone, MessageSquare, CheckCircle, Star } from 'lucide-react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { BUSINESS } from '../data/business';
 
 export default function ContactForm() {
   const sectionRef = useRef(null);
@@ -70,12 +68,14 @@ export default function ContactForm() {
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     if (!validate()) return;
+    // Abrir WhatsApp síncrono — Safari iOS bloquea window.open si va dentro
+    // de un setTimeout (pierde la "user activation"). Feedback visual aparte.
+    handleWhatsApp();
     setIsSubmitting(true);
     setTimeout(() => {
-      handleWhatsApp();
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 600);
+    }, 400);
   }, [validate, handleWhatsApp]);
 
   return (
@@ -104,7 +104,7 @@ export default function ContactForm() {
             </h2>
 
             <p className="contact-animate text-[var(--color-ink-400)] text-base md:text-lg leading-relaxed mb-10 font-body">
-              Respuesta garantizada en menos de 24 horas con presupuesto cerrado, sin sorpresas.
+              Te respondemos en menos de 24 horas con presupuesto cerrado, sin sorpresas.
             </p>
 
             {/* Benefits with Checkmarks */}
@@ -134,24 +134,24 @@ export default function ContactForm() {
                   <span className="text-[var(--color-dark)] font-bold text-sm">✓</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[var(--color-ink)] mb-1">Técnicos autorizados</h3>
-                  <p className="text-[var(--color-ink-400)] text-sm">Profesionales certificados y con amplia experiencia.</p>
+                  <h3 className="font-semibold text-[var(--color-ink)] mb-1">Instalador autorizado</h3>
+                  <p className="text-[var(--color-ink-400)] text-sm">Damos de alta el boletín y los certificados oficiales.</p>
                 </div>
               </div>
             </div>
 
-            {/* Footer Avatars & Text */}
+            {/* Footer — rating real Google */}
             <div className="contact-animate mt-12 flex items-center gap-3">
-              <div className="flex -space-x-3">
-                <img className="w-8 h-8 rounded-full border-2 border-[var(--color-dark-800)] object-cover" src="https://i.pravatar.cc/100?img=11" alt="Cliente" />
-                <img className="w-8 h-8 rounded-full border-2 border-[var(--color-dark-800)] object-cover" src="https://i.pravatar.cc/100?img=32" alt="Cliente" />
-                <img className="w-8 h-8 rounded-full border-2 border-[var(--color-dark-800)] object-cover" src="https://i.pravatar.cc/100?img=33" alt="Cliente" />
+              <div className="flex items-center gap-0.5" aria-hidden="true">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <Star key={i} size={16} className="text-[var(--color-brand)] fill-[var(--color-brand)]" />
+                ))}
               </div>
-              <div>
-                <p className="text-[var(--color-ink-400)] text-sm font-medium">
-                  <span className="text-[var(--color-ink)] font-bold">+120 clientes</span> confían en nosotros
-                </p>
-              </div>
+              <p className="text-[var(--color-ink-400)] text-sm font-medium">
+                <span className="text-[var(--color-ink)] font-bold">{BUSINESS.rating.value}</span>
+                {' · '}
+                <span className="text-[var(--color-ink-400)]">{BUSINESS.rating.count} reseñas en Google</span>
+              </p>
             </div>
           </div>
 

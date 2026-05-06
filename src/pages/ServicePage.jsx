@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Plug,
   Zap,
@@ -22,7 +21,7 @@ import {
 import { services } from '../data/services';
 import SeoHead from '../components/SeoHead';
 
-gsap.registerPlugin(ScrollTrigger);
+// ScrollTrigger ya está registrado globalmente en App.jsx
 
 const iconMap = {
   Plug,

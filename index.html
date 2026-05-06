@@ -31,17 +31,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
     <noscript><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500&display=swap" rel="stylesheet" /></noscript>
 
-    <!-- Schema LocalBusiness -->
+    <!-- Schema LocalBusiness — datos sincronizados con src/data/business.js -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Electrician",
       "name": "ALMelectricidad",
       "legalName": "ALMelectricidad",
-      "description": "Instalaciones eléctricas profesionales en Madrid y Toledo. Más de 10 años de experiencia. Instaladores autorizados del REBT.",
+      "description": "Instalaciones eléctricas en Madrid y Toledo desde 2018. Instalador autorizado del REBT. Presupuesto cerrado sin sorpresas.",
       "url": "https://almelectricidad.com",
       "telephone": "+34605333108",
       "email": "contacto@almelectricidad.com",
+      "foundingDate": "2018",
       "founder": {
         "@type": "Person",
         "name": "Jorge Hernández García",
@@ -70,7 +71,7 @@
           "@type": "OpeningHoursSpecification",
           "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
           "opens": "08:00",
-          "closes": "19:00"
+          "closes": "20:00"
         },
         {
           "@type": "OpeningHoursSpecification",
@@ -83,11 +84,13 @@
         "@type": "OfferCatalog",
         "name": "Servicios Eléctricos",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Instalaciones eléctricas completas" }},
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Instalaciones eléctricas" }},
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Reparación de averías y urgencias 24h" }},
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Paneles solares y autoconsumo" }},
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Iluminación LED profesional" }},
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Boletines y certificados oficiales" }}
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Iluminación LED" }},
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Boletines y certificados oficiales" }},
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Telecomunicaciones" }},
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Recarga de vehículo eléctrico" }}
         ]
       },
       "aggregateRating": {
@@ -98,7 +101,9 @@
         "ratingCount": "25",
         "reviewCount": "25"
       },
-      "sameAs": []
+      "sameAs": [
+        "https://wa.me/34605333108"
+      ]
     }
     </script>
   </head>

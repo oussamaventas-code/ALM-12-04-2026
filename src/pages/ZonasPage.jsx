@@ -10,7 +10,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const highlights = [
-  { icon: Zap,           title: 'Urgencias 24h',       desc: 'Respuesta garantizada en cualquier zona de cobertura' },
+  { icon: Zap,           title: 'Urgencias 24h',       desc: 'Te respondemos rápido en cualquier zona de cobertura' },
   { icon: Clock,         title: 'Presupuesto en 24h',  desc: 'Estudio y propuesta económica en menos de un día laborable' },
   { icon: CheckCircle,   title: 'Precio cerrado',       desc: 'Sin sorpresas al finalizar. Lo que acordamos es lo que pagas' },
   { icon: Building,      title: 'Industrial y residencial', desc: 'Misma calidad tanto para una nave como para un piso' },
@@ -81,7 +81,7 @@ export default function ZonasPage() {
               </h1>
               <p className="font-body text-xl text-white/55 leading-relaxed max-w-2xl mb-10">
                 Cubrimos Madrid capital, municipios del sur, norte, este y oeste, y la provincia de Toledo.
-                Urgencias 24h en todas las zonas. Tiempo de respuesta garantizado.
+                Urgencias 24h en todas las zonas, con tiempos de respuesta cortos.
               </p>
 
               <div className="flex flex-wrap gap-4">

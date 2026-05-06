@@ -91,7 +91,7 @@ export default function ContactoPage() {
     <>
       <SeoHead
         title="Contacto — ALMelectricidad | Electricistas Madrid y Toledo"
-        description="Contacta con ALM Electricidad para solicitar presupuesto de instalación eléctrica, urgencias 24h o paneles solares en Madrid y Toledo. Respuesta garantizada en menos de 24h."
+        description="Contacta con ALM Electricidad para solicitar presupuesto de instalación eléctrica, urgencias 24h o paneles solares en Madrid y Toledo. Solemos responder en menos de 24h."
         canonical="/contacto"
         ogImage="https://almelectricidad.com/og-contacto.png"
       />
@@ -225,7 +225,7 @@ export default function ContactoPage() {
               ) : (
                 <div className="bg-dark/60 border border-white/8 rounded-2xl p-7 md:p-10">
                   <h2 className="font-heading text-xl font-bold text-white mb-1">Solicita tu presupuesto</h2>
-                  <p className="text-white/50 text-sm mb-7">Respuesta garantizada en menos de 24h.</p>
+                  <p className="text-white/50 text-sm mb-7">Te respondemos en menos de 24h, normalmente antes.</p>
 
                   <form onSubmit={handleSubmit} noValidate className="space-y-5 font-body">
 

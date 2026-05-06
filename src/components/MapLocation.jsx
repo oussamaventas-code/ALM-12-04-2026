@@ -118,7 +118,7 @@ export default function MapLocation() {
           </h2>
           <p className="section-subtitle mx-auto mt-4">
             Nuestra base está en el centro, pero llegamos a todos los rincones
-            de la zona. Respuesta rápida garantizada.
+            de la zona. Te respondemos rápido.
           </p>
         </div>
 

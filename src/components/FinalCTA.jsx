@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { Send, MessageCircle, Phone, Clock, ShieldCheck, FileText } from 'lucide-react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+// ScrollTrigger ya está registrado globalmente en App.jsx
 
 const badges = [
   { icon: Clock, text: 'Respondemos en <24h' },

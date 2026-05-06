@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { AlertTriangle, XCircle, Ban, ShieldOff, ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+// ScrollTrigger ya está registrado globalmente en App.jsx
 
 const mistakes = [
   {
@@ -26,9 +25,9 @@ const mistakes = [
   },
   {
     icon: ShieldOff,
-    title: 'Chapuzas de otros que hay que rehacer',
+    title: 'Trabajos a medias que hay que rehacer',
     description:
-      'Nos llegan muchos trabajos de arreglar lo que otros dejaron a medias. No somos los más baratos, pero tampoco te tocará pagar dos veces.',
+      'A veces nos llegan instalaciones que se quedaron sin terminar bien. Intentamos hacerlo a la primera para que no haya que pagar dos veces.',
   },
 ];
 

@@ -153,7 +153,6 @@ function AppShell() {
 
       <PageTransition />
       <Navbar />
-      {/* <UrgencyBanner /> */}
       <main id="main-content" className="pb-[72px] lg:pb-0">
         <Suspense fallback={<PageSkeleton />}>
           <Routes>

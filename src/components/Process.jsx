@@ -28,7 +28,7 @@ const steps = [
     tag: 'Presupuesto',
     title: 'Precio cerrado, sin sorpresas',
     body: 'Te damos un presupuesto detallado y cerrado. Lo que te decimos es lo que pagas. Trabajamos sin letra pequeña.',
-    highlight: 'Precio fijo garantizado',
+    highlight: 'Precio cerrado, por escrito',
   },
   {
     num: '04',
@@ -152,11 +152,10 @@ export default function Process() {
         <div className="process-headline mb-20 md:mb-28 max-w-3xl">
           <span className="section-label mb-5 block">Cómo trabajamos</span>
           <h2 className="section-title text-white leading-tight">
-            Sin líos raros,{' '}
-            <span className="text-gradient-gold">te lo explicamos fácil</span>
+            Así <span className="text-gradient-gold">trabajamos contigo</span>
           </h2>
           <p className="section-subtitle mt-5">
-            Nada de procesos con 15 reuniones. Así funciona trabajar con nosotros — rápido, limpio y sin sorpresas.
+            Un proceso sencillo, explicado paso a paso para que sepas en todo momento por dónde va tu instalación.
           </p>
         </div>
 
