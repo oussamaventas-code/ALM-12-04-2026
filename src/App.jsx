@@ -97,7 +97,6 @@ function useLenis() {
       if (lenis) lenis.destroy();
       lenisInstance = null;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // init once
 
   // On route change scroll to top via Lenis (avoids position carry-over)

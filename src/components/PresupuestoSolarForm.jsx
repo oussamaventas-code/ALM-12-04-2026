@@ -67,8 +67,6 @@ export default function PresupuestoSolarForm() {
     setEnviado(true);
   };
 
-  const progress = ((step - 1) / 2) * 100;
-
   if (enviado) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
@@ -104,7 +102,9 @@ export default function PresupuestoSolarForm() {
         <div>
           <p className="text-white/70 text-sm mb-5">¿Qué tipo de instalación necesitas?</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-            {TIPOS.map(({ id, label, sub, icon: Icon }) => (
+            {TIPOS.map(({ id, label, sub, icon }) => {
+              const Icon = icon;
+              return (
               <button
                 key={id}
                 type="button"
@@ -121,7 +121,8 @@ export default function PresupuestoSolarForm() {
                   <p className="text-white/40 text-xs mt-0.5">{sub}</p>
                 </div>
               </button>
-            ))}
+              );
+            })}
           </div>
           <button
             type="button"

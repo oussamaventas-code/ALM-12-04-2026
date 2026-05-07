@@ -72,7 +72,6 @@ export default function PageTransition() {
       // Ensure overlay is always pushed off-screen on cleanup
       gsap.set(overlay, { yPercent: -100 });
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   return (
