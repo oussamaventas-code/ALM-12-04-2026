@@ -17,6 +17,7 @@ const CookieBanner     = lazy(() => import('./components/CookieBanner'));
 import HomePage from './pages/HomePage';
 
 // Resto de páginas: carga diferida (solo se descargan si el usuario navega a ellas)
+const ServiciosPage    = lazy(() => import('./pages/ServiciosPage'));
 const ServicePage      = lazy(() => import('./pages/ServicePage'));
 const ZonePage         = lazy(() => import('./pages/ZonePage'));
 const FotovoltaicaPage = lazy(() => import('./pages/FotovoltaicaPage'));
@@ -159,6 +160,7 @@ function AppShell() {
             <Route path="/urgencias"       element={<UrgenciasPage />} />
             <Route path="/patrocinios"     element={<PatrociniosPage />} />
             <Route path="/proyectos"       element={<ProyectosPage />} />
+            <Route path="/servicios"       element={<ServiciosPage />} />
             <Route path="/servicios/:slug" element={<ServicePage />} />
             <Route path="/zonas"           element={<ZonasPage />} />
             <Route path="/zonas/:slug"     element={<ZonePage />} />

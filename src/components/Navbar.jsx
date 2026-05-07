@@ -9,6 +9,7 @@ const navLinks = [
     label: 'Servicios',
     id: 'servicios',
     dropdown: [
+      { label: 'Ver todos los servicios',    to: '/servicios', icon: Globe },
       { label: 'Instalaciones Eléctricas',   to: '/servicios/instalaciones-electricas', icon: Zap },
       { label: 'Reparación de Averías 24h',  to: '/servicios/reparacion-averias', icon: Wrench },
       { label: 'Urgencias 24h',               to: '/urgencias', icon: AlertCircle },
