@@ -54,7 +54,7 @@ export default function ZonasPage() {
         description="Electricistas profesionales en Madrid (Centro, Norte, Sur, Este, Oeste, Getafe, Alcorcón) y Toledo (capital, Talavera, Illescas). Urgencias 24h y presupuesto en 24h."
         canonical="/zonas"
         schema={schema}
-        ogImage="https://almelectricidad.com/og-zonas.png"
+        ogImage="/og/zonas.png"
       />
 
       <div ref={pageRef}>

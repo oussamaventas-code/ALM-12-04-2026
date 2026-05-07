@@ -4,7 +4,9 @@ const BASE_URL = 'https://almelectricidad.com';
 const OG_IMAGE = `${BASE_URL}/og-image.png`;
 
 export default function SeoHead({ title, description, canonical, schema, ogImage, noindex }) {
-  const image = ogImage || OG_IMAGE;
+  const image = ogImage
+    ? (ogImage.startsWith('http') ? ogImage : `${BASE_URL}${ogImage}`)
+    : OG_IMAGE;
 
   return (
     <Helmet>

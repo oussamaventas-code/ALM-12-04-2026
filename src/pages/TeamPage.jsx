@@ -200,6 +200,7 @@ export default function TeamPage() {
         title="Nuestro Equipo — ALMelectricidad"
         description="Conoce al equipo de electricistas profesionales de ALMelectricidad. Más de 10 años de experiencia en instalaciones eléctricas en Madrid y Toledo."
         canonical="/equipo"
+        ogImage="/og/equipo.png"
       />
 
       {/* ── HERO ── */}

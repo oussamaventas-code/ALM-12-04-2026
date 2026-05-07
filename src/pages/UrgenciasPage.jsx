@@ -86,6 +86,7 @@ export default function UrgenciasPage() {
         title="Electricista de Urgencias 24h en Madrid — ALMelectricidad"
         description="Servicio de urgencias eléctricas 24h, 365 días en Madrid y Toledo. Respuesta rápida a cortocircuitos, averías y apagones. Llámanos ahora."
         canonical="/urgencias"
+        ogImage="/og/urgencias.png"
       />
       <UrgenciasSection />
       <UrgenciasFAQ />

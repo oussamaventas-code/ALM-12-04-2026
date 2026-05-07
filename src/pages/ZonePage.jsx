@@ -180,6 +180,7 @@ export default function ZonePage() {
         title={`Electricista en ${zone.name} — ALMelectricidad`}
         description={`Electricistas en ${zone.name}. ${zone.description} Presupuesto sin compromiso en menos de 24h.`}
         canonical={`/zonas/${zone.slug}`}
+        ogImage="/og/zonas.png"
       />
       {/* ══════ HERO ══════ */}
       <section

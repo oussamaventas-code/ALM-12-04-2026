@@ -170,6 +170,7 @@ export default function ServicePage() {
         description={service.heroDesc}
         canonical={`/servicios/${service.slug}`}
         schema={serviceSchema}
+        ogImage={`/og/${service.slug}.png`}
       />
       {/* ══════ HERO ══════ */}
       <section

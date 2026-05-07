@@ -82,7 +82,7 @@ export default function FotovoltaicaPage() {
         title="Paneles Solares e Instalaciones Fotovoltaicas en Madrid — ALMelectricidad"
         description="Diseño e instalación de sistemas fotovoltaicos completos en Madrid y Toledo. Autoconsumo residencial e industrial. Legalización incluida. Presupuesto sin compromiso."
         canonical="/fotovoltaica"
-        ogImage="https://almelectricidad.com/og-fotovoltaica.png"
+        ogImage="/og/fotovoltaica.png"
       />
       {/* ── Hero ── */}
       <section ref={heroRef} className="relative bg-dark pt-32 pb-20 overflow-hidden">
