@@ -8,35 +8,92 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev       # Dev server at http://localhost:5173
 npm run build     # Production build → dist/
 npm run preview   # Preview production build locally
-npm run lint      # ESLint
+npm run lint      # ESLint (0 errors = clean)
+```
+
+**Image conversion (Sharp already installed):**
+```bash
+node -e "require('sharp')('src.png').webp({quality:82,effort:6}).toFile('out.webp').then(console.log)"
+```
+
+**Video compression (ffmpeg-static in node_modules):**
+```bash
+./node_modules/ffmpeg-static/ffmpeg.exe -i input.mp4 -c:v libx264 -crf 26 -preset slow -profile:v main -an -movflags +faststart output.mp4
 ```
 
 ## Tech Stack
 
-- **React 19** + **Vite 8** + **Tailwind CSS 4** (via `@tailwindcss/vite` plugin — no `tailwind.config.js`)
+- **React 19** + **Vite 8** + **Tailwind CSS 4** (via `@tailwindcss/vite` — no `tailwind.config.js`)
 - **GSAP 3** with ScrollTrigger for animations
-- **Lenis** for smooth scroll (desktop only — skipped on touch/coarse-pointer devices)
+- **Lenis** smooth scroll (desktop/non-touch only, dynamic import delayed 300ms off critical path)
 - **React Router DOM 7** for client-side routing
-- **react-helmet-async** (`<SeoHead />`) for per-page meta tags
+- **react-helmet-async** (`<SeoHead />`) for per-page meta + schema
 
 ## Architecture
 
-`src/App.jsx` is the application shell. It:
+### App shell (`src/App.jsx`)
 - Registers GSAP plugins once (`ScrollTrigger`)
-- Initialises Lenis smooth scroll as a module-level singleton (`lenisInstance`) synced to GSAP ticker
-- Runs `useScrollTriggerCleanup` on route change — kills all ScrollTrigger instances with `kill(true)` **before** React unmounts DOM to prevent `removeChild` errors from GSAP pin spacers
-- Lazy-loads all pages except `HomePage` via `React.lazy`
+- Initialises Lenis as a module-level singleton (`lenisInstance`) synced to GSAP ticker
+- `useScrollTriggerCleanup` kills all ScrollTrigger instances with `kill(true)` **before** React unmounts DOM (prevents `removeChild` errors from pin spacers)
+- All pages lazy-loaded except `HomePage` (above-the-fold critical path)
+- `prefers-reduced-motion`: GSAP defaults set to `duration: 0, delay: 0` globally
 
-**Routing:** `src/App.jsx` defines all routes. Pages live in `src/pages/`, reusable UI in `src/components/`, static data (services, zones) in `src/data/`.
+### Routing
+All routes defined in `src/App.jsx`. Pattern: `/servicios` (index) + `/servicios/:slug` (detail), `/zonas` + `/zonas/:slug`.
 
-**GSAP pattern:** Components use `useGSAP` or `useEffect`/`useLayoutEffect` with a `gsap.context()` for scoped cleanup. ScrollTrigger instances must not be created outside of this cleanup pattern — the app-level `useScrollTriggerCleanup` kills them all on navigation regardless.
+### Data layer (`src/data/`)
+- **`services.js`** — array of 7 services with `slug`, `title`, `subtitle`, `shortDesc`, `heroDesc`, `image`, `icon` (string), `bullets[]`, `faq[]`. ServicePage and ServiciosPage consume this.
+- **`zones.js`** — zone data consumed by ZonePage and ZonasPage.
+- **`business.js`** — single source of truth for phone, email, hours, rating, founder. Exports `BUSINESS`, `TEL_HREF`, `whatsappUrl(text)`.
 
-**Lenis + ScrollTrigger sync:** `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.add(tickerFn)` keep them in sync. When adding scroll-triggered animations, do not call `ScrollTrigger.refresh()` synchronously on mount — use a `setTimeout(..., 150)` as done in the route-change handler.
+### SEO pattern (`src/components/SeoHead.jsx`)
+```jsx
+<SeoHead
+  title="Page title"
+  description="Meta description"
+  canonical="/path"
+  ogImage="/og/page-name.png"   // relative → prepended with BASE_URL automatically
+  schema={schemaObject}          // or array of schemas
+  noindex                        // for 404 etc
+/>
+```
+- Absolute Schema (LocalBusiness/Electrician) lives in `index.html` (pre-hydration). Only FAQPage schema goes in React.
+- Per-page og:images are in `public/og/*.png` (1200×630, generated with Sharp).
 
-**Premium UX components:** `<CustomCursor />` (global custom cursor with spring physics, toggled via `data-cursor="pointer"` on interactive elements), `<MagneticElement />` (GSAP magnet wrapper for CTAs — used in Hero and Navbar), `<PageTransition />` (GSAP-based route transition overlay mounted in `App.jsx`). The cursor is enabled via `cursor: none` in `index.css`.
+### GSAP pattern
+Components use `useLayoutEffect` + `gsap.context()` for scoped cleanup:
+```jsx
+useLayoutEffect(() => {
+  const ctx = gsap.context(() => { /* animations */ }, ref);
+  return () => ctx.revert();
+}, []);
+```
+Never call `ScrollTrigger.refresh()` synchronously on mount — use `setTimeout(..., 150)`.
 
-**Deployment:** Vercel. `vercel.json` sets `buildCommand` and `outputDirectory`. SPA routing is handled by Vercel's default rewrites for Vite projects.
+### Assets
+- All images: **WebP** in `public/images/`. Team photos in `public/images/team/EQUIPO PARA PAGINA/`.
+- Videos: `public/videos/HERO PARA PC.mp4` (desktop) + `HERO MOVIL.mp4` (mobile), both ~3MB CRF 26.
+- Urgencias video: `public/video  seccion de urgencias/Avería Urgente1.mp4`.
+- `og-image.png` kept as PNG (OG doesn't support WebP). All other images WebP.
+- `_archived/` folder is gitignored (originals before WebP conversion).
+
+### Premium UX components
+- `<CustomCursor />` — global cursor with spring physics. Toggle pointer style via `data-cursor="pointer"`.
+- `<MagneticElement />` — GSAP magnet wrapper for CTAs.
+- `<PageTransition />` — full-screen sweep overlay on route change (mounted in App.jsx).
+- `<PageSkeleton />` — Suspense fallback for all lazy pages.
+- `<StickyMobileCTA />` — floating mobile CTA (inside HomePage Suspense).
+
+### Navbar
+Dropdown items in `src/components/Navbar.jsx` `navLinks` array. Servicios dropdown has "Ver todos los servicios" → `/servicios` at top. Zonas dropdown has "Ver todas las zonas" → `/zonas` at top.
+
+### WhatsApp integration
+Use `whatsappUrl(text)` from `src/data/business.js`. **Critical Safari/iOS bug**: `window.open()` must be called synchronously in the click handler — never inside `setTimeout`.
+
+## Deployment
+
+Vercel reads from `main` branch. Push to `main` triggers deploy. SPA routing handled by Vercel default rewrites.
 
 ## Reference
 
-`directivas/` contains design directives that defined the current architecture (GSAP/Lenis integration, cursor system, page transitions). Consult them when making significant changes to animation infrastructure.
+`directivas/` — design directives for GSAP/Lenis integration, cursor system, page transitions. Consult before changing animation infrastructure.
