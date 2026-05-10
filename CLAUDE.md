@@ -42,9 +42,11 @@ node -e "require('sharp')('src.png').webp({quality:82,effort:6}).toFile('out.web
 All routes defined in `src/App.jsx`. Pattern: `/servicios` (index) + `/servicios/:slug` (detail), `/zonas` + `/zonas/:slug`.
 
 ### Data layer (`src/data/`)
-- **`services.js`** — array of 7 services with `slug`, `title`, `subtitle`, `shortDesc`, `heroDesc`, `image`, `icon` (string), `bullets[]`, `faq[]`. ServicePage and ServiciosPage consume this.
-- **`zones.js`** — zone data consumed by ZonePage and ZonasPage.
-- **`business.js`** — single source of truth for phone, email, hours, rating, founder. Exports `BUSINESS`, `TEL_HREF`, `whatsappUrl(text)`.
+- **`business.js`** — phone, email, hours, rating (5.0 · 25), founder. Exports `BUSINESS`, `TEL_HREF`, `whatsappUrl(text)`.
+- **`services.js`** — 7 services with slug, title, shortDesc, heroDesc, image, icon, bullets[], faq[].
+- **`team.js`** — single source of truth: 6 team members with name, role, badge, desc, quote, img. Consumed by JorgeSection (home) + TeamPage (/equipo).
+- **`portfolio.js`** — 92 projects with slug, title, desc, category. Exports `FEATURED_PROJECTS` + `ALL_PROJECTS` (with auto-category via modulo + `CATEGORY_OVERRIDES` map for manual overrides).
+- **`zones.js`** — zone data (ZonePage, ZonasPage).
 
 ### SEO pattern (`src/components/SeoHead.jsx`)
 ```jsx
@@ -60,22 +62,72 @@ All routes defined in `src/App.jsx`. Pattern: `/servicios` (index) + `/servicios
 - Absolute Schema (LocalBusiness/Electrician) lives in `index.html` (pre-hydration). Only FAQPage schema goes in React.
 - Per-page og:images are in `public/og/*.png` (1200×630, generated with Sharp).
 
-### GSAP pattern
-Components use `useLayoutEffect` + `gsap.context()` for scoped cleanup:
+### GSAP patterns
+
+**Standard scroll reveal** (`useLayoutEffect` + `gsap.context()`):
 ```jsx
 useLayoutEffect(() => {
   const ctx = gsap.context(() => { /* animations */ }, ref);
   return () => ctx.revert();
 }, []);
 ```
-Never call `ScrollTrigger.refresh()` synchronously on mount — use `setTimeout(..., 150)`.
+Never call `ScrollTrigger.refresh()` synchronously — use `setTimeout(..., 150)`.
+
+**Horizontal pin scroll** (Portfolio, JorgeSection, TeamPage desktop):
+- Pattern: `pin: true`, `scrub: 0.5`, `anticipatePin: 1`, `invalidateOnRefresh: true`
+- Card reveals use `containerAnimation: pinAnimation` to sync with horizontal scroll
+- `getScrollAmount()` calculates scroll distance dynamically
+- Mobile alternative: vertical stack (no pin, natural scroll flow)
+- Example in `JorgeSection.jsx` lines 26–77 (desktop) + `TeamMobile()` (mobile)
+
+**Facade pattern** (heavy media):
+- Videos in `Hero`, `VideoShowcase`, `UrgenciasSection` use placeholder image/button until user click
+- `mapLoaded` state toggles between static facade + live iframe
+- Prevents viewport clogging on load, improves LCP
+
+### Key components
+
+**JorgeSection** — team carousel on home
+- Desktop: GSAP horizontal pin scroll (pin entire section, slides move left)
+- Mobile: vertical stacked cards with stagger reveal
+- Data source: `src/data/team.js`
+
+**TeamPage** (`/equipo`)
+- Hero: mosaic grid 3×2 of 6 team member photos (real faces, not AI)
+- Desktop: horizontal pin scroll gallery (left text, right photo)
+- Mobile: vertical card stack with gradient overlay + info at bottom
+- GSAP animations gate with `matchMedia` — only desktop runs pin
+
+**ProyectosPage** (`/proyectos`)
+- Hero with live project count
+- Sticky filter bar per category with counts
+- 4-column grid (responsive, aspect-ratio 4/5)
+- Lightbox with keyboard nav (arrow keys, ESC)
+- Data: auto-categorized via modulo, override with `CATEGORY_OVERRIDES` map
+
+**VideoShowcase** (home section)
+- 3 video cards with facade pattern (poster image → click → autoPlay video)
+- `onError` fallback to styled placeholder if poster fails
+- GSAP reveal on scroll
+
+**UrgenciasSection** (home + dedicated area)
+- Hero video: `32vh` mobile, `h-screen` desktop
+- Desktop: GSAP horizontal pin scroll (5 timeline steps + CTA slide)
+- Mobile: vertical card stack (image + step number + title)
+- GSAP gate: `matchMedia('(min-width: 768px)')` prevents pin on mobile
+
+**Hero**
+- Form: 2 fields (nombre + telefono) — built to WhatsApp
+- Trust strip: Google rating (★5,0 · 25) + badges (Autorizado REBT, Urgencias 24h)
+- WhatsApp link uses `BUSINESS.whatsapp` from data
 
 ### Assets
-- All images: **WebP** in `public/images/`. Team photos in `public/images/team/EQUIPO PARA PAGINA/`.
-- Videos: `public/videos/HERO PARA PC.mp4` (desktop) + `HERO MOVIL.mp4` (mobile), both ~3MB CRF 26.
-- Urgencias video: `public/video  seccion de urgencias/Avería Urgente1.mp4`.
-- `og-image.png` kept as PNG (OG doesn't support WebP). All other images WebP.
-- `_archived/` folder is gitignored (originals before WebP conversion).
+- All images: **WebP** in `public/images/`. Team photos: `public/images/team/EQUIPO PARA PAGINA/`
+- Portfolio: 92 images (`proyecto-01.webp` through `proyecto-99.webp`)
+- Videos: `public/videos/HERO PARA PC/MOVIL.mp4` (~1.9MB each, CRF 26), `Avería Urgente1.mp4` (~1.5MB)
+- Video posters: auto-generated first frame (`.webp`)
+- `og-image.png` is PNG (legacy, OG doesn't support WebP). All else WebP.
+- Service images: optimized (recarga 2.03MB→93KB, telecomunicaciones 2.89MB→356KB via Sharp)
 
 ### Premium UX components
 - `<CustomCursor />` — global cursor with spring physics. Toggle pointer style via `data-cursor="pointer"`.
@@ -90,10 +142,35 @@ Dropdown items in `src/components/Navbar.jsx` `navLinks` array. Servicios dropdo
 ### WhatsApp integration
 Use `whatsappUrl(text)` from `src/data/business.js`. **Critical Safari/iOS bug**: `window.open()` must be called synchronously in the click handler — never inside `setTimeout`.
 
+### Mobile-first component patterns
+
+Many components have **dual JSX** for mobile vs desktop (not just CSS `hidden`):
+- `JorgeSection`: `TeamDesktop()` (pin scroll) + `TeamMobile()` (vertical stack)
+- `TeamPage`: mobile uses `md:hidden` with vertical cards; desktop uses `hidden md:flex` with pin scroll
+- `UrgenciasSection`: mobile timeline is vertical (`md:hidden`); desktop is pinned horizontal (`hidden md:flex`)
+
+This prevents GSAP from pinning hidden sections on mobile, which breaks scroll coherence.
+
+## Scripts
+
+**`scripts/` folder** — utility scripts (not in build, run manually):
+- `compress-videos.cjs` — compress 3 proyecto videos (CRF 28, H.264, faststart)
+- `dedupe-portfolio-v2.cjs` — find duplicate images via dHash (Hamming distance), delete, rename remainder
+- `rename-videos.cjs` — rename video files to sequential
+- Run: `node scripts/compress-videos.cjs` (requires ffmpeg-static + ffprobe)
+
 ## Deployment
 
-Vercel reads from `main` branch. Push to `main` triggers deploy. SPA routing handled by Vercel default rewrites.
+Vercel reads from `main` branch. Push triggers auto-deploy. SPA routing via Vercel rewrites.
+
+## Mobile-specific considerations
+
+- Hero section heights: `h-[32vh] md:h-screen` (team), `h-[28vh] md:h-[70vh]` (equipo)
+- Hero text sizes step down: `text-4xl md:text-7xl` vs `text-5xl md:text-7xl`
+- Video sections: shrink on mobile to conserve space
+- Horizontal pin scroll: **always gate with `matchMedia`** or use `hidden md:flex` to prevent mobile pin weirdness
+- Contact form: 2-field design for mobile speed (nombre + telefono, directo WhatsApp)
 
 ## Reference
 
-`directivas/` — design directives for GSAP/Lenis integration, cursor system, page transitions. Consult before changing animation infrastructure.
+`directivas/` — design directives (GSAP/Lenis, cursor, transitions). Consult before animation refactor.
