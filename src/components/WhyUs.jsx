@@ -134,16 +134,14 @@ export default function WhyUs() {
             </h2>
 
             <p className="section-subtitle mt-6">
-              En ALMelectricidad ofrecemos soluciones eléctricas integrales para viviendas, empresas
-              e industria, con un enfoque claro: seguridad, eficiencia y cuidado en cada instalación.
-              Somos instaladores autorizados y trabajamos conforme al Reglamento Electrotécnico
-              de Baja Tensión (REBT), para que la instalación quede segura, legal y duradera.
+              Empezamos en 2018 como empresa familiar y seguimos siendo eso. Jorge y su equipo
+              conocen el oficio desde jóvenes y llevan cada trabajo con el mismo nivel de atención,
+              sea una vivienda o una industria. Instaladores autorizados REBT, con el número en regla.
             </p>
 
             <p className="font-body text-base text-ink-500 mt-5 leading-relaxed max-w-md">
-              Trabajamos con un objetivo sencillo: cuidar cada detalle desde el inicio hasta la
-              puesta en marcha. No solo instalamos — intentamos que tu instalación consuma menos,
-              funcione mejor y te dé tranquilidad a largo plazo.
+              El objetivo es sencillo: que la instalación quede bien hecha, pase la inspección sin
+              problemas y no te dé quebraderos de cabeza después. Sin grandes promesas, solo trabajo honesto.
             </p>
 
             <div className="mt-8 h-[3px] w-12 bg-brand" />

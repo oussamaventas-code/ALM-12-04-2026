@@ -107,7 +107,7 @@ export default function MapLocation() {
     <section
       id="ubicacion"
       ref={sectionRef}
-      className="relative py-24 md:py-32 bg-dark overflow-hidden"
+      className="relative pt-24 pb-12 md:pt-32 md:pb-14 bg-dark overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
@@ -122,8 +122,8 @@ export default function MapLocation() {
           </p>
         </div>
 
-        {/* Map + Info panel */}
-        <div className="map-container invisible grid lg:grid-cols-[1fr_340px] gap-0 border border-white/10 overflow-hidden">
+        {/* Map + Oficina + Info panel */}
+        <div className="map-container invisible grid lg:grid-cols-[1.2fr_1fr_320px] gap-0 border border-white/10 overflow-hidden">
           {/* Google Maps — Facade Pattern (MM-3) */}
           <div
             ref={mapContainerRef}
@@ -194,6 +194,34 @@ export default function MapLocation() {
             )}
             {/* Overlay gradient on sides */}
             <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-surface/30 to-transparent pointer-events-none lg:hidden" />
+          </div>
+
+          {/* Oficina — foto del local con caption */}
+          <div className="relative bg-surface-200 border-t lg:border-t-0 lg:border-l border-white/10 overflow-hidden h-[300px] lg:h-auto group">
+            <img
+              src="/images/oficina-alm.webp"
+              alt="Oficina ALM Electricidad — Ocaña, Toledo"
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="1000"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            />
+            {/* Gradiente para legibilidad del caption */}
+            <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent" />
+
+            {/* Caption */}
+            <div className="absolute inset-x-0 bottom-0 p-5">
+              <span className="inline-flex items-center gap-1.5 border border-brand/30 bg-brand/10 px-2.5 py-1 mb-2.5 backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand" />
+                <span className="text-brand text-[10px] font-body font-bold uppercase tracking-[0.15em]">
+                  Nuestra oficina
+                </span>
+              </span>
+              <p className="font-heading text-white text-base font-semibold leading-snug">
+                Atendemos en persona, no solo por teléfono.
+              </p>
+            </div>
           </div>
 
           {/* Info Panel */}

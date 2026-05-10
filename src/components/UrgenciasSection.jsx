@@ -39,8 +39,10 @@ export default function UrgenciasSection() {
         });
       }
 
-      // 2. Horizontal Scroll para el Timeline
-      if (containerRef.current) {
+      // 2. Horizontal Scroll para el Timeline — SOLO desktop.
+      // En móvil renderizamos un stack vertical (sin pin) para que el scroll sea coherente.
+      const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+      if (containerRef.current && isDesktop) {
         const slides = gsap.utils.toArray('.timeline-slide');
 
         if (slides.length > 0) {
@@ -118,7 +120,7 @@ export default function UrgenciasSection() {
     <section id="urgencias" className="w-full bg-ink text-surface overflow-hidden relative">
       
       {/* 1. HERO URGENCIAS */}
-      <div ref={heroRef} className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+      <div ref={heroRef} className="relative w-full h-[32vh] md:h-screen flex items-center justify-center overflow-hidden">
         {/* Video Background */}
         <video
           className="absolute inset-0 w-full h-full object-cover opacity-50"
@@ -160,9 +162,9 @@ export default function UrgenciasSection() {
         </div>
       </div>
 
-      {/* 2. TIMELINE SCROLL HORIZONTAL */}
+      {/* 2. TIMELINE SCROLL HORIZONTAL — SOLO DESKTOP */}
       {/* Contenedor PIN que ocupa todo el alto pero permite hacer slide horizontal */}
-      <div ref={containerRef} className="h-screen w-full flex overflow-hidden bg-ink relative z-30">
+      <div ref={containerRef} className="hidden md:flex h-screen w-full overflow-hidden bg-ink relative z-30">
         <div ref={trackRef} className="flex h-full will-change-transform items-center">
           
           {/* Tarjetas de paso */}
@@ -221,7 +223,57 @@ export default function UrgenciasSection() {
                </svg>
             </div>
           </div>
-          
+
+        </div>
+      </div>
+
+      {/* 3. TIMELINE MÓVIL — Pila vertical coherente con el scroll de página */}
+      <div className="md:hidden bg-ink py-10">
+        <div className="px-4 space-y-4">
+          {timelineSteps.map((step, i) => (
+            <article
+              key={i}
+              className="relative overflow-hidden border border-surface/10 rounded-lg"
+              style={{ height: '60vw', minHeight: '220px', maxHeight: '320px' }}
+            >
+              <img
+                src={step.img}
+                alt={step.title}
+                width="800"
+                height="500"
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/10" />
+              <div className="absolute top-0 left-0 w-[3px] h-full bg-brand" />
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <span className="text-brand font-body font-bold text-[10px] uppercase tracking-[0.2em] block mb-1">
+                  Paso 0{i + 1}
+                </span>
+                <h3 className="text-lg font-heading font-bold text-surface leading-tight">
+                  {step.title}
+                </h3>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* CTA móvil */}
+        <div className="mx-4 mt-8 bg-brand text-ink p-6 rounded-lg text-center">
+          <h2 className="text-2xl font-heading font-black uppercase tracking-tighter leading-none mb-3">
+            SOLUCIÓN INMEDIATA A TU AVERÍA
+          </h2>
+          <p className="text-ink/70 font-body text-sm mb-5">
+            No esperes más. Llegamos rápido y reparamos con garantía.
+          </p>
+          <a
+            href="#contacto"
+            className="bg-ink text-brand px-6 py-3.5 rounded-full font-body font-bold uppercase tracking-wide inline-flex items-center justify-center gap-2 w-full text-sm"
+          >
+            Solicitar servicio
+            <ArrowRight size={16} />
+          </a>
         </div>
       </div>
 

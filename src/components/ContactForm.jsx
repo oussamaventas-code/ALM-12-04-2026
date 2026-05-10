@@ -82,7 +82,7 @@ export default function ContactForm() {
     <section
       id="contacto"
       ref={sectionRef}
-      className="py-24 md:py-32 overflow-hidden bg-dark relative"
+      className="pt-12 pb-24 md:pt-14 md:pb-32 overflow-hidden bg-dark relative"
     >
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">

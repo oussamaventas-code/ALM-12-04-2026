@@ -13,6 +13,7 @@ const PricingPhilosophy = lazy(() => import('../components/PricingPhilosophy'));
 const Process           = lazy(() => import('../components/Process'));
 const JorgeSection      = lazy(() => import('../components/JorgeSection'));
 const Portfolio         = lazy(() => import('../components/Portfolio'));
+const VideoShowcase     = lazy(() => import('../components/VideoShowcase'));
 const Testimonials      = lazy(() => import('../components/Testimonials'));
 const FAQ               = lazy(() => import('../components/FAQ'));
 const MapLocation       = lazy(() => import('../components/MapLocation'));
@@ -118,17 +119,23 @@ export default function HomePage() {
         {/* 8. Trabajo real — galería de proyectos */}
         <Portfolio />
 
+        {/* 8.5. Vídeos en marcha — facade pattern, 0 KB hasta clic */}
+        <VideoShowcase />
+
         {/* 9. Prueba social — testimonios con ubicación */}
         <Testimonials />
 
         {/* 10. FAQ — últimas dudas antes de contactar */}
         <FAQ />
 
-        {/* 11. Mapa — confianza por proximidad geográfica */}
-        <MapLocation />
-
-        {/* 12. Formulario principal de conversión */}
-        <ContactForm />
+        {/* 11+12. Ubicación y contacto — bloque unificado */}
+        <div className="bg-dark">
+          <MapLocation />
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="h-[1px] bg-white/[0.06]" />
+          </div>
+          <ContactForm />
+        </div>
 
         {/* CTA flotante móvil */}
         <StickyMobileCTA />

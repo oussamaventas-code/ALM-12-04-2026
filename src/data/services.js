@@ -27,7 +27,7 @@ export const services = [
     subtitle: 'Urgencias 24h, los 7 días',
     shortDesc: 'Cortocircuitos, derivaciones y fallos eléctricos. Reparaciones rápidas con equipos calibrados.',
     heroDesc: 'Cuando se va la luz a las 3 de la mañana en tu negocio, necesitas a alguien que coja el teléfono. Atendemos urgencias eléctricas 24 horas, los 7 días de la semana, en Madrid y Toledo.',
-    image: '/images/services/NUEVO REPARACIÓN DE AVERÍAS.webp',
+    image: '/images/services/reparacion-averias.webp',
     icon: 'Zap',
     bullets: [
       'Cortocircuitos y derivaciones',

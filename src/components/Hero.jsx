@@ -1,32 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import { Send, Phone, MessageCircle, ChevronDown, ArrowDown, CheckCircle } from 'lucide-react';
+import { Send, Phone, MessageCircle, ArrowDown, CheckCircle, ShieldCheck, Zap } from 'lucide-react';
 import gsap from 'gsap';
 import MagneticElement from './MagneticElement';
-
-const projectTypes = [
-  'Instalación eléctrica nueva',
-  'Reforma / adecuación',
-  'Reparación de averías',
-  'Iluminación LED',
-  'Paneles solares / Autoconsumo',
-  'Telecomunicaciones',
-  'Punto de recarga VE',
-  'Boletín / Certificado oficial',
-  'Urgencia 24h',
-  'Otro',
-];
+import { BUSINESS } from '../data/business';
 
 
 
 export default function Hero() {
   const heroRef = useRef(null);
   const bgRef = useRef(null);
-  const [formData, setFormData] = useState({
-    nombre: '',
-    empresa: '',
-    telefono: '',
-    tipo: '',
-  });
+  const [formData, setFormData] = useState({ nombre: '', telefono: '' });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -98,7 +81,6 @@ export default function Hero() {
     if (!formData.nombre.trim()) errs.nombre = 'El nombre es obligatorio';
     if (!formData.telefono.trim()) errs.telefono = 'El teléfono es obligatorio';
     else if (!/^[0-9+\s()-]{6,}$/.test(formData.telefono.trim())) errs.telefono = 'Introduce un teléfono válido';
-    if (!formData.tipo) errs.tipo = 'Selecciona el tipo de proyecto';
     return errs;
   };
 
@@ -118,13 +100,9 @@ export default function Hero() {
     // Safari/iOS bloquea window.open() si se llama desde un setTimeout,
     // porque pierde la "user activation". Por eso disparamos el open
     // inmediatamente dentro del handler y el feedback visual va aparte.
-    const parts = [`Hola, soy ${formData.nombre}`];
-    if (formData.empresa) parts[0] += ` de ${formData.empresa}`;
-    parts.push(`Necesito info sobre: ${formData.tipo}`);
-    parts.push(`Mi teléfono: ${formData.telefono}`);
-    const msg = parts.join('. ') + '.';
+    const msg = `Hola, soy ${formData.nombre}. Quiero pedir presupuesto. Mi teléfono: ${formData.telefono}.`;
     window.open(
-      `https://wa.me/34605333108?text=${encodeURIComponent(msg)}`,
+      `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(msg)}`,
       '_blank',
       'noopener,noreferrer'
     );
@@ -152,7 +130,7 @@ export default function Hero() {
           alt=""
           aria-hidden="true"
           fetchPriority="high"
-          className="absolute inset-0 w-full h-full object-cover object-[70%_center] lg:object-center transition-opacity duration-700"
+          className="absolute inset-0 w-full h-full object-cover object-[70%_center] lg:object-[62%_center] transition-opacity duration-700"
           style={{ opacity: videoReady ? 0 : 1 }}
           width="1920"
           height="1080"
@@ -165,7 +143,7 @@ export default function Hero() {
           playsInline
           preload="auto"
           onCanPlay={() => setVideoReady(true)}
-          className="absolute inset-0 w-full h-full object-cover object-[70%_center] lg:object-center lg:scale-110"
+          className="absolute inset-0 w-full h-full object-cover object-[70%_center] lg:object-[62%_center] lg:scale-110"
         >
           <source
             media="(max-width: 1023px)"
@@ -185,7 +163,7 @@ export default function Hero() {
 
       {/* ── Content ── */}
       <div className="relative z-10 container-custom px-6 pt-32 pb-16">
-        <div className="grid lg:grid-cols-[1fr_420px] gap-8 lg:gap-12 items-start">
+        <div className="grid lg:grid-cols-[1fr_360px] gap-8 lg:gap-10 items-start">
           <div>
             {/* Badge */}
             <div className="hero-badge inline-flex items-center gap-2.5 border border-brand/30 bg-brand/10 px-4 py-2 mb-6">
@@ -218,7 +196,7 @@ export default function Hero() {
             <div className="flex flex-wrap gap-4">
               <MagneticElement strength={0.3}>
                 <a
-                  href="https://wa.me/34605333108"
+                  href={`https://wa.me/${BUSINESS.whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hero-cta-btn btn-whatsapp !py-3.5 !px-7"
@@ -229,13 +207,35 @@ export default function Hero() {
               </MagneticElement>
               <MagneticElement strength={0.3}>
                 <a
-                  href="tel:+34605333108"
+                  href={`tel:${BUSINESS.phone}`}
                   className="hero-cta-btn btn-outline !border-white/25 !text-white hover:!border-brand hover:!text-brand !py-3.5 !px-7"
                 >
                   <Phone size={18} />
-                  605 33 31 08
+                  {BUSINESS.phoneDisplay}
                 </a>
               </MagneticElement>
+            </div>
+
+            {/* Trust strip */}
+            <div className="hero-cta-btn mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+              {/* Google rating */}
+              <div className="flex items-center gap-2">
+                <span className="text-brand text-base leading-none tracking-tight">★★★★★</span>
+                <span className="font-heading font-bold text-white text-sm">{BUSINESS.rating.value}</span>
+                <span className="text-white/45 text-xs font-body">
+                  · {BUSINESS.rating.count} reseñas Google
+                </span>
+              </div>
+              <span className="hidden sm:block w-px h-4 bg-white/15" />
+              <div className="flex items-center gap-1.5 text-white/50 text-xs font-body">
+                <ShieldCheck size={13} className="text-brand shrink-0" />
+                Instalador autorizado REBT
+              </div>
+              <span className="hidden sm:block w-px h-4 bg-white/15" />
+              <div className="flex items-center gap-1.5 text-white/50 text-xs font-body">
+                <Zap size={13} className="text-brand shrink-0" />
+                Urgencias 24h / 365
+              </div>
             </div>
           </div>
 
@@ -259,7 +259,7 @@ export default function Hero() {
                     onClick={() => {
                       setIsSubmitted(false);
                       setFormErrors({});
-                      setFormData({ nombre: '', empresa: '', telefono: '', tipo: '' });
+                      setFormData({ nombre: '', telefono: '' });
                     }}
                     className="text-brand text-sm font-body hover:text-brand-light transition-colors underline underline-offset-2"
                   >
@@ -271,10 +271,10 @@ export default function Hero() {
                   {/* Form header */}
                   <div className="mb-2">
                     <p className="font-heading text-xl font-bold text-white">
-                      Cuéntanos qué necesitas
+                      Pide presupuesto gratis
                     </p>
                     <p className="text-white/65 text-sm font-body mt-1">
-                      Te respondemos en menos de 24h. De verdad.
+                      Solo 2 campos. Te llamamos nosotros.
                     </p>
                   </div>
 
@@ -293,16 +293,6 @@ export default function Hero() {
                     {formErrors.nombre && <p id="err-nombre" className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.nombre}</p>}
                   </div>
 
-                  {/* Empresa */}
-                  <input
-                    type="text"
-                    placeholder="Empresa (opcional)"
-                    autoComplete="organization"
-                    className="input-field"
-                    value={formData.empresa}
-                    onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
-                  />
-
                   {/* Teléfono */}
                   <div>
                     <input
@@ -317,35 +307,6 @@ export default function Hero() {
                       onChange={(e) => { setFormData({ ...formData, telefono: e.target.value }); clearFieldError('telefono'); }}
                     />
                     {formErrors.telefono && <p id="err-telefono" className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.telefono}</p>}
-                  </div>
-
-                  {/* Tipo de proyecto */}
-                  <div>
-                    <div className="relative">
-                      <label htmlFor="tipo-proyecto" className="sr-only">Tipo de proyecto</label>
-                      <select
-                        id="tipo-proyecto"
-                        className={`input-field appearance-none cursor-pointer ${formErrors.tipo ? '!border-red-400/60' : ''}`}
-                        aria-invalid={!!formErrors.tipo}
-                        aria-describedby={formErrors.tipo ? 'err-tipo' : undefined}
-                        value={formData.tipo}
-                        onChange={(e) => { setFormData({ ...formData, tipo: e.target.value }); clearFieldError('tipo'); }}
-                      >
-                        <option value="" disabled>
-                          Tipo de proyecto
-                        </option>
-                        {projectTypes.map((t) => (
-                          <option key={t} value={t} className="bg-dark text-white">
-                            {t}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown
-                        size={18}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
-                      />
-                    </div>
-                    {formErrors.tipo && <p id="err-tipo" className="text-red-400 text-xs mt-1 animate-fadeInUp">{formErrors.tipo}</p>}
                   </div>
 
                   {/* Submit */}
@@ -371,7 +332,7 @@ export default function Hero() {
                   </button>
 
                   <p className="text-white/50 text-xs text-center font-body">
-                    Sin compromiso. Respondemos incluso fuera de horario si es urgente.
+                    Sin compromiso · Respuesta en menos de 24h
                   </p>
                 </form>
               )}

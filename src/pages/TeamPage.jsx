@@ -1,62 +1,24 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Award, Wrench, Star, Users, Phone } from 'lucide-react';
+import { ArrowRight, Award, Wrench, Star, Users, Phone, Quote } from 'lucide-react';
 import SeoHead from '../components/SeoHead';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { TEAM } from '../data/team';
 
 // gsap.registerPlugin ya registrado globalmente en App.jsx
 
-const teamMembers = [
-  {
-    name: 'Jorge',
-    role: 'Instalador Jefe',
-    specialty: 'Instalaciones industriales · Fotovoltaica',
-    experience: '+15 años',
-    cert: 'Instalador Autorizado REBT',
-    image: '/images/team/EQUIPO PARA PAGINA/JORGE.webp',
-  },
-  {
-    name: 'Dani',
-    role: 'Especialista Técnico',
-    specialty: 'Domótica · Cuadros eléctricos',
-    experience: '+10 años',
-    cert: 'Certificado SEC · Nivel 2',
-    image: '/images/team/EQUIPO PARA PAGINA/DANI.webp',
-  },
-  {
-    name: 'Isma',
-    role: 'Técnico Senior',
-    specialty: 'Renovaciones · Alarmas · VE',
-    experience: '+7 años',
-    cert: 'Formación continua AMPERE',
-    image: '/images/team/EQUIPO PARA PAGINA/ISMA.webp',
-  },
-  {
-    name: 'Jefferson',
-    role: 'Instalador',
-    specialty: 'Residencial · Telecomunicaciones',
-    experience: '+5 años',
-    cert: 'Habilitado RITE',
-    image: '/images/team/EQUIPO PARA PAGINA/JEFFERSON.webp',
-  },
-  {
-    name: 'Melo',
-    role: 'Técnico Especialista',
-    specialty: 'Fotovoltaica · Instalaciones industriales',
-    experience: '+5 años',
-    cert: 'Instalador Autorizado REBT',
-    image: '/images/team/EQUIPO PARA PAGINA/MELO.webp',
-  },
-  {
-    name: 'Melisa',
-    role: 'Administración & RRHH',
-    specialty: 'Gestión administrativa · Recursos Humanos',
-    experience: 'Nueva incorporación',
-    cert: 'Gestión de equipo y coordinación',
-    image: '/images/team/EQUIPO PARA PAGINA/MELISA.webp',
-  },
-];
+// Mapeo desde la fuente única (data/team.js).
+// Para editar nombres/roles/citas, modifica src/data/team.js.
+const teamMembers = TEAM.map((p) => ({
+  displayName: p.nickname ? p.name : p.name,
+  shortName: p.nickname || p.name.split(' ')[0],
+  role: p.role,
+  badge: p.badge,
+  desc: p.desc,
+  quote: p.quote,
+  img: p.img,
+}));
 
 const values = [
   {
@@ -204,9 +166,24 @@ export default function TeamPage() {
       />
 
       {/* ── HERO ── */}
-      <div ref={heroRef} className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark/60 to-dark z-10" />
-        <div className="absolute inset-0 bg-gradient-to-br from-brand/5 via-transparent to-transparent" />
+      <div ref={heroRef} className="relative w-full h-[28vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
+        {/* Foto del equipo completo, desenfocada y oscurecida de fondo */}
+        <img
+          src="/images/team/equipo-completo.webp"
+          alt=""
+          aria-hidden="true"
+          width="1920"
+          height="1080"
+          className="absolute inset-0 w-full h-full object-cover lg:scale-110"
+          style={{
+            filter: 'blur(3px) brightness(0.75) saturate(1.05)',
+            willChange: 'transform',
+          }}
+        />
+
+        {/* Overlays para legibilidad del texto */}
+        <div className="absolute inset-0 bg-gradient-to-b from-dark/45 via-dark/25 to-dark z-10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand/8 via-transparent to-transparent z-10" />
 
         <div className="team-hero-content relative z-20 text-center flex flex-col items-center px-6 mt-16 md:mt-0">
           <Link
@@ -231,75 +208,81 @@ export default function TeamPage() {
         </div>
       </div>
 
-      {/* ── GALERÍA MÓVIL (< lg) — CSS scroll-snap ── */}
-      <div className="lg:hidden bg-dark">
-        <div
-          className="flex overflow-x-auto"
-          style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth' }}
-        >
+      {/* ── GALERÍA MÓVIL (< lg) — Cards verticales con overlay ── */}
+      <div className="lg:hidden bg-dark py-10">
+        <div className="px-4 space-y-4">
           {teamMembers.map((member, i) => (
-            <div
+            <article
               key={i}
-              className="flex-shrink-0 w-screen flex flex-col"
-              style={{ scrollSnapAlign: 'start' }}
+              className="relative overflow-hidden border border-white/10"
+              style={{ height: '72vw', minHeight: '260px', maxHeight: '360px' }}
             >
-              {/* Foto arriba */}
-              <div className="w-full h-[60vw] max-h-72 overflow-hidden">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover object-top"
-                />
+              {/* Foto de fondo */}
+              <img
+                src={member.img}
+                alt={member.displayName}
+                loading="lazy"
+                decoding="async"
+                width="600"
+                height="750"
+                className="absolute inset-0 w-full h-full object-cover object-top"
+              />
+
+              {/* Gradiente para legibilidad */}
+              <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/55 to-dark/10" />
+
+              {/* Número */}
+              <div className="absolute top-3.5 left-4 font-heading font-black text-4xl text-white/[0.12] leading-none select-none">
+                {String(i + 1).padStart(2, '0')}
               </div>
-              {/* Texto abajo */}
-              <div className="flex flex-col px-6 py-8 bg-dark border-b border-white/8">
-                <span className="text-brand font-body font-bold text-sm mb-1">{member.role}</span>
-                <h3 className="text-3xl font-heading font-black text-white leading-none mb-3 tracking-tighter">{member.name}</h3>
-                <p className="text-white/55 font-body text-sm mb-4">{member.specialty}</p>
-                <ul className="flex flex-col gap-2">
-                  <li className="flex items-center gap-2 text-xs text-white/65 font-body">
-                    <span className="text-brand">🏅</span> {member.cert}
-                  </li>
-                  <li className="flex items-center gap-2 text-xs text-white/65 font-body">
-                    <span className="text-brand">⏱</span> {member.experience} de experiencia
-                  </li>
-                </ul>
+
+              {/* Acento de marca izquierdo */}
+              <div className="absolute top-0 left-0 w-[3px] h-full bg-brand" />
+
+              {/* Info en la parte inferior */}
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                {member.badge && (
+                  <span className="inline-flex items-center gap-1.5 border border-brand/30 bg-brand/10 px-2 py-0.5 mb-2 backdrop-blur-sm">
+                    <span className="w-1 h-1 rounded-full bg-brand" />
+                    <span className="text-brand text-[9px] font-body font-bold uppercase tracking-[0.15em]">
+                      {member.badge}
+                    </span>
+                  </span>
+                )}
+                <h3 className="font-heading text-lg font-bold text-white leading-tight">
+                  {member.displayName}
+                </h3>
+                <p className="font-body text-xs text-brand/90 mt-0.5 mb-2 leading-snug">
+                  {member.role}
+                </p>
+                <div className="flex gap-2 pt-2 border-t border-white/15">
+                  <Quote size={11} className="text-brand/60 shrink-0 mt-0.5" aria-hidden="true" />
+                  <p className="text-white/70 text-xs italic leading-snug font-body line-clamp-2">
+                    "{member.quote}"
+                  </p>
+                </div>
               </div>
-            </div>
+            </article>
           ))}
-          {/* Slide CTA móvil */}
-          <div
-            className="flex-shrink-0 w-screen flex flex-col items-center justify-center px-6 py-16 bg-brand text-dark"
-            style={{ scrollSnapAlign: 'start' }}
-          >
-            <Users size={48} className="mb-5" />
-            <h2 className="text-3xl font-heading font-black mb-4 text-center tracking-tighter leading-none">
-              HABLEMOS DE TU PROYECTO
-            </h2>
-            <p className="text-dark/70 font-body text-base mb-8 text-center">
-              6 profesionales especializados. Sin bots, sin esperas.
-            </p>
-            <div className="flex flex-col w-full gap-3 max-w-xs">
-              <a
-                href="/#contacto"
-                className="bg-dark text-brand px-6 py-4 font-body text-base font-bold uppercase tracking-wide hover:scale-105 transition-transform inline-flex items-center justify-center gap-3"
-              >
-                Pedir presupuesto
-                <ArrowRight size={18} />
-              </a>
-              <a
-                href="tel:+34605333108"
-                className="bg-dark/15 text-dark px-6 py-4 font-body text-base font-bold uppercase tracking-wide hover:scale-105 transition-transform inline-flex items-center justify-center gap-3"
-              >
-                <Phone size={18} />
-                605 33 31 08
-              </a>
-            </div>
-          </div>
         </div>
-        <p className="text-center text-white/20 text-xs py-3 font-body">← Desliza para ver el equipo →</p>
+
+        {/* CTA móvil */}
+        <div className="px-4 mt-8 flex flex-col gap-3">
+          <a
+            href="/#contacto"
+            className="flex items-center justify-center gap-2 bg-brand text-dark font-heading font-bold text-sm uppercase tracking-wide px-6 py-4 w-full"
+          >
+            Pedir presupuesto
+            <ArrowRight size={16} />
+          </a>
+          <a
+            href="tel:+34605333108"
+            className="flex items-center justify-center gap-2 border border-white/15 text-white/70 font-heading font-semibold text-sm uppercase tracking-wide px-6 py-4 w-full"
+          >
+            <Phone size={15} />
+            605 33 31 08
+          </a>
+        </div>
       </div>
 
       {/* ── GALERÍA DESKTOP (≥ lg) — GSAP horizontal pin ── */}
@@ -312,31 +295,38 @@ export default function TeamPage() {
               className="team-slide-desktop w-screen h-full flex shrink-0 relative"
             >
               {/* Texto izquierda */}
-              <div className="slide-title flex flex-col justify-center px-10 md:px-20 w-1/2 shrink-0 z-10">
-                <span className="text-brand font-body font-bold text-lg md:text-xl block mb-3">
-                  {member.role}
-                </span>
-                <h3 className="text-4xl md:text-6xl lg:text-7xl font-heading font-black text-white leading-none mb-6 tracking-tighter">
-                  {member.name}
+              <div className="slide-title flex flex-col justify-center px-10 md:px-16 lg:px-20 w-1/2 shrink-0 z-10">
+                {member.badge && (
+                  <span className="self-start inline-flex items-center gap-2 border border-brand/30 bg-brand/10 px-3 py-1 mb-5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand" />
+                    <span className="text-brand text-[11px] font-body font-bold uppercase tracking-[0.18em]">
+                      {member.badge}
+                    </span>
+                  </span>
+                )}
+                <h3 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-heading font-black text-white leading-[1.05] mb-5 tracking-tight">
+                  {member.displayName}
                 </h3>
-                <p className="text-white/60 font-body text-base md:text-lg max-w-sm mb-6">
-                  {member.specialty}
+                <p className="text-brand font-body font-semibold text-sm md:text-base max-w-md mb-6 leading-snug">
+                  {member.role}
                 </p>
-                <ul className="flex flex-col gap-2">
-                  <li className="flex items-center gap-2 text-sm text-white/65 font-body">
-                    <span className="text-brand">🏅</span> {member.cert}
-                  </li>
-                  <li className="flex items-center gap-2 text-sm text-white/65 font-body">
-                    <span className="text-brand">⏱</span> {member.experience} de experiencia
-                  </li>
-                </ul>
+                <p className="text-white/65 font-body text-base max-w-md mb-8 leading-relaxed">
+                  {member.desc}
+                </p>
+                {/* Cita */}
+                <div className="flex gap-3 max-w-md pt-5 border-t border-white/10">
+                  <Quote size={18} className="text-brand/60 shrink-0 mt-1" aria-hidden="true" />
+                  <p className="text-white/75 text-base italic leading-snug font-body">
+                    "{member.quote}"
+                  </p>
+                </div>
               </div>
 
               {/* Foto derecha */}
               <div className="slide-img-container w-1/2 h-full shrink-0 overflow-hidden">
                 <img
-                  src={member.image}
-                  alt={member.name}
+                  src={member.img}
+                  alt={member.displayName}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-[1.03]"

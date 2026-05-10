@@ -1,45 +1,16 @@
 import { useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
+import { FEATURED_PROJECTS } from '../data/portfolio';
 
-const projects = [
-  {
-    image: '/images/portfolio/bbf912ac-5634-4e6f-ad8d-b83fdf356274.webp',
-    title: 'Revisión de armario exterior',
-    type: 'Mantenimiento',
-    result: 'Medición y diagnóstico en armario de distribución exterior. Trabajo certificado.',
-  },
-  {
-    image: '/images/portfolio/f015c7ac-f508-4a30-bde0-3dfdb7713f23.webp',
-    title: 'Instalación fotovoltaica residencial',
-    type: 'Autoconsumo',
-    result: 'Paneles solares de alta eficiencia en cubierta inclinada. Legalización incluida.',
-  },
-  {
-    image: '/images/portfolio/8217e1cb-136f-4b3c-88ca-fb7cda38d8aa.webp',
-    title: 'Cuadros eléctricos en nave industrial',
-    type: 'Industrial',
-    result: 'Instalación de cuadros de mando y protecciones en nave. Certificado REBT.',
-  },
-  {
-    image: '/images/portfolio/e6948f9c-0f62-4771-bf42-8c308b96c351.webp',
-    title: 'Autoconsumo en vivienda unifamiliar',
-    type: 'Autoconsumo',
-    result: 'Sistema fotovoltaico en tejado. Ahorro desde el primer mes.',
-  },
-  {
-    image: '/images/portfolio/2d9c7fe9-ebf3-43e6-ae41-41f8e990bf8c.webp',
-    title: 'Cuadro de distribución exterior',
-    type: 'Alta potencia',
-    result: 'Cuadro eléctrico con protecciones de última generación instalado en exterior.',
-  },
-  {
-    image: '/images/portfolio/0c1c3c06-f1d5-4f04-91a8-1381e29dd650.webp',
-    title: 'Solar en cubierta plana comercial',
-    type: 'Autoconsumo',
-    result: 'Instalación fotovoltaica para autoconsumo en cubierta de edificio comercial.',
-  },
-];
+// Portfolio recibe los proyectos destacados desde la fuente única.
+// Se mapea para mantener la API interna (image/title/type/result).
+const projects = FEATURED_PROJECTS.map((p) => ({
+  image: p.src,
+  title: p.title,
+  type: p.category,
+  result: p.desc,
+}));
 
 function PortfolioDesktop() {
   const sectionRef = useRef(null);
