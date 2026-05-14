@@ -1,14 +1,4 @@
 export const zones = [
-  // Madrid Centro eliminado — el equipo lo evita en la medida de lo posible
-  // {
-  //   slug: 'madrid-centro',
-  //   name: 'Madrid Centro',
-  //   region: 'Madrid',
-  //   description: 'Electricistas profesionales en el centro de Madrid. Chamberi, Salamanca, Retiro, Arganzuela, Centro, Moncloa y alrededores.',
-  //   longDesc: 'Somos tu electricista de confianza en el centro de Madrid. Conocemos las particularidades de los edificios antiguos del centro: instalaciones vetustas, cuadros eléctricos obsoletos y la necesidad de adecuar todo a la normativa actual sin perder el encanto del edificio. Trabajamos en pisos, locales comerciales, restaurantes y oficinas.',
-  //   neighborhoods: ['Chamberi', 'Salamanca', 'Retiro', 'Arganzuela', 'Centro', 'Moncloa-Aravaca', 'Latina'],
-  //   responseTime: '30-45 min',
-  // },
   {
     slug: 'ocana',
     name: 'Ocaña',
@@ -17,6 +7,8 @@ export const zones = [
     longDesc: 'Ocaña es nuestra base de operaciones. Desde aquí cubrimos toda la comarca con la máxima rapidez de respuesta. Realizamos instalaciones eléctricas residenciales, industriales, agrícolas y de energía solar. Si estás en Ocaña, somos tu electricista más cercano.',
     neighborhoods: ['Ocaña Centro', 'Polígono Industrial', 'Zona Agrícola', 'Ontígola', 'Noblejas', 'Villarrubia de Santiago'],
     responseTime: '10-20 min',
+    coords: { lat: 39.9558, lng: -3.5031, zoom: 13 },
+    bbox: '-3.59,39.92,-3.42,39.99',
   },
   {
     slug: 'aranjuez',
@@ -26,6 +18,8 @@ export const zones = [
     longDesc: 'Aranjuez es una de nuestras zonas principales de trabajo. Atendemos viviendas, comunidades de vecinos, empresas y fincas de la zona. Conocemos bien las necesidades del municipio y sus alrededores, con tiempos de respuesta muy reducidos.',
     neighborhoods: ['Aranjuez Centro', 'Las Infantas', 'Polígono Industrial', 'Fuentidueña de Tajo', 'Colmenar de Oreja', 'Chinchón'],
     responseTime: '15-25 min',
+    coords: { lat: 40.0322, lng: -3.6035, zoom: 13 },
+    bbox: '-3.68,39.99,-3.52,40.07',
   },
   {
     slug: 'nacional',
@@ -35,6 +29,8 @@ export const zones = [
     longDesc: 'No nos limitamos a una zona geográfica. Para proyectos de envergadura — plantas fotovoltaicas, instalaciones industriales, naves logísticas o grandes obras — nos desplazamos a cualquier punto de España. Consulta sin compromiso y valoramos tu proyecto sin importar dónde esté.',
     neighborhoods: ['Toda España', 'Proyectos industriales', 'Plantas fotovoltaicas', 'Grandes obras', 'Instalaciones logísticas'],
     responseTime: 'A consultar',
+    coords: { lat: 40.4168, lng: -3.7038, zoom: 6 },
+    bbox: '-9.5,35.9,3.5,43.8',
   },
   {
     slug: 'madrid-norte',
@@ -44,6 +40,8 @@ export const zones = [
     longDesc: 'Cubrimos toda la zona norte de Madrid, desde Fuencarral hasta Las Tablas y Montecarmelo. Zonas de nueva construcción que necesitan ampliaciones, puntos de recarga para vehículos eléctricos y actualizaciones de cuadros. También urbanizaciones y chalets.',
     neighborhoods: ['Fuencarral', 'Hortaleza', 'Las Tablas', 'Montecarmelo', 'Sanchinarro', 'Tres Olivos', 'La Moraleja'],
     responseTime: '30-50 min',
+    coords: { lat: 40.4960, lng: -3.6800, zoom: 12 },
+    bbox: '-3.78,40.43,-3.58,40.56',
   },
   {
     slug: 'madrid-sur',
@@ -53,6 +51,8 @@ export const zones = [
     longDesc: 'La zona sur de Madrid es una de nuestras áreas de mayor actividad. Muchas naves industriales, polígonos y negocios que necesitan instalaciones eléctricas potentes y fiables. También atendemos viviendas y comunidades de vecinos en Villaverde, Usera, Carabanchel y municipios cercanos.',
     neighborhoods: ['Villaverde', 'Usera', 'Carabanchel', 'Leganés', 'Fuenlabrada', 'Parla', 'Pinto'],
     responseTime: '30-50 min',
+    coords: { lat: 40.3382, lng: -3.7700, zoom: 11 },
+    bbox: '-3.92,40.20,-3.62,40.42',
   },
   {
     slug: 'madrid-este',
@@ -62,6 +62,8 @@ export const zones = [
     longDesc: 'El corredor del Henares es una de las zonas industriales más potentes de España. Trabajamos con empresas logísticas, fábricas y centros de datos que necesitan instalaciones eléctricas de alta potencia y fiabilidad absoluta. También hogares y comercios de la zona.',
     neighborhoods: ['Vallecas', 'San Blas', 'Vicálvaro', 'Coslada', 'San Fernando de Henares', 'Torrejón de Ardoz', 'Alcalá de Henares'],
     responseTime: '35-55 min',
+    coords: { lat: 40.4500, lng: -3.5200, zoom: 11 },
+    bbox: '-3.68,40.35,-3.32,40.55',
   },
   {
     slug: 'madrid-oeste',
@@ -71,6 +73,8 @@ export const zones = [
     longDesc: 'La zona oeste de Madrid concentra muchas viviendas unifamiliares y chalets que necesitan instalaciones eléctricas cuidadas: domótica, puntos de recarga para vehículos eléctricos, paneles solares y sistemas de iluminación exterior. También empresas en parques tecnológicos.',
     neighborhoods: ['Pozuelo de Alarcón', 'Majadahonda', 'Las Rozas', 'Boadilla del Monte', 'Villalba', 'Brunete', 'Villanueva de la Cañada'],
     responseTime: '40-60 min',
+    coords: { lat: 40.4500, lng: -3.8500, zoom: 11 },
+    bbox: '-4.05,40.32,-3.72,40.62',
   },
   {
     slug: 'getafe',
@@ -80,6 +84,8 @@ export const zones = [
     longDesc: 'Getafe es uno de los municipios donde más trabajamos. Su tejido industrial, con polígonos como Los Ángeles y San Marcos, genera una demanda constante de instalaciones eléctricas industriales. También atendemos a comunidades de vecinos y particulares.',
     neighborhoods: ['Getafe Centro', 'El Bercial', 'Sector III', 'Los Ángeles (polígono)', 'San Marcos (polígono)', 'Juan de la Cierva'],
     responseTime: '25-40 min',
+    coords: { lat: 40.3057, lng: -3.7325, zoom: 13 },
+    bbox: '-3.79,40.27,-3.67,40.34',
   },
   {
     slug: 'alcorcon',
@@ -89,6 +95,8 @@ export const zones = [
     longDesc: 'Alcorcón y sus zonas comerciales e industriales son parte de nuestra área principal de servicio. Desde el polígono de Urtinsa hasta las zonas residenciales, cubrimos todo tipo de instalaciones eléctricas con rapidez y profesionalidad.',
     neighborhoods: ['Alcorcón Centro', 'Urtinsa', 'Parque Oeste', 'San José de Valderas', 'Campodón', 'Polígono Industrial'],
     responseTime: '25-40 min',
+    coords: { lat: 40.3458, lng: -3.8244, zoom: 13 },
+    bbox: '-3.89,40.31,-3.76,40.38',
   },
   {
     slug: 'toledo-capital',
@@ -98,6 +106,8 @@ export const zones = [
     longDesc: 'Toledo tiene un patrimonio arquitectónico único que requiere electricistas con experiencia en edificios históricos. Sabemos trabajar respetando las estructuras originales mientras cumplimos toda la normativa. También cubrimos las zonas de nueva construcción como Santa María de Benquerencia.',
     neighborhoods: ['Toledo Casco Histórico', 'Santa Bárbara', 'Buenavista', 'Santa María de Benquerencia', 'Azucaica', 'Polígono Industrial'],
     responseTime: '40-60 min',
+    coords: { lat: 39.8628, lng: -4.0273, zoom: 13 },
+    bbox: '-4.10,39.82,-3.95,39.91',
   },
   {
     slug: 'talavera',
@@ -107,6 +117,8 @@ export const zones = [
     longDesc: 'Talavera de la Reina y su comarca son parte de nuestra zona de servicio en Toledo. Atendemos a empresas del sector cerámico, agroalimentario e industrial, así como a comercios y viviendas. Conocemos bien las necesidades de la zona.',
     neighborhoods: ['Talavera Centro', 'Zona Industrial', 'Las Moreras', 'Patrocinio', 'El Prado', 'Comarca de Talavera'],
     responseTime: '50-75 min',
+    coords: { lat: 39.9633, lng: -4.8330, zoom: 13 },
+    bbox: '-4.92,39.92,-4.75,40.01',
   },
   {
     slug: 'illescas',
@@ -116,5 +128,7 @@ export const zones = [
     longDesc: 'La zona de Illescas es un polo logístico e industrial en crecimiento constante. Muchas empresas nuevas que necesitan instalaciones eléctricas desde cero, ampliaciones de potencia y certificaciones. Cubrimos Illescas, Yuncos, Seseña, Numancia de la Sagra y toda la comarca.',
     neighborhoods: ['Illescas', 'Yuncos', 'Seseña', 'Numancia de la Sagra', 'Yeles', 'Esquivias', 'Borox'],
     responseTime: '35-50 min',
+    coords: { lat: 40.1228, lng: -3.8480, zoom: 12 },
+    bbox: '-3.95,40.05,-3.74,40.20',
   },
 ];

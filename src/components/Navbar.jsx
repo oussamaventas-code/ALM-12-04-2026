@@ -35,6 +35,8 @@ const navLinks = [
       { label: 'Getafe',        to: '/zonas/getafe', icon: MapPin },
       { label: 'Alcorcón',      to: '/zonas/alcorcon', icon: MapPin },
       { label: 'Toledo',        to: '/zonas/toledo-capital', icon: MapPin },
+      { label: 'Talavera',      to: '/zonas/talavera', icon: MapPin },
+      { label: 'Illescas',      to: '/zonas/illescas', icon: MapPin },
       { label: 'Nacional',      to: '/zonas/nacional', icon: Globe },
     ],
   },

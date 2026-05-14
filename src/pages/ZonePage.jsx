@@ -272,7 +272,7 @@ export default function ZonePage() {
               <h2 className="section-title mb-6">{zone.name}</h2>
               <p
                 className="text-lg leading-[1.8]"
-                style={{ color: 'var(--color-ink-400)' }}
+                style={{ color: 'var(--color-ink-600)' }}
               >
                 {zone.longDesc}
               </p>
@@ -305,7 +305,7 @@ export default function ZonePage() {
                 >
                   {zone.responseTime}
                 </p>
-                <p className="text-white/40 text-sm leading-relaxed">
+                <p className="text-white/55 text-sm leading-relaxed">
                   Tiempo medio de llegada para urgencias en {zone.name}. Disponibles 24 horas, 7 d{'\u00ED'}as a la semana.
                 </p>
                 <hr
@@ -324,6 +324,36 @@ export default function ZonePage() {
                   Llamar ahora
                 </a>
               </div>
+
+              {/* Mapa interactivo de la zona */}
+              <div className="mt-6 relative overflow-hidden border border-white/10 bg-dark group">
+                <div className="absolute top-4 left-4 z-10 inline-flex items-center gap-2 px-3 py-1.5 bg-dark/85 backdrop-blur-sm border border-brand/30">
+                  <MapPin size={14} className="text-brand" />
+                  <span className="text-brand text-[11px] font-body font-bold uppercase tracking-[0.12em]">
+                    {zone.name}
+                  </span>
+                </div>
+                <iframe
+                  title={`Mapa de ${zone.name}`}
+                  src={`https://www.openstreetmap.org/export/embed.html?bbox=${zone.bbox}&layer=mapnik&marker=${zone.coords.lat},${zone.coords.lng}`}
+                  width="100%"
+                  height="320"
+                  loading="lazy"
+                  className="w-full"
+                  style={{ border: 0, filter: 'invert(0.92) hue-rotate(180deg) brightness(0.95) contrast(0.95)' }}
+                />
+                <a
+                  href={`https://www.openstreetmap.org/?mlat=${zone.coords.lat}&mlon=${zone.coords.lng}#map=${zone.coords.zoom}/${zone.coords.lat}/${zone.coords.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block px-5 py-3 text-xs font-body font-semibold uppercase tracking-widest text-white/60 hover:text-brand transition-colors border-t border-white/10 bg-dark text-center"
+                >
+                  Ver mapa ampliado &rarr;
+                </a>
+              </div>
+              <p className="mt-3 text-xs text-white/45 text-center font-body">
+                Cobertura aproximada &middot; {zone.region}
+              </p>
             </div>
           </div>
         </div>
