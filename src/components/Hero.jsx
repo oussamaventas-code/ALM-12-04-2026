@@ -46,7 +46,8 @@ export default function Hero() {
         });
 
         tl.from('.hero-subtitle', { y: 30, opacity: 0, duration: 0.8 }, '-=0.3')
-          .from('.hero-cta-btn', { y: 20, opacity: 0, duration: 0.5, stagger: 0.1 }, '-=0.4')
+          .from('.hero-cta-btn', { y: 20, duration: 0.5, stagger: 0.1 }, '-=0.4')
+          .from('.hero-trust', { y: 15, duration: 0.5 }, '-=0.2')
           .from('.hero-form', { y: 50, opacity: 0, duration: 0.9 }, '-=0.6')
           .from('.hero-scroll', { y: 15, opacity: 0, duration: 0.6 }, '-=0.2');
 
@@ -217,7 +218,7 @@ export default function Hero() {
             </div>
 
             {/* Trust strip */}
-            <div className="hero-cta-btn mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <div className="hero-trust mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
               {/* Google rating */}
               <div className="flex items-center gap-2">
                 <span className="text-brand text-base leading-none tracking-tight">★★★★★</span>

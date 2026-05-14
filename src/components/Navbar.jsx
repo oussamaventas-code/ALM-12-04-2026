@@ -245,7 +245,7 @@ export default function Navbar() {
               <Link
                 to="/urgencias"
                 aria-label="Urgencias eléctricas 24 horas — contactar ahora"
-                className="relative flex items-center gap-1.5 bg-danger/90 hover:bg-danger text-white text-[0.6875rem] font-bold uppercase tracking-widest px-3 py-1.5 transition-all duration-300"
+                className="btn-urgencias"
               >
                 <span className="relative flex h-2 w-2" aria-hidden="true">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-300 opacity-75" />
@@ -279,24 +279,34 @@ export default function Navbar() {
         <div
           id="mobile-nav-menu"
           ref={mobileMenuRef}
-          className="fixed inset-0 z-[55] bg-dark/98 backdrop-blur-xl flex flex-col"
+          className="fixed inset-0 z-[55] flex flex-col mobile-nav-glass"
           style={{ paddingTop: 'calc(3px + 72px)' }}
           role="dialog"
           aria-label="Menú de navegación"
           aria-modal="true"
         >
-          <div className="flex-1 flex flex-col justify-center px-8 -mt-12">
+          {/* Glow decorativo de marca */}
+          <div
+            className="absolute top-1/3 -right-20 w-72 h-72 bg-brand/10 rounded-full blur-[100px] pointer-events-none"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute bottom-1/4 -left-20 w-64 h-64 bg-brand/5 rounded-full blur-[120px] pointer-events-none"
+            aria-hidden="true"
+          />
+
+          <div className="relative flex-1 flex flex-col justify-center px-8 -mt-8 overflow-y-auto py-6">
             {navLinks.map((link) =>
               link.dropdown ? (
                 <div key={link.id} className="mobile-nav-link">
                   <button
                     onClick={() => toggleMobileDropdown(link.id)}
-                    className="flex items-center justify-between w-full font-heading text-3xl md:text-4xl font-bold text-white/90 hover:text-brand-glow transition-colors duration-300 py-4 border-b border-white/5"
+                    className="flex items-center justify-between w-full font-heading text-[1.75rem] md:text-3xl font-bold text-white/90 hover:text-brand-glow active:text-brand transition-colors duration-300 py-5 border-b border-white/8"
                   >
                     <span>{link.label}</span>
                     <ChevronDown
-                      size={24}
-                      className={`text-brand transition-transform duration-300 ${mobileDropdowns[link.id] ? 'rotate-180' : ''}`}
+                      size={22}
+                      className={`text-brand/80 transition-transform duration-300 ${mobileDropdowns[link.id] ? 'rotate-180' : ''}`}
                     />
                   </button>
                   <div
@@ -304,15 +314,15 @@ export default function Navbar() {
                       mobileDropdowns[link.id] ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
                     }`}
                   >
-                    <div className="pl-4 py-2 space-y-1 border-l-2 border-brand/30 ml-2">
+                    <div className="pl-5 py-3 space-y-1.5 border-l-2 border-brand/40 ml-1.5">
                       {link.dropdown.map((item) => (
                         <Link
                           key={item.to}
                           to={item.to}
                           onClick={closeMobile}
-                          className="flex items-center gap-2 text-white/50 hover:text-brand-glow text-lg py-2 transition-colors font-body"
+                          className="flex items-center gap-2.5 text-white/65 hover:text-brand-glow active:text-brand text-base py-2 transition-colors font-body"
                         >
-                          <item.icon size={14} className="text-brand/40" />
+                          <item.icon size={15} className="text-brand/55" />
                           {item.label}
                         </Link>
                       ))}
@@ -324,7 +334,7 @@ export default function Navbar() {
                   key={link.to}
                   to={link.to}
                   onClick={closeMobile}
-                  className="mobile-nav-link font-heading text-3xl md:text-4xl font-bold text-white/90 hover:text-brand-glow transition-colors duration-300 py-4 border-b border-white/5 block"
+                  className="mobile-nav-link font-heading text-[1.75rem] md:text-3xl font-bold text-white/90 hover:text-brand-glow active:text-brand transition-colors duration-300 py-5 border-b border-white/8 block"
                 >
                   {link.label}
                 </Link>
@@ -333,7 +343,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={closeMobile}
-                  className="mobile-nav-link font-heading text-3xl md:text-4xl font-bold text-white/90 hover:text-brand-glow transition-colors duration-300 py-4 border-b border-white/5 block"
+                  className="mobile-nav-link font-heading text-[1.75rem] md:text-3xl font-bold text-white/90 hover:text-brand-glow active:text-brand transition-colors duration-300 py-5 border-b border-white/8 block"
                 >
                   {link.label}
                 </a>
@@ -341,11 +351,11 @@ export default function Navbar() {
             )}
           </div>
 
-          <div className="px-8 pb-10 space-y-3">
+          <div className="relative px-6 pb-[max(env(safe-area-inset-bottom),1.5rem)] pt-4 space-y-3 border-t border-white/8 backdrop-blur-sm bg-dark/30">
             <Link
               to="/urgencias"
               onClick={closeMobile}
-              className="flex items-center justify-center gap-2 bg-danger text-white font-bold py-4 text-sm uppercase tracking-wider transition-all"
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#B91C1C] to-[#DC2626] hover:from-[#A11717] hover:to-[#B91C1C] text-white font-bold py-4 text-sm uppercase tracking-wider transition-all shadow-lg shadow-red-900/40 active:scale-[0.98]"
             >
               <Zap size={16} />
               Urgencias 24h
@@ -353,9 +363,16 @@ export default function Navbar() {
             <a
               href="/#contacto"
               onClick={closeMobile}
-              className="btn-brand w-full justify-center !py-4"
+              className="btn-brand w-full justify-center !py-4 shadow-lg shadow-brand/25 active:scale-[0.98]"
             >
               Pide presupuesto
+            </a>
+            <a
+              href="tel:+34605333108"
+              className="flex items-center justify-center gap-2 text-white/60 hover:text-white text-sm font-body py-2 transition-colors"
+            >
+              <Phone size={14} className="text-brand" />
+              <span className="font-medium">605 33 31 08</span>
             </a>
           </div>
         </div>

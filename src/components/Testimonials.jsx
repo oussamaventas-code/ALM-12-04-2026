@@ -216,7 +216,7 @@ export default function Testimonials() {
                 <Quote size={32} className="text-brand/20 mb-4 shrink-0" aria-hidden="true" />
 
                 {/* Quote text */}
-                <p className="text-white/80 font-body text-base leading-relaxed italic flex-1">
+                <p className="font-body italic font-normal text-white/85 text-base leading-relaxed tracking-[0.005em] flex-1">
                   &ldquo;{t.text}&rdquo;
                 </p>
 

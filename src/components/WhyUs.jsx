@@ -208,7 +208,7 @@ export default function WhyUs() {
                       <h3 className="font-heading text-lg font-bold text-ink transition-colors duration-400 leading-snug group-hover:text-brand [.reason-active_&]:text-brand">
                         {r.title}
                       </h3>
-                      <p className="font-body text-sm text-ink-400 mt-1.5 leading-relaxed max-w-md">
+                      <p className="font-body text-sm text-ink-600 mt-1.5 leading-relaxed max-w-md">
                         {r.desc}
                       </p>
                     </div>

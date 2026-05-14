@@ -91,8 +91,8 @@ function TeamDesktop() {
       <div className="h-full flex flex-col">
         {/* Header */}
         <div className="container-custom px-6 pt-16 pb-8 shrink-0">
-          <div className="flex items-end justify-between gap-8">
-            <div ref={titleRef}>
+          <div className="flex items-end justify-between gap-12">
+            <div ref={titleRef} className="flex-1 min-w-0">
               <div className="inline-flex items-center gap-2 border border-brand/25 bg-brand/8 px-4 py-2 mb-5">
                 <Heart size={14} className="text-brand" />
                 <span className="text-brand text-xs font-semibold uppercase tracking-widest">
@@ -104,11 +104,15 @@ function TeamDesktop() {
                 <span className="text-gradient-gold">ALMelectricidad</span>
               </h2>
             </div>
-            <p className="section-subtitle hidden md:block max-w-xs text-right">
-              Personas reales detrás de cada instalación.
-              <br />
-              Nos gusta que sepas con quién trabajas.
-            </p>
+            <div className="hidden md:flex items-start gap-4 max-w-sm shrink-0 pb-2">
+              <span className="w-8 h-[2px] bg-brand mt-2 shrink-0" aria-hidden="true" />
+              <p className="font-body text-[0.95rem] text-white/65 leading-relaxed">
+                Personas reales detrás de cada instalación.
+                <span className="block text-white/45 mt-1">
+                  Nos gusta que sepas con quién trabajas.
+                </span>
+              </p>
+            </div>
           </div>
         </div>
 
@@ -140,8 +144,14 @@ function TeamDesktop() {
                   style={{ objectPosition: p.imgPosition || 'top' }}
                 />
 
-                {/* Gradiente permanente para legibilidad del texto */}
-                <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent" />
+                {/* Vignette radial + gradiente inferior para depth + legibilidad */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      'radial-gradient(ellipse 90% 70% at 50% 35%, transparent 0%, rgba(8,8,9,0.25) 55%, rgba(8,8,9,0.75) 100%), linear-gradient(to top, rgba(8,8,9,0.95) 0%, rgba(8,8,9,0.4) 35%, transparent 60%)',
+                  }}
+                />
 
                 {/* Número grande arriba izquierda */}
                 <div className="absolute top-5 left-5 font-heading font-black text-5xl text-white/[0.14] leading-none select-none pointer-events-none group-hover:text-brand/30 transition-colors duration-500">
@@ -173,7 +183,7 @@ function TeamDesktop() {
                       className="text-brand/60 shrink-0 mt-0.5"
                       aria-hidden="true"
                     />
-                    <p className="text-white/75 text-sm italic leading-snug line-clamp-2">
+                    <p className="font-body italic font-normal text-white/80 text-sm leading-snug tracking-[0.005em] line-clamp-2">
                       "{p.quote}"
                     </p>
                   </div>
@@ -276,9 +286,16 @@ function TeamMobile() {
                 height="500"
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 w-full h-full object-cover object-top"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: p.imgPosition || 'top' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent" />
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(ellipse 90% 70% at 50% 35%, transparent 0%, rgba(8,8,9,0.25) 55%, rgba(8,8,9,0.75) 100%), linear-gradient(to top, rgba(8,8,9,0.95) 0%, rgba(8,8,9,0.4) 35%, transparent 60%)',
+                }}
+              />
 
               <div className="absolute top-3 left-3 font-heading font-black text-4xl text-white/[0.10] leading-none select-none pointer-events-none">
                 {String(i + 1).padStart(2, '0')}
@@ -300,7 +317,7 @@ function TeamMobile() {
                 </p>
                 <div className="flex gap-2 pt-3 border-t border-white/15">
                   <Quote size={12} className="text-brand/60 shrink-0 mt-0.5" />
-                  <p className="text-white/75 text-xs italic leading-snug">
+                  <p className="font-body italic font-normal text-white/80 text-xs leading-snug tracking-[0.005em]">
                     "{p.quote}"
                   </p>
                 </div>

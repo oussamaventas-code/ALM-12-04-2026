@@ -117,7 +117,7 @@ function PortfolioDesktop() {
             {projects.map((p, i) => (
               <div
                 key={i}
-                className="portfolio-card group relative overflow-hidden cursor-pointer shrink-0 rounded-sm"
+                className="portfolio-card group relative overflow-hidden cursor-pointer shrink-0 rounded-sm border border-white/8 transition-all duration-500 hover:border-brand/40 hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(245,197,24,0.18),0_8px_24px_rgba(0,0,0,0.6)]"
                 style={{
                   width: 'clamp(280px, 35vw, 520px)',
                   height: '70vh',
@@ -130,7 +130,7 @@ function PortfolioDesktop() {
                   height="700"
                   loading="eager"
                   decoding="async"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-7">
                   <span

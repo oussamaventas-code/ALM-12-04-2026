@@ -229,8 +229,14 @@ export default function TeamPage() {
                 style={{ objectPosition: member.imgPosition || 'top' }}
               />
 
-              {/* Gradiente para legibilidad */}
-              <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/55 to-dark/10" />
+              {/* Vignette radial + gradiente inferior */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(ellipse 90% 70% at 50% 35%, transparent 0%, rgba(8,8,9,0.25) 55%, rgba(8,8,9,0.75) 100%), linear-gradient(to top, rgba(8,8,9,0.95) 0%, rgba(8,8,9,0.4) 35%, transparent 60%)',
+                }}
+              />
 
               {/* Número */}
               <div className="absolute top-3.5 left-4 font-heading font-black text-4xl text-white/[0.12] leading-none select-none">
@@ -258,7 +264,7 @@ export default function TeamPage() {
                 </p>
                 <div className="flex gap-2 pt-2 border-t border-white/15">
                   <Quote size={11} className="text-brand/60 shrink-0 mt-0.5" aria-hidden="true" />
-                  <p className="text-white/70 text-xs italic leading-snug font-body line-clamp-2">
+                  <p className="font-body italic font-normal text-white/80 text-xs leading-snug tracking-[0.005em] line-clamp-2">
                     "{member.quote}"
                   </p>
                 </div>
@@ -317,14 +323,14 @@ export default function TeamPage() {
                 {/* Cita */}
                 <div className="flex gap-3 max-w-md pt-5 border-t border-white/10">
                   <Quote size={18} className="text-brand/60 shrink-0 mt-1" aria-hidden="true" />
-                  <p className="text-white/75 text-base italic leading-snug font-body">
+                  <p className="font-body italic font-normal text-white/85 text-base leading-snug tracking-[0.005em]">
                     "{member.quote}"
                   </p>
                 </div>
               </div>
 
               {/* Foto derecha */}
-              <div className="slide-img-container w-1/2 h-full shrink-0 overflow-hidden">
+              <div className="slide-img-container w-1/2 h-full shrink-0 overflow-hidden relative">
                 <img
                   src={member.img}
                   alt={member.displayName}
@@ -332,6 +338,14 @@ export default function TeamPage() {
                   decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]"
                   style={{ objectPosition: member.imgPosition || 'top' }}
+                />
+                {/* Vignette radial — depth + tema dark */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      'radial-gradient(ellipse 80% 65% at 50% 40%, transparent 0%, rgba(8,8,9,0.2) 60%, rgba(8,8,9,0.65) 100%)',
+                  }}
                 />
               </div>
             </div>

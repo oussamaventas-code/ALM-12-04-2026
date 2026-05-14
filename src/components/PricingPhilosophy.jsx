@@ -81,7 +81,7 @@ export default function PricingPhilosophy() {
         <div className="pp-table max-w-4xl mx-auto mb-14">
           {/* Encabezados */}
           <div className="grid grid-cols-3 gap-2 mb-3 px-2">
-            <div className="text-white/40 text-xs uppercase tracking-wider font-semibold">Aspecto</div>
+            <div className="text-white/60 text-xs uppercase tracking-wider font-semibold">Aspecto</div>
             <div className="text-center">
               <span className="inline-flex items-center gap-1.5 bg-brand/15 border border-brand/30 text-brand text-xs font-bold px-3 py-1.5 rounded-full">
                 <CheckCircle size={12} />
@@ -89,30 +89,30 @@ export default function PricingPhilosophy() {
               </span>
             </div>
             <div className="text-center">
-              <span className="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-white/40 text-xs font-bold px-3 py-1.5 rounded-full">
+              <span className="inline-flex items-center gap-1.5 bg-white/[0.06] border border-white/15 text-white/60 text-xs font-bold px-3 py-1.5 rounded-full">
                 <X size={12} />
                 El más barato
               </span>
             </div>
           </div>
 
-          <div className="rounded-xl overflow-hidden border border-white/8">
+          <div className="rounded-xl overflow-hidden border border-white/10">
             {comparisons.map((row, i) => (
               <div
                 key={row.aspect}
                 className={`pp-row grid grid-cols-3 gap-2 p-4 ${
-                  i % 2 === 0 ? 'bg-white/3' : 'bg-transparent'
-                } border-b border-white/5 last:border-0`}
+                  i % 2 === 0 ? 'bg-white/[0.04]' : 'bg-transparent'
+                } border-b border-white/8 last:border-0`}
               >
-                <div className="font-heading font-bold text-white/70 text-sm flex items-center">
+                <div className="font-heading font-bold text-white/90 text-sm flex items-center">
                   {row.aspect}
                 </div>
-                <div className="flex items-start gap-2 text-sm text-white/70">
+                <div className="flex items-start gap-2 text-sm text-white/90 leading-snug">
                   <CheckCircle size={14} className="text-brand flex-shrink-0 mt-0.5" />
                   {row.nosotros}
                 </div>
-                <div className="flex items-start gap-2 text-sm text-white/35">
-                  <X size={14} className="text-red-400/60 flex-shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2 text-sm text-white/60 leading-snug">
+                  <X size={14} className="text-red-400/75 flex-shrink-0 mt-0.5" />
                   {row.otros}
                 </div>
               </div>
@@ -122,7 +122,7 @@ export default function PricingPhilosophy() {
 
         {/* CTA */}
         <div className="pp-cta text-center">
-          <p className="text-white/50 text-sm mb-5">
+          <p className="text-white/70 text-sm mb-5">
             Si encajamos con lo que buscas, estaremos encantados de hablar.
           </p>
           <Link to="/contacto" className="btn-brand">
