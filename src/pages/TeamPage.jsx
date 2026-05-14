@@ -225,7 +225,8 @@ export default function TeamPage() {
                 decoding="async"
                 width="600"
                 height="750"
-                className="absolute inset-0 w-full h-full object-cover object-top"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: member.imgPosition || 'top' }}
               />
 
               {/* Gradiente para legibilidad */}
@@ -329,7 +330,8 @@ export default function TeamPage() {
                   alt={member.displayName}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+                  style={{ objectPosition: member.imgPosition || 'top' }}
                 />
               </div>
             </div>

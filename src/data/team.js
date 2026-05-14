@@ -54,5 +54,6 @@ export const TEAM = [
     desc: 'Organización, gestión y atención al cliente.',
     quote: 'La clave está en que todo esté bien gestionado desde el principio.',
     img: '/images/team/EQUIPO%20PARA%20PAGINA/MELISA.webp',
+    imgPosition: 'center 15%',
   },
 ];

@@ -4,6 +4,7 @@
   <!-- ── Home ─────────────────────────────────────────────────────────── -->
   <url>
     <loc>https://almelectricidad.com/</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,21 +12,25 @@
   <!-- ── Páginas principales ──────────────────────────────────────────── -->
   <url>
     <loc>https://almelectricidad.com/urgencias</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/contacto</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/proyectos</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/fotovoltaica</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -33,6 +38,7 @@
   <!-- ── Índice de servicios ─────────────────────────────────────────── -->
   <url>
     <loc>https://almelectricidad.com/servicios</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -40,36 +46,43 @@
   <!-- ── Servicios (slugs reales del router /servicios/:slug) ────────── -->
   <url>
     <loc>https://almelectricidad.com/servicios/instalaciones-electricas</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/servicios/reparacion-averias</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/servicios/paneles-solares</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/servicios/iluminacion-led</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/servicios/boletines-certificados</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/servicios/telecomunicaciones</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/servicios/recarga-vehiculo-electrico</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -77,6 +90,7 @@
   <!-- ── Zonas índice ─────────────────────────────────────────────────── -->
   <url>
     <loc>https://almelectricidad.com/zonas</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -84,51 +98,61 @@
   <!-- ── Zonas individuales (slugs reales del router /zonas/:slug) ───── -->
   <url>
     <loc>https://almelectricidad.com/zonas/madrid-centro</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/zonas/madrid-norte</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/zonas/madrid-sur</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/zonas/madrid-este</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/zonas/madrid-oeste</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/zonas/getafe</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/zonas/alcorcon</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/zonas/toledo-capital</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/zonas/talavera</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/zonas/illescas</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -136,21 +160,25 @@
   <!-- ── Sobre nosotros ───────────────────────────────────────────────── -->
   <url>
     <loc>https://almelectricidad.com/sobre-nosotros</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/equipo</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/flota</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/patrocinios</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -158,16 +186,19 @@
   <!-- ── Legales ──────────────────────────────────────────────────────── -->
   <url>
     <loc>https://almelectricidad.com/aviso-legal</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/privacidad</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://almelectricidad.com/cookies</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

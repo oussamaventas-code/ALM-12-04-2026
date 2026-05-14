@@ -136,7 +136,8 @@ function TeamDesktop() {
                   height="700"
                   loading="eager"
                   decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  style={{ objectPosition: p.imgPosition || 'top' }}
                 />
 
                 {/* Gradiente permanente para legibilidad del texto */}

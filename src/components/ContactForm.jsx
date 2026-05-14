@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { ArrowRight, User, Mail, Phone, MessageSquare, CheckCircle, Star } from 'lucide-react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { BUSINESS } from '../data/business';
 
 export default function ContactForm() {
@@ -280,7 +281,9 @@ export default function ContactForm() {
                           backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.6)' d='M1 3.5L6 8l5-4.5'/%3E%3C/svg%3E")`,
                           backgroundRepeat: 'no-repeat',
                           backgroundPosition: 'right 1rem center',
-                          paddingRight: '2.5rem'
+                          paddingRight: '2.5rem',
+                          backgroundColor: 'rgb(8, 8, 9)',
+                          colorScheme: 'dark',
                         }}
                       >
                         <option value="">Elige un servicio...</option>

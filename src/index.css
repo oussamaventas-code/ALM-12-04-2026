@@ -488,7 +488,7 @@
 
   .btn-secondary:hover {
     background: var(--color-brand);
-    color: white;
+    color: var(--color-dark);
     transform: translateY(-2px);
   }
 

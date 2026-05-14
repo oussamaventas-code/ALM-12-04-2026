@@ -17,8 +17,8 @@ export const BUSINESS = {
 
   // Ubicación
   address: {
-    locality: 'Madrid',
-    region: 'Comunidad de Madrid',
+    locality: 'Ocaña',
+    region: 'Castilla-La Mancha',
     country: 'ES',
   },
 
@@ -45,6 +45,8 @@ export const BUSINESS = {
 
   // Áreas de cobertura (para schema)
   serviceCities: [
+    'Ocaña',
+    'Aranjuez',
     'Madrid',
     'Toledo',
     'Getafe',

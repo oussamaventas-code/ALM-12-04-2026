@@ -7,27 +7,58 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // gsap.registerPlugin ya registrado globalmente en App.jsx
 
+// const vehicles = [
+//   {
+//     name: 'Furgoneta Técnica 01',
+//     type: 'Taller Móvil',
+//     desc: 'Equipada con herramienta de precisión y material de instalación completo para obras residenciales y comerciales.',
+//     specs: ['Material para cuadros eléctricos completos', 'Herramienta de verificación y certificación', 'Cable prefijado en bobinas para respuesta rápida'],
+//     image: '/images/flota/Professional_commercial_fleet_202604082305.webp',
+//   },
+//   {
+//     name: 'Furgoneta Técnica 02',
+//     type: 'Urgencias y Averías',
+//     desc: 'Unidad de respuesta rápida 24h para urgencias. Equipada con material de reposición inmediata.',
+//     specs: ['Material de reposición inmediata', 'Diagnóstico de averías en campo', 'Operativa 24h / 365 días'],
+//     image: '/images/flota/Professional_3_4_side_202604082308.webp',
+//   },
+//   {
+//     name: 'Furgoneta Técnica 03',
+//     type: 'Proyectos Especiales',
+//     desc: 'Para grandes obras, instalaciones industriales y proyectos fotovoltaicos que requieren material voluminoso.',
+//     specs: ['Capacidad de carga ampliada', 'Grúa de carga integrada', 'Material para instalaciones solares'],
+//     image: '/images/flota/Dynamic_3_4_front_202604082312.webp',
+//   },
+// ];
+
 const vehicles = [
   {
-    name: 'Furgoneta Técnica 01',
-    type: 'Taller Móvil',
-    desc: 'Equipada con herramienta de precisión y material de instalación completo para obras residenciales y comerciales.',
-    specs: ['Material para cuadros eléctricos completos', 'Herramienta de verificación y certificación', 'Cable prefijado en bobinas para respuesta rápida'],
-    image: '/images/flota/Professional_commercial_fleet_202604082305.webp',
+    name: 'Camión Plataforma Elevadora',
+    type: 'Trabajos en Altura',
+    desc: 'Plataforma articulada para instalaciones en altura, iluminación exterior, mantenimiento de fachadas y obras que requieren acceso seguro a zonas elevadas.',
+    specs: ['Acceso hasta 20m de altura', 'Instalaciones en fachadas y postes', 'Señalización vial incluida'],
+    image: '/images/flota/camion-plataforma.webp',
   },
   {
-    name: 'Furgoneta Técnica 02',
-    type: 'Urgencias y Averías',
-    desc: 'Unidad de respuesta rápida 24h para urgencias. Equipada con material de reposición inmediata.',
-    specs: ['Material de reposición inmediata', 'Diagnóstico de averías en campo', 'Operativa 24h / 365 días'],
-    image: '/images/flota/Professional_3_4_side_202604082308.webp',
+    name: 'Furgón de Obra',
+    type: 'Grandes Proyectos',
+    desc: 'Furgón de gran capacidad para proyectos industriales, plantas fotovoltaicas e instalaciones que requieren material voluminoso y herramienta pesada.',
+    specs: ['Capacidad de carga máxima', 'Material para instalaciones industriales', 'Portabobinas y rack de escalera'],
+    image: '/images/flota/citroen-jumper.webp',
   },
   {
-    name: 'Furgoneta Técnica 03',
-    type: 'Proyectos Especiales',
-    desc: 'Para grandes obras, instalaciones industriales y proyectos fotovoltaicos que requieren material voluminoso.',
-    specs: ['Capacidad de carga ampliada', 'Grúa de carga integrada', 'Material para instalaciones solares'],
-    image: '/images/flota/Dynamic_3_4_front_202604082312.webp',
+    name: 'Furgoneta Ligera',
+    type: 'Trabajos Residenciales',
+    desc: 'Ideal para instalaciones residenciales, pequeñas obras y trabajos en zonas de acceso restringido donde la agilidad marca la diferencia.',
+    specs: ['Acceso a zonas urbanas restringidas', 'Material para instalaciones domésticas', 'Respuesta ágil y rápida'],
+    image: '/images/flota/fiat-fiorino.webp',
+  },
+  {
+    name: 'Unidad de Urgencias',
+    type: 'Urgencias 24h',
+    desc: 'Unidad de respuesta rápida disponible 24h para averías y urgencias eléctricas. Equipada con material de reposición inmediata para solucionar cualquier incidencia.',
+    specs: ['Operativa 24h / 365 días', 'Material de reposición inmediata', 'Diagnóstico de averías en campo'],
+    image: '/images/flota/mercedes-vito.webp',
   },
 ];
 
@@ -35,7 +66,7 @@ const whyFleet = [
   { icon: Package, title: 'Material siempre disponible', desc: 'Cada furgoneta sale a obra con el material necesario. Sin esperas ni viajes de vuelta al almacén.' },
   { icon: Wrench, title: 'Herramienta profesional', desc: 'Equipos de medición, verificación y certificación propios. Herramienta de calidad industrial en cada trabajo.' },
   { icon: Shield, title: 'Uniformidad y seriedad', desc: 'Vehículos identificados con nuestra marca. Sabes perfectamente quién viene a tu casa o empresa.' },
-  { icon: Truck, title: 'Capacidad de respuesta', desc: 'Con 3 unidades operativas podemos atender varios proyectos simultáneamente sin comprometer la calidad.' },
+  { icon: Truck, title: 'Capacidad de respuesta', desc: 'Con 4 unidades operativas podemos atender varios proyectos simultáneamente sin comprometer la calidad.' },
 ];
 
 export default function FlotaPage() {
@@ -238,7 +269,7 @@ export default function FlotaPage() {
               LISTOS PARA TU PROYECTO
             </h2>
             <p className="text-dark/70 font-body text-base mb-8 text-center">
-              3 unidades operativas. Material completo. Sin esperas.
+              4 unidades operativas. Material completo. Sin esperas.
             </p>
             <div className="flex flex-col w-full gap-3 max-w-xs">
               <a
@@ -314,7 +345,7 @@ export default function FlotaPage() {
                 LISTOS PARA TU PROYECTO
               </h2>
               <p className="text-dark/70 font-body text-xl md:text-2xl mb-10 max-w-2xl font-medium">
-                3 unidades operativas, material completo y técnicos cualificados. Sin esperas.
+                4 unidades operativas, material completo y técnicos cualificados. Sin esperas.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a

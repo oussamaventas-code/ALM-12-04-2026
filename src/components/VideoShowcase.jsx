@@ -8,14 +8,14 @@ const VIDEOS = [
   {
     src: '/videos/proyectos/proyecto-01.mp4',
     poster: '/videos/proyectos/proyecto-01-poster.webp',
-    title: 'Instalación industrial',
-    category: 'Industrial',
+    title: 'Cuadro eléctrico',
+    category: 'Cuadros',
   },
   {
     src: '/videos/proyectos/proyecto-02.mp4',
     poster: '/videos/proyectos/proyecto-02-poster.webp',
-    title: 'Cuadro eléctrico',
-    category: 'Cuadros',
+    title: 'Instalación industrial',
+    category: 'Industrial',
   },
   {
     src: '/videos/proyectos/proyecto-03.mp4',

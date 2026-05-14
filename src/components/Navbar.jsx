@@ -26,14 +26,16 @@ const navLinks = [
     id: 'zonas',
     dropdown: [
       { label: 'Ver todas las zonas', to: '/zonas', icon: Globe },
-      { label: 'Madrid Centro', to: '/zonas/madrid-centro', icon: MapPin },
+      { label: 'Ocaña',         to: '/zonas/ocana', icon: MapPin },
+      { label: 'Aranjuez',      to: '/zonas/aranjuez', icon: MapPin },
       { label: 'Madrid Norte',  to: '/zonas/madrid-norte', icon: MapPin },
       { label: 'Madrid Sur',    to: '/zonas/madrid-sur', icon: MapPin },
       { label: 'Madrid Este',   to: '/zonas/madrid-este', icon: MapPin },
       { label: 'Madrid Oeste',  to: '/zonas/madrid-oeste', icon: MapPin },
       { label: 'Getafe',        to: '/zonas/getafe', icon: MapPin },
-      { label: 'Alcorcon',      to: '/zonas/alcorcon', icon: MapPin },
+      { label: 'Alcorcón',      to: '/zonas/alcorcon', icon: MapPin },
       { label: 'Toledo',        to: '/zonas/toledo-capital', icon: MapPin },
+      { label: 'Nacional',      to: '/zonas/nacional', icon: Globe },
     ],
   },
   {

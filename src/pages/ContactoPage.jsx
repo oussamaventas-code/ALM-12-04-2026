@@ -195,7 +195,7 @@ export default function ContactoPage() {
                   <h3 className="font-heading font-bold text-sm uppercase tracking-wider text-white/70">Zona de cobertura</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {['Madrid Centro','Madrid Norte','Madrid Sur','Madrid Este','Madrid Oeste','Getafe','Alcorcón','Toledo','Talavera','Illescas'].map((zona) => (
+                  {['Ocaña','Aranjuez','Madrid Norte','Madrid Sur','Madrid Este','Madrid Oeste','Getafe','Alcorcón','Toledo','Talavera','Illescas','Nacional'].map((zona) => (
                     <span key={zona} className="text-xs bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-white/60">
                       {zona}
                     </span>

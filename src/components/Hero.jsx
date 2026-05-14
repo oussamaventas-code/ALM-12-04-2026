@@ -141,17 +141,17 @@ export default function Hero() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           onCanPlay={() => setVideoReady(true)}
           className="absolute inset-0 w-full h-full object-cover object-[70%_center] lg:object-[62%_center] lg:scale-110"
         >
           <source
             media="(max-width: 1023px)"
-            src="/videos/HERO MOVIL.mp4"
+            src="/videos/hero-movil.mp4"
             type="video/mp4"
           />
           <source
-            src="/videos/HERO PARA PC.mp4"
+            src="/videos/hero-desktop.mp4"
             type="video/mp4"
           />
         </video>

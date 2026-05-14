@@ -67,7 +67,7 @@ export default function Footer() {
               className="h-16 w-auto object-contain mb-5 brightness-110"
             />
             <p className="text-sm leading-relaxed mb-4">
-              Electricistas profesionales en Madrid y Toledo. Instalaciones, reformas, aver&iacute;as y energ&iacute;a solar con garant&iacute;a.
+              Electricistas profesionales en Madrid y Toledo. Instalaciones, reformas, averías y energía solar con garantía.
             </p>
             <div className="flex items-center gap-4 mt-6">
               <a 
@@ -172,13 +172,13 @@ export default function Footer() {
               <li className="flex items-start gap-2.5 text-sm">
                 <Clock size={15} className="text-brand-light shrink-0 mt-0.5" aria-hidden="true" />
                 <div>
-                  <p>Lun&ndash;Vie: 8:00&ndash;20:00</p>
-                  <p>S&aacute;b: 9:00&ndash;14:00</p>
+                  <p>Lun–Vie: 8:00–20:00</p>
+                  <p>Sáb: 9:00–14:00</p>
                 </div>
               </li>
               <li className="flex items-center gap-2.5 text-sm text-brand-light">
                 <AlertTriangle size={15} className="shrink-0" aria-hidden="true" />
-                Urgencias 24h / 365 d&iacute;as
+                Urgencias 24h / 365 días
               </li>
             </ul>
           </address>
@@ -189,9 +189,9 @@ export default function Footer() {
       <div className="border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/60">
-            &copy; {currentYear} ALM Electricidad. Todos los derechos reservados.
-            <span className="mx-2 text-white/20" aria-hidden="true">&middot;</span>
-            Dise&ntilde;o web por <a href="https://somsyngular.com" target="_blank" rel="noopener noreferrer" className="text-brand/70 font-semibold hover:text-brand transition-colors" aria-label="Visitar sitio web de SOMSYNGULAR">SOMSYNGULAR</a>
+            © {currentYear} ALM Electricidad. Todos los derechos reservados.
+            <span className="mx-2 text-white/20" aria-hidden="true">·</span>
+            Diseño web por <a href="https://somsyngular.com" target="_blank" rel="noopener noreferrer" className="text-brand/70 font-semibold hover:text-brand transition-colors" aria-label="Visitar sitio web de SOMSYNGULAR">SOMSYNGULAR</a>
           </p>
           <div className="flex items-center gap-6">
             <Link
