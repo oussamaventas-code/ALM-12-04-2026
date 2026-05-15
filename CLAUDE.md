@@ -44,9 +44,9 @@ All routes defined in `src/App.jsx`. Pattern: `/servicios` (index) + `/servicios
 ### Data layer (`src/data/`)
 - **`business.js`** — phone, email, hours, rating (5.0 · 25), founder. Exports `BUSINESS`, `TEL_HREF`, `whatsappUrl(text)`.
 - **`services.js`** — 7 services with slug, title, shortDesc, heroDesc, image, icon, bullets[], faq[].
-- **`team.js`** — single source of truth: 6 team members with name, role, badge, desc, quote, img. Consumed by JorgeSection (home) + TeamPage (/equipo).
+- **`team.js`** — single source of truth: 6 team members con name, role, badge, desc, quote, img. Campo opcional `imgPosition` (string CSS `object-position`) para reencuadre per-photo cuando la foto descentra al sujeto (ej. Melisa: `'center 15%'`). Consumed by JorgeSection (home) + TeamPage (`/equipo`).
 - **`portfolio.js`** — 92 projects with slug, title, desc, category. Exports `FEATURED_PROJECTS` + `ALL_PROJECTS` (with auto-category via modulo + `CATEGORY_OVERRIDES` map for manual overrides).
-- **`zones.js`** — zone data (ZonePage, ZonasPage).
+- **`zones.js`** — 13 zonas (Ocaña, Aranjuez, Madrid N/S/E/O, Getafe, Alcorcón, Toledo, Talavera, Illescas, Nacional). Cada una con `coords: { lat, lng, zoom }` + `bbox: 'minLng,minLat,maxLng,maxLat'` consumidos por `ZonePage` para embed OpenStreetMap. Si añades zona al menú, sincroniza también `Navbar.jsx`.
 
 ### SEO pattern (`src/components/SeoHead.jsx`)
 ```jsx
@@ -72,6 +72,12 @@ useLayoutEffect(() => {
 }, []);
 ```
 Never call `ScrollTrigger.refresh()` synchronously — use `setTimeout(..., 150)`.
+
+**Critical: `gsap.from({ opacity: 0 })` + React StrictMode = elementos invisibles.**
+StrictMode ejecuta `useEffect` dos veces. Si el cleanup `ctx.revert()` cae a mitad de animación, los elementos pueden quedar en `opacity: 0` permanentemente. Mitigación:
+- Para elementos **críticos visibles** (CTAs, trust strip): no animar opacidad, solo `y/x` translate. Si la animación falla, siguen visibles. Ver `Hero.jsx:39-44` (CTAs y trust strip sin `opacity` en `from()`)
+- Añadir la clase al safety list de `prefers-reduced-motion` en `index.css` (`opacity: 1 !important`)
+- Prefer `gsap.fromTo()` con estado final explícito sobre `gsap.from()` cuando el destino debe ser garantizado
 
 **Horizontal pin scroll** (Portfolio, JorgeSection, TeamPage desktop):
 - Pattern: `pin: true`, `scrub: 0.5`, `anticipatePin: 1`, `invalidateOnRefresh: true`
@@ -110,6 +116,20 @@ Never call `ScrollTrigger.refresh()` synchronously — use `setTimeout(..., 150)
 - `onError` fallback to styled placeholder if poster fails
 - GSAP reveal on scroll
 
+**ZonePage** (`/zonas/:slug`)
+- Mapa OpenStreetMap embebido (iframe sin API key) usando `coords.lat/lng` + `bbox` de `zones.js`
+- CSS dark filter: `invert(0.92) hue-rotate(180deg) brightness(0.95) contrast(0.95)` para integrar con tema oscuro
+- Layout: descripción larga + tarjeta tiempo de respuesta + mapa en columna derecha
+- Sin dependencias, solo HTML/CSS
+
+**PatrociniosSection** (ruta `/patrocinios`)
+- Sección fútbol sala: 2 fotos en columna derecha (`futbol-sala-equipo.webp` + `futbol-sala-jorge.webp`)
+- Sección ciclismo: galería 3×2 de imágenes
+
+**ServiciosPage** (`/servicios`)
+- Combina `services` (7 entradas dinámicas con slug) + `extras` array (Urgencias 24h → `/urgencias`, Fotovoltaica Industrial → `/fotovoltaica`)
+- Los 2 extras tienen página propia (no usan `ServicePage` dinámica), pero se renderizan juntos en el grid
+
 **UrgenciasSection** (home + dedicated area)
 - Hero video: `32vh` mobile, `h-screen` desktop
 - Desktop: GSAP horizontal pin scroll (5 timeline steps + CTA slide)
@@ -124,17 +144,25 @@ Never call `ScrollTrigger.refresh()` synchronously — use `setTimeout(..., 150)
 ### Assets
 - All images: **WebP** in `public/images/`. Team photos: `public/images/team/EQUIPO PARA PAGINA/`
 - Portfolio: 92 images (`proyecto-01.webp` through `proyecto-99.webp`)
-- Videos: `public/videos/HERO PARA PC/MOVIL.mp4` (~1.9MB each, CRF 26), `Avería Urgente1.mp4` (~1.5MB)
+- Videos hero: `public/videos/hero-desktop.mp4` y `hero-movil.mp4` (renombrados desde `HERO PARA PC.mp4` / `HERO MOVIL.mp4`). Proyectos: `public/videos/proyectos/proyecto-{01,02,03}.mp4` (sin audio, CRF 26-28)
 - Video posters: auto-generated first frame (`.webp`)
 - `og-image.png` is PNG (legacy, OG doesn't support WebP). All else WebP.
 - Service images: optimized (recarga 2.03MB→93KB, telecomunicaciones 2.89MB→356KB via Sharp)
 
 ### Premium UX components
 - `<CustomCursor />` — global cursor with spring physics. Toggle pointer style via `data-cursor="pointer"`.
-- `<MagneticElement />` — GSAP magnet wrapper for CTAs.
+- `<MagneticElement />` — GSAP magnet wrapper for CTAs. Renderiza `<span inline-flex>` que NO aplica efecto en touch devices (early return en `pointer: coarse`).
 - `<PageTransition />` — full-screen sweep overlay on route change (mounted in App.jsx).
 - `<PageSkeleton />` — Suspense fallback for all lazy pages.
-- `<StickyMobileCTA />` — floating mobile CTA (inside HomePage Suspense).
+- `<StickyMobileCTA />` — floating mobile CTA (inside HomePage Suspense). Usa `pb-[max(env(safe-area-inset-bottom),1rem)]` para iPhones.
+
+### CSS custom utility classes (`src/index.css`)
+- `.btn-brand` — botón amarillo principal (gradient amarillo + sombra)
+- `.btn-whatsapp` — botón verde WhatsApp
+- `.btn-outline` — botón outline transparente
+- `.btn-urgencias` — botón rojo carmesí con `linear-gradient(180deg, #C42626 → #A11717)` + `inset shadow` arriba/abajo para relieve 3D. Usar en lugar de `bg-danger` plano
+- `.mobile-nav-glass` — fondo del menú hamburguesa móvil con `linear-gradient` 3-stop + `backdrop-filter: blur(24px) saturate(140%)`
+- `.text-gradient-gold` — gradiente dorado para énfasis en headings
 
 ### Navbar
 Dropdown items in `src/components/Navbar.jsx` `navLinks` array. Servicios dropdown has "Ver todos los servicios" → `/servicios` at top. Zonas dropdown has "Ver todas las zonas" → `/zonas` at top.
@@ -162,6 +190,17 @@ This prevents GSAP from pinning hidden sections on mobile, which breaks scroll c
 ## Deployment
 
 Vercel reads from `main` branch. Push triggers auto-deploy. SPA routing via Vercel rewrites.
+
+**Si Vercel se "salta" commits y no actualiza:** push un commit vacío para forzar el rebuild:
+```bash
+git commit --allow-empty -m "chore: trigger Vercel redeploy"
+git push origin main
+```
+Verifica qué bundle sirve Vercel comparando el hash JS:
+```bash
+curl -s https://alm-12-04-2026.vercel.app/ | grep -o 'index-[A-Za-z0-9_-]*\.js'
+# vs local: npm run build (output muestra el hash actual)
+```
 
 ## Mobile-specific considerations
 

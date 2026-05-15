@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import gsap from 'gsap';
 import {
@@ -17,6 +17,8 @@ import {
   ArrowRight,
   Clock,
   Shield,
+  Award,
+  Users,
 } from 'lucide-react';
 import { services } from '../data/services';
 import SeoHead from '../components/SeoHead';
@@ -33,107 +35,163 @@ const iconMap = {
   BatteryCharging,
 };
 
+const trustIconMap = {
+  Shield,
+  CheckCircle,
+  Clock,
+  Award,
+  Users,
+  Zap,
+};
+
 export default function ServicePage() {
   const { slug } = useParams();
   const service = services.find((s) => s.slug === slug);
 
+  const mainRef = useRef(null);
   const heroRef = useRef(null);
   const contentRef = useRef(null);
+  const processRef = useRef(null);
   const faqRef = useRef(null);
+  const trustRef = useRef(null);
   const ctaRef = useRef(null);
   const relatedRef = useRef(null);
 
   const [openFaq, setOpenFaq] = useState(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!service) return;
 
     const ctx = gsap.context(() => {
       // Hero animations
-      gsap.from('.service-hero-breadcrumb', {
-        y: 20,
-        opacity: 0,
-        duration: 0.6,
-        delay: 0.1,
-        ease: 'power3.out',
-      });
-      gsap.from('.service-hero-title', {
-        y: 60,
-        opacity: 0,
-        duration: 0.9,
-        delay: 0.2,
-        ease: 'power3.out',
-      });
-      gsap.from('.service-hero-subtitle', {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.4,
-        ease: 'power3.out',
-      });
-      gsap.from('.service-hero-rule', {
-        scaleX: 0,
-        transformOrigin: 'left',
-        duration: 0.8,
-        delay: 0.5,
-        ease: 'power3.inOut',
-      });
+      gsap.fromTo(
+        '.service-hero-breadcrumb',
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.6, delay: 0.1, ease: 'power3.out' },
+      );
+      gsap.fromTo(
+        '.service-hero-title',
+        { y: 60, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.9, delay: 0.2, ease: 'power3.out' },
+      );
+      gsap.fromTo(
+        '.service-hero-subtitle',
+        { y: 40, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.8, delay: 0.4, ease: 'power3.out' },
+      );
+      gsap.fromTo(
+        '.service-hero-rule',
+        { scaleX: 0, transformOrigin: 'left' },
+        { scaleX: 1, duration: 0.8, delay: 0.5, ease: 'power3.inOut' },
+      );
 
       // Content section
-      gsap.from('.service-content-item', {
-        y: 40,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.08,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: contentRef.current,
-          start: 'top 75%',
-          once: true,
+      gsap.fromTo(
+        '.service-content-item',
+        { y: 40, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: contentRef.current,
+            start: 'top 75%',
+            once: true,
+          },
         },
-      });
+      );
+
+      // Process section
+      gsap.fromTo(
+        '.service-process-item',
+        { y: 40, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: processRef.current,
+            start: 'top 80%',
+            once: true,
+          },
+        },
+      );
 
       // FAQ section
-      gsap.from('.service-faq-item', {
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: faqRef.current,
-          start: 'top 75%',
-          once: true,
+      gsap.fromTo(
+        '.service-faq-item',
+        { y: 30, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: faqRef.current,
+            start: 'top 75%',
+            once: true,
+          },
         },
-      });
+      );
+
+      // Trust section
+      gsap.fromTo(
+        '.service-trust-item',
+        { y: 30, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: trustRef.current,
+            start: 'top 75%',
+            once: true,
+          },
+        },
+      );
 
       // CTA section
-      gsap.from('.service-cta-content', {
-        y: 50,
-        opacity: 0,
-        duration: 0.9,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: ctaRef.current,
-          start: 'top 75%',
-          once: true,
+      gsap.fromTo(
+        '.service-cta-content',
+        { y: 50, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: ctaRef.current,
+            start: 'top 75%',
+            once: true,
+          },
         },
-      });
+      );
 
       // Related services
-      gsap.from('.service-related-card', {
-        y: 40,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: relatedRef.current,
-          start: 'top 80%',
-          once: true,
+      gsap.fromTo(
+        '.service-related-card',
+        { y: 40, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: relatedRef.current,
+            start: 'top 80%',
+            once: true,
+          },
         },
-      });
-    }, heroRef);
+      );
+    }, mainRef);
 
     return () => ctx.revert();
   }, [service, slug]);
@@ -164,7 +222,7 @@ export default function ServicePage() {
   };
 
   return (
-    <main>
+    <main ref={mainRef}>
       <SeoHead
         title={`${service.title} en Madrid — ALMelectricidad`}
         description={service.heroDesc}
@@ -183,10 +241,10 @@ export default function ServicePage() {
           <img
             src={service.image}
             alt=""
-            className="w-full h-full object-cover opacity-15"
+            className="w-full h-full object-cover opacity-25"
             fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-dark/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-dark/30" />
         </div>
 
         {/* Decorative glow */}
@@ -306,6 +364,68 @@ export default function ServicePage() {
         </div>
       </section>
 
+      {/* ══════ PROCESS SECTION — Cómo trabajamos ══════ */}
+      {service.process && service.process.length > 0 && (
+        <section
+          ref={processRef}
+          className="section-padding"
+          style={{ background: 'var(--color-dark)' }}
+        >
+          <div className="container-custom px-6">
+            <div className="text-center mb-16">
+              <span className="section-label justify-center mb-4 !text-brand-glow">Nuestro proceso</span>
+              <h2
+                className="font-heading font-bold text-white leading-tight"
+                style={{ fontSize: 'clamp(1.75rem, 4vw, 2.75rem)' }}
+              >
+                Cómo trabajamos
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+              {service.process.map((item, i) => (
+                <div
+                  key={item.step}
+                  className="service-process-item relative"
+                >
+                  {/* Big background number */}
+                  <div
+                    className="font-heading font-black text-5xl leading-none mb-4"
+                    style={{ color: 'rgba(245, 197, 24, 0.12)' }}
+                    aria-hidden="true"
+                  >
+                    {item.step}
+                  </div>
+                  {/* Small legible step number */}
+                  <span className="text-brand text-sm font-bold tracking-wider mb-2 block">
+                    PASO {item.step}
+                  </span>
+                  <h3
+                    className="font-heading font-bold text-base text-white mb-2"
+                  >
+                    {item.title}
+                  </h3>
+                  <p
+                    className="text-sm leading-relaxed"
+                    style={{ color: 'rgba(255,255,255,0.5)' }}
+                  >
+                    {item.desc}
+                  </p>
+
+                  {/* Desktop separator */}
+                  {i < service.process.length - 1 && (
+                    <div
+                      className="hidden lg:block absolute top-0 right-0 w-px h-full"
+                      style={{ background: 'rgba(245, 197, 24, 0.12)' }}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ══════ FAQ SECTION ══════ */}
       <section
         ref={faqRef}
@@ -375,6 +495,72 @@ export default function ServicePage() {
         </div>
       </section>
 
+      {/* ══════ TRUST SECTION — Por qué elegirnos ══════ */}
+      {service.trustPoints && service.trustPoints.length > 0 && (
+        <section
+          ref={trustRef}
+          className="section-padding"
+          style={{ background: 'var(--color-surface)' }}
+        >
+          <div className="container-custom px-6">
+            <div className="text-center mb-12">
+              <span className="section-label justify-center mb-4">Confianza</span>
+              <h2 className="section-title">
+                Por qué elegirnos para{' '}
+                <span className="text-gradient-brand">{service.title.toLowerCase()}</span>
+              </h2>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {service.trustPoints.map((point, i) => {
+                const TrustIcon = trustIconMap[point.icon] || CheckCircle;
+                return (
+                  <div
+                    key={i}
+                    className="service-trust-item p-6 text-center"
+                    style={{
+                      border: '1px solid rgba(255,255,255,0.08)',
+                    }}
+                  >
+                    <div
+                      className="w-12 h-12 flex items-center justify-center mx-auto mb-4"
+                      style={{
+                        background: 'rgba(245, 197, 24, 0.08)',
+                        border: '1px solid rgba(245, 197, 24, 0.15)',
+                      }}
+                    >
+                      <TrustIcon size={24} className="text-brand" />
+                    </div>
+                    <p
+                      className="text-sm leading-relaxed font-medium"
+                      style={{ color: 'var(--color-ink-600)' }}
+                    >
+                      {point.text}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* REBT Badge */}
+            <div className="mt-10 text-center">
+              <div
+                className="inline-flex items-center gap-3 px-6 py-3"
+                style={{
+                  background: 'rgba(245, 197, 24, 0.06)',
+                  border: '1px solid rgba(245, 197, 24, 0.15)',
+                }}
+              >
+                <Shield size={18} className="text-brand" />
+                <span className="text-brand font-semibold text-sm tracking-wide uppercase">
+                  Instaladores autorizados REBT
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ══════ CTA SECTION ══════ */}
       <section
         ref={ctaRef}
@@ -385,7 +571,7 @@ export default function ServicePage() {
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-accent/5 rounded-full blur-[100px]" />
 
         <div className="container-custom px-6 relative z-10">
-          <div className="service-cta-content text-center max-w-3xl mx-auto">
+          <div className="service-cta-content text-center max-w-3xl mx-auto" style={{ visibility: 'hidden' }}>
             <span className="section-label justify-center mb-6 !text-brand-glow">
               Hablemos
             </span>
@@ -451,7 +637,7 @@ export default function ServicePage() {
                   key={s.slug}
                   to={`/servicios/${s.slug}`}
                   className="service-related-card card group p-6 block"
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: 'none', visibility: 'hidden' }}
                 >
                   <div
                     className="w-10 h-10 flex items-center justify-center mb-4"

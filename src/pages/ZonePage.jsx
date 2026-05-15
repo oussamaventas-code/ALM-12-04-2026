@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -40,127 +40,81 @@ export default function ZonePage() {
   const ctaRef = useRef(null);
   const otherZonesRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!zone) return;
 
-    // Kill all existing ScrollTriggers from previous zone before creating new ones
-    ScrollTrigger.getAll().forEach(trigger => {
-      if (trigger.vars.trigger === descRef.current ||
-          trigger.vars.trigger === neighborhoodsRef.current ||
-          trigger.vars.trigger === servicesRef.current ||
-          trigger.vars.trigger === ctaRef.current ||
-          trigger.vars.trigger === otherZonesRef.current) {
-        trigger.kill();
-      }
-    });
-
     const ctx = gsap.context(() => {
-      // Hero animations
-      gsap.from('.zone-hero-breadcrumb', {
-        y: 20,
-        opacity: 0,
-        duration: 0.6,
-        delay: 0.1,
-        ease: 'power3.out',
-      });
-      gsap.from('.zone-hero-title', {
-        y: 60,
-        opacity: 0,
-        duration: 0.9,
-        delay: 0.2,
-        ease: 'power3.out',
-      });
-      gsap.from('.zone-hero-meta', {
-        y: 30,
-        opacity: 0,
-        duration: 0.7,
-        delay: 0.4,
-        ease: 'power3.out',
-      });
-      gsap.from('.zone-hero-rule', {
-        scaleX: 0,
-        transformOrigin: 'left',
-        duration: 0.8,
-        delay: 0.5,
-        ease: 'power3.inOut',
-      });
+      // Hero animations — fromTo con autoAlpha para evitar bug StrictMode
+      gsap.fromTo('.zone-hero-breadcrumb',
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.6, delay: 0.1, ease: 'power3.out' }
+      );
+      gsap.fromTo('.zone-hero-title',
+        { y: 60, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.9, delay: 0.2, ease: 'power3.out' }
+      );
+      gsap.fromTo('.zone-hero-meta',
+        { y: 30, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.7, delay: 0.4, ease: 'power3.out' }
+      );
+      gsap.fromTo('.zone-hero-rule',
+        { scaleX: 0, transformOrigin: 'left' },
+        { scaleX: 1, duration: 0.8, delay: 0.5, ease: 'power3.inOut' }
+      );
 
       // Description
       if (descRef.current) {
-        gsap.from('.zone-desc-content', {
-          y: 40,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: descRef.current,
-            start: 'top 75%',
-            once: true,
-          },
-        });
+        gsap.fromTo('.zone-desc-content',
+          { y: 40, autoAlpha: 0 },
+          {
+            y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: { trigger: descRef.current, start: 'top 75%', once: true },
+          }
+        );
       }
 
       // Neighborhoods
       if (neighborhoodsRef.current) {
-        gsap.from('.zone-neighborhood-tag', {
-          y: 20,
-          opacity: 0,
-          duration: 0.5,
-          stagger: 0.05,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: neighborhoodsRef.current,
-            start: 'top 80%',
-            once: true,
-          },
-        });
+        gsap.fromTo('.zone-neighborhood-tag',
+          { y: 20, autoAlpha: 0 },
+          {
+            y: 0, autoAlpha: 1, duration: 0.5, stagger: 0.05, ease: 'power3.out',
+            scrollTrigger: { trigger: neighborhoodsRef.current, start: 'top 80%', once: true },
+          }
+        );
       }
 
       // Services grid
       if (servicesRef.current) {
-        gsap.from('.zone-service-card', {
-          y: 40,
-          opacity: 0,
-          duration: 0.7,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: servicesRef.current,
-            start: 'top 80%',
-            once: true,
-          },
-        });
+        gsap.fromTo('.zone-service-card',
+          { y: 40, autoAlpha: 0 },
+          {
+            y: 0, autoAlpha: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out',
+            scrollTrigger: { trigger: servicesRef.current, start: 'top 80%', once: true },
+          }
+        );
       }
 
       // CTA
       if (ctaRef.current) {
-        gsap.from('.zone-cta-content', {
-          y: 50,
-          opacity: 0,
-          duration: 0.9,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: ctaRef.current,
-            start: 'top 75%',
-            once: true,
-          },
-        });
+        gsap.fromTo('.zone-cta-content',
+          { y: 50, autoAlpha: 0 },
+          {
+            y: 0, autoAlpha: 1, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: ctaRef.current, start: 'top 75%', once: true },
+          }
+        );
       }
 
       // Other zones
       if (otherZonesRef.current) {
-        gsap.from('.zone-other-link', {
-          x: 30,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.06,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: otherZonesRef.current,
-          start: 'top 85%',
-          once: true,
-        },
-        });
+        gsap.fromTo('.zone-other-link',
+          { x: 30, autoAlpha: 0 },
+          {
+            x: 0, autoAlpha: 1, duration: 0.6, stagger: 0.06, ease: 'power3.out',
+            scrollTrigger: { trigger: otherZonesRef.current, start: 'top 85%', once: true },
+          }
+        );
       }
     }, heroRef);
 

@@ -4,7 +4,7 @@ export const services = [
     title: 'Instalaciones Eléctricas',
     subtitle: 'Completas, reformas y adecuaciones',
     shortDesc: 'Montamos instalaciones eléctricas completas para viviendas, locales, naves y oficinas.',
-    heroDesc: 'Desde el diseño del cuadro general hasta el último enchufe. Instalaciones eléctricas que pasan inspección a la primera, con material certificado y mano de obra de electricistas autorizados.',
+    heroDesc: 'Desde el diseño del cuadro general hasta el último enchufe. Realizamos instalaciones eléctricas completas en viviendas, locales comerciales, naves y oficinas en toda la Comunidad de Madrid y Toledo. Material certificado, mano de obra de electricistas autorizados y 100% de inspecciones superadas a la primera.',
     image: '/images/services/NUEVO INSTALACIONES ELÉCTRICAS.webp',
     icon: 'Plug',
     bullets: [
@@ -15,10 +15,24 @@ export const services = [
       'Pasamos inspección a la primera',
       'Cuadros generales y subcuadros',
     ],
+    process: [
+      { step: '01', title: 'Visita y medición', desc: 'Vamos al sitio, medimos, revisamos el estado actual y te damos precio cerrado ese mismo día.' },
+      { step: '02', title: 'Diseño y presupuesto', desc: 'Diseñamos el esquema unifilar, dimensionamos protecciones y te entregamos presupuesto cerrado. Sin sorpresas.' },
+      { step: '03', title: 'Ejecución', desc: 'Montamos cuadro, cableado y mecanismos con material de Schneider, Legrand o ABB. Todo conforme al REBT.' },
+      { step: '04', title: 'Legalización', desc: 'Gestionamos el boletín y pasamos la inspección de Industria. Tú no tienes que hacer nada.' },
+    ],
+    trustPoints: [
+      { icon: 'Shield', text: 'Más de 400 instalaciones realizadas desde 2018' },
+      { icon: 'CheckCircle', text: 'Inspección de Industria a la primera o repetimos sin coste' },
+      { icon: 'Clock', text: 'Garantía de 2 años en mano de obra' },
+    ],
     faq: [
       { q: '¿Cuánto tarda una instalación completa?', a: 'Depende del tamaño, pero una vivienda estándar entre 3-5 días. Una nave industrial puede ser 2-4 semanas. Te damos plazo cerrado en el presupuesto.' },
       { q: '¿Pasáis la inspección de industria?', a: 'Sí, el 100% de nuestras instalaciones pasan inspección a la primera. Si por algún motivo no pasara, lo arreglamos sin coste adicional.' },
       { q: '¿Qué material utilizáis?', a: 'Trabajamos con marcas como Schneider Electric, Legrand y ABB. No usamos material barato que falle al año.' },
+      { q: '¿Hacéis reformas parciales o solo instalaciones completas?', a: 'Hacemos ambas cosas. Si solo necesitas cambiar el cuadro eléctrico o añadir circuitos, también lo hacemos. No es necesario reformar todo.' },
+      { q: '¿En qué zonas de Madrid trabajáis?', a: 'Cubrimos toda la Comunidad de Madrid (norte, sur, este y oeste), Toledo, Ocaña y Aranjuez. La visita técnica es gratuita en toda nuestra zona de cobertura.' },
+      { q: '¿Incluís la legalización en el precio?', a: 'Sí, el boletín eléctrico y los trámites con la distribuidora van incluidos en el presupuesto. Sin extras ocultos.' },
     ],
   },
   {
@@ -26,7 +40,7 @@ export const services = [
     title: 'Reparación de Averías',
     subtitle: 'Urgencias 24h, los 7 días',
     shortDesc: 'Cortocircuitos, derivaciones y fallos eléctricos. Reparaciones rápidas con equipos calibrados.',
-    heroDesc: 'Cuando se va la luz a las 3 de la mañana en tu negocio, necesitas a alguien que coja el teléfono. Atendemos urgencias eléctricas 24 horas, los 7 días de la semana, en Madrid y Toledo.',
+    heroDesc: 'Cuando se va la luz a las 3 de la mañana en tu negocio o tu vivienda, necesitas a alguien que coja el teléfono. Atendemos urgencias eléctricas 24 horas, los 7 días de la semana, en toda la Comunidad de Madrid, Toledo y alrededores. Llegamos con equipos de diagnóstico calibrados y resolvemos el problema en la primera visita.',
     image: '/images/services/reparacion-averias.webp',
     icon: 'Zap',
     bullets: [
@@ -37,10 +51,24 @@ export const services = [
       'Reparaciones de emergencia 24/7',
       'Equipos de diagnóstico calibrados',
     ],
+    process: [
+      { step: '01', title: 'Llamada', desc: 'Coges el teléfono. Te confirmamos tiempo de llegada en menos de 5 minutos.' },
+      { step: '02', title: 'Desplazamiento', desc: 'Un electricista sale con todo el equipo. En Madrid urbano, 30-60 minutos. Toledo y alrededores, 45-90 min.' },
+      { step: '03', title: 'Diagnóstico', desc: 'Pinza amperimétrica, megóhmetro, cámara termográfica. Encontramos el fallo exacto, no chapuzas.' },
+      { step: '04', title: 'Reparación', desc: 'Arreglamos, verificamos que todo funciona y te explicamos qué ha pasado para que no vuelva a ocurrir.' },
+    ],
+    trustPoints: [
+      { icon: 'Clock', text: 'Tiempo medio de respuesta: 45 minutos en Madrid' },
+      { icon: 'Shield', text: 'Equipos de diagnóstico calibrados y certificados' },
+      { icon: 'CheckCircle', text: 'Sin cobro si no localizamos la avería' },
+    ],
     faq: [
       { q: '¿Cuánto tardáis en llegar ante una urgencia?', a: 'En zona urbana de Madrid, entre 30-60 minutos. En Toledo y alrededores, entre 45-90 minutos dependiendo de la ubicación.' },
       { q: '¿Hay recargo por urgencias nocturnas?', a: 'Sí, las urgencias fuera de horario tienen un recargo, pero te lo decimos antes de ir. Sin sorpresas.' },
       { q: '¿Reparáis averías de otros electricistas?', a: 'Sí, es bastante habitual. Diagnosticamos el problema, te explicamos qué pasó y lo reparamos correctamente.' },
+      { q: '¿Cobráis el desplazamiento aunque no reparéis?', a: 'Solo cobramos desplazamiento. Si diagnosticamos y reparamos, el desplazamiento va incluido en la reparación.' },
+      { q: '¿Podéis reparar averías en instalaciones antiguas?', a: 'Sí, trabajamos con instalaciones de todas las épocas. Si hay que actualizar algo para que sea seguro, te lo decimos antes.' },
+      { q: '¿Emitís factura por las reparaciones?', a: 'Siempre. Somos instaladores autorizados y todas nuestras reparaciones van con factura y garantía.' },
     ],
   },
   {
@@ -48,7 +76,7 @@ export const services = [
     title: 'Paneles Solares y Autoconsumo',
     subtitle: 'Energía limpia, ahorro real',
     shortDesc: 'Paneles solares de alta eficiencia con ahorro económico desde el primer día.',
-    heroDesc: 'Instalamos sistemas fotovoltaicos para empresas y particulares. Desde el estudio de tu cubierta hasta la legalización completa. Ahorro real desde el primer mes, con retorno de inversión en 4-6 años.',
+    heroDesc: 'Instalamos sistemas fotovoltaicos para empresas y particulares en Madrid y Toledo. Desde el estudio de tu cubierta hasta la legalización completa con la distribuidora. Ahorro real desde el primer mes y retorno de inversión en 4-6 años. Más de 150 instalaciones solares realizadas.',
     image: '/images/services/NUEVO PANELES SOLARES.webp',
     icon: 'Sun',
     bullets: [
@@ -59,10 +87,24 @@ export const services = [
       'Monitorización en tiempo real',
       'Mantenimiento preventivo incluido el primer año',
     ],
+    process: [
+      { step: '01', title: 'Estudio de cubierta', desc: 'Subimos al tejado, medimos orientación, inclinación y sombras. No vendemos kits genéricos.' },
+      { step: '02', title: 'Simulación de ahorro', desc: 'Te mostramos cuánto vas a ahorrar al mes con datos reales de tu factura y tu cubierta concreta.' },
+      { step: '03', title: 'Instalación', desc: 'Montamos paneles, inversor y protecciones. Conectamos a red y verificamos la producción real in situ.' },
+      { step: '04', title: 'Legalización', desc: 'Gestionamos todo el papeleo: ayuntamiento, distribuidora, IDAE. Te instalamos la app de monitorización.' },
+    ],
+    trustPoints: [
+      { icon: 'Zap', text: 'Más de 150 instalaciones solares realizadas' },
+      { icon: 'Shield', text: 'Paneles Tier 1 con 25 años de garantía de fabricante' },
+      { icon: 'Clock', text: 'Retorno medio de inversión: 4-6 años' },
+    ],
     faq: [
       { q: '¿Cuánto puedo ahorrar con placas solares?', a: 'Depende de tu consumo y cubierta, pero de media nuestros clientes ahorran entre un 30-50% en su factura eléctrica.' },
       { q: '¿Necesito permiso para instalar placas?', a: 'Sí, hay trámites con tu ayuntamiento y la distribuidora. Nosotros nos encargamos de todo el papeleo.' },
       { q: '¿Cuánto tarda la instalación?', a: 'Una instalación residencial, 2-3 días. Una comercial o industrial, 1-3 semanas según el tamaño.' },
+      { q: '¿Puedo instalar placas en un piso?', a: 'Si tienes cubierta propia o autorización de la comunidad, sí. Te asesoramos sobre la normativa de autoconsumo compartido.' },
+      { q: '¿Qué pasa con la energía que no consumo?', a: 'Se vierte a la red y tu distribuidora te compensa en la factura. Es lo que se llama excedentes con compensación simplificada.' },
+      { q: '¿Hacéis el mantenimiento posterior?', a: 'Sí. El primer año está incluido. Después ofrecemos un plan de mantenimiento anual que incluye limpieza y revisión del sistema.' },
     ],
   },
   {
@@ -70,7 +112,7 @@ export const services = [
     title: 'Iluminación LED Profesional',
     subtitle: 'Moderniza tu espacio y ahorra',
     shortDesc: 'Sistemas LED modernos y eficientes que reducen tu factura con acabado profesional.',
-    heroDesc: 'Cambiamos tu iluminación antigua por LED de última generación. Menos consumo, mejor luz, más vida útil. Para comercios, oficinas, naves industriales y viviendas.',
+    heroDesc: 'Cambiamos tu iluminación antigua por LED de última generación en comercios, oficinas, naves industriales y viviendas de Madrid y Toledo. Menos consumo, mejor calidad de luz, mayor vida útil. Diseñamos el proyecto lumínico y nos encargamos de toda la instalación sin obra.',
     image: '/images/services/iluminacion.webp',
     icon: 'Lightbulb',
     bullets: [
@@ -81,10 +123,24 @@ export const services = [
       'Iluminación de emergencia incluida',
       'Cumplimiento normativa eficiencia energética',
     ],
+    process: [
+      { step: '01', title: 'Auditoría lumínica', desc: 'Medimos lux, consumo y distribución actual. Detectamos dónde estás tirando dinero.' },
+      { step: '02', title: 'Proyecto LED', desc: 'Proponemos luminarias, temperatura de color y disposición. Te decimos exactamente cuánto vas a ahorrar.' },
+      { step: '03', title: 'Instalación retrofit', desc: 'Cambiamos las luminarias sin tocar el cableado ni hacer obra. En un comercio de 100m², 1-2 días.' },
+      { step: '04', title: 'Verificación', desc: 'Medimos los niveles finales de iluminación y te entregamos el informe de ahorro energético.' },
+    ],
+    trustPoints: [
+      { icon: 'Zap', text: 'Ahorro medio del 70% en consumo de iluminación' },
+      { icon: 'Clock', text: 'Luminarias con más de 50.000 horas de vida útil' },
+      { icon: 'Shield', text: 'Garantía de 3 años en luminarias instaladas' },
+    ],
     faq: [
       { q: '¿Cuánto se ahorra cambiando a LED?', a: 'Entre un 60-80% en la parte de iluminación de tu factura. En un comercio o nave, eso puede ser mucho dinero.' },
       { q: '¿Hay que cambiar toda la instalación?', a: 'No siempre. En muchos casos se puede hacer retrofit (cambiar solo las luminarias sin tocar el cableado).' },
       { q: '¿Qué vida útil tienen los LED?', a: 'Los que instalamos nosotros tienen 50.000+ horas de vida útil. Eso son más de 10 años de uso normal.' },
+      { q: '¿Se nota la diferencia de luz entre halógeno y LED?', a: 'La diferencia es enorme, tanto en calidad como en consumo. Los LED actuales ofrecen un índice de reproducción cromática (CRI) superior a 90, mejor que muchos halógenos.' },
+      { q: '¿Cuánto tarda el cambio a LED en un comercio?', a: 'Depende de la superficie, pero un local de 100m² se puede hacer en 1-2 días sin interrumpir la actividad.' },
+      { q: '¿Ofrecéis LED regulable (dimmer)?', a: 'Sí, instalamos sistemas regulables compatibles con DALI, 0-10V y Bluetooth. Ideal para oficinas y hostelería.' },
     ],
   },
   {
@@ -92,7 +148,7 @@ export const services = [
     title: 'Boletines y Certificados',
     subtitle: 'Todo en regla, sin complicaciones',
     shortDesc: 'Altas de luz, legalizaciones y certificaciones. Nos encargamos de la burocracia.',
-    heroDesc: 'Necesitas el boletín para dar de alta la luz, legalizar una reforma o pasar una inspección. Nosotros nos encargamos de todo: revisamos la instalación, emitimos el certificado y gestionamos los trámites.',
+    heroDesc: '¿Necesitas el boletín para dar de alta la luz, legalizar una reforma o pasar una inspección periódica? Nos encargamos de todo: revisamos la instalación, emitimos el certificado y gestionamos los trámites con tu distribuidora. Servicio rápido en toda la Comunidad de Madrid, Toledo, Ocaña y Aranjuez.',
     image: '/images/services/certificados.webp',
     icon: 'FileCheck',
     bullets: [
@@ -103,10 +159,24 @@ export const services = [
       'Inspecciones periódicas OCA',
       'Gestión completa de trámites',
     ],
+    process: [
+      { step: '01', title: 'Nos llamas', desc: 'Cuéntanos qué necesitas: alta de luz, cambio de potencia, legalización. Te damos cita en 24-48h.' },
+      { step: '02', title: 'Revisión', desc: 'Comprobamos que tu instalación cumple normativa. Si hay algo que arreglar, te lo decimos antes con precio.' },
+      { step: '03', title: 'Boletín', desc: 'Emitimos el CIE/BIE en el acto si todo está correcto. Te lo llevas firmado y sellado.' },
+      { step: '04', title: 'Trámites', desc: 'Presentamos la documentación a tu distribuidora. Tú no tienes que hacer nada más.' },
+    ],
+    trustPoints: [
+      { icon: 'Zap', text: 'Boletín emitido en el acto si la instalación es correcta' },
+      { icon: 'CheckCircle', text: 'Gestión completa de trámites con la distribuidora' },
+      { icon: 'Shield', text: 'Precio cerrado sin extras ocultos' },
+    ],
     faq: [
       { q: '¿Qué es un boletín eléctrico?', a: 'Es un certificado oficial que acredita que tu instalación cumple la normativa. Lo necesitas para dar de alta la luz, cambiar de potencia o después de una reforma.' },
       { q: '¿Cuánto cuesta un boletín?', a: 'Depende del tipo de instalación. Un boletín residencial está entre 150-300€. Te damos precio exacto antes de empezar.' },
       { q: '¿Cuánto tarda el proceso?', a: 'El boletín lo emitimos en el momento si la instalación está bien. Los trámites con la distribuidora pueden tardar 5-15 días laborables.' },
+      { q: '¿Qué pasa si mi instalación no cumple la normativa?', a: 'Te decimos exactamente qué hay que corregir y cuánto cuesta. Solo haces la obra si quieres seguir adelante. Sin compromiso.' },
+      { q: '¿Puedo cambiar de potencia sin hacer obra?', a: 'En muchos casos sí. Si el cableado y las protecciones lo permiten, solo necesitas un nuevo boletín. Lo comprobamos en la visita.' },
+      { q: '¿Hacéis boletines para comunidades de propietarios?', a: 'Sí. Emitimos certificados para zonas comunes, garajes, ascensores y servicios generales de edificios.' },
     ],
   },
   {
@@ -114,7 +184,7 @@ export const services = [
     title: 'Telecomunicaciones',
     subtitle: 'Redes, datos y conectividad profesional',
     shortDesc: 'Cableado de red, redes Wi-Fi, videoporteros y control de accesos. Crimpado UTP/FTP profesional.',
-    heroDesc: 'Las redes son la especialidad técnica favorita de Jorge. Desde el crimpado de un cable UTP hasta el diseño completo de una red corporativa. Instalaciones limpias, bien etiquetadas y con documentación incluida.',
+    heroDesc: 'Desde el crimpado de un cable UTP hasta el diseño completo de una red corporativa. Instalamos cableado de datos, redes Wi-Fi empresariales, videoporteros, CCTV y control de accesos en Madrid y Toledo. Instalaciones limpias, bien etiquetadas y con documentación técnica incluida.',
     image: '/images/services/telecomunicaciones.webp',
     icon: 'Wifi',
     bullets: [
@@ -125,10 +195,24 @@ export const services = [
       'Antenas TDT y satélite',
       'Automatismos y domotíca básica',
     ],
+    process: [
+      { step: '01', title: 'Análisis', desc: 'Evaluamos qué necesitas: puntos de red, Wi-Fi, cámaras, videoportero. Diseñamos la solución sobre plano.' },
+      { step: '02', title: 'Esquema de red', desc: 'Planificamos distribución de cableado, rack, APs y equipos. Todo documentado antes de empezar.' },
+      { step: '03', title: 'Instalación', desc: 'Pasamos cable, crimpamos, etiquetamos y certificamos cada punto con equipo Fluke.' },
+      { step: '04', title: 'Configuración', desc: 'Configuramos switches, puntos de acceso y equipos. Te lo entregamos funcionando con documentación.' },
+    ],
+    trustPoints: [
+      { icon: 'CheckCircle', text: 'Certificación de cableado con equipo Fluke' },
+      { icon: 'Shield', text: 'Garantía de 5 años en cableado estructurado' },
+      { icon: 'Award', text: 'Documentación técnica completa incluida' },
+    ],
     faq: [
       { q: '¿Qué diferencia hay entre un cable UTP y FTP?', a: 'El FTP tiene apantallamiento metálico que lo protege de interferencias electromagnéticas. Recomendamos FTP para instalaciones industriales o cerca de maquinaria eléctrica.' },
       { q: '¿Instaláis redes Wi-Fi para empresas?', a: 'Sí. Diseñamos la cobertura, elegimos los puntos de acceso correctos y los configuramos. No solo ponemos hardware, medimos la cobertura real.' },
       { q: '¿Hacéis mantenimiento de instalaciones de datos?', a: 'Sí, incluyendo diagnóstico, certificación de cableado y actualizaciones. Si algo no funciona bien y no sabes por qué, lo buscamos.' },
+      { q: '¿Podéis mejorar la cobertura Wi-Fi de mi oficina?', a: 'Sí. Hacemos un estudio de cobertura, detectamos zonas muertas y proponemos puntos de acceso donde realmente hacen falta.' },
+      { q: '¿Instaláis cámaras de seguridad (CCTV)?', a: 'Sí, tanto analógicas como IP. Incluimos grabador, configuración y acceso remoto desde el móvil.' },
+      { q: '¿Qué categoría de cable usáis?', a: 'Cat 6 como mínimo para nuevas instalaciones. Cat 6A para entornos que necesiten 10 Gbps o tengan interferencias electromagnéticas.' },
     ],
   },
   {
@@ -136,7 +220,7 @@ export const services = [
     title: 'Recarga Vehículo Eléctrico',
     subtitle: 'Instalación de puntos de recarga',
     shortDesc: 'Puntos de recarga domésticos y profesionales para flotas y parking. Instalación certificada.',
-    heroDesc: 'El vehículo eléctrico necesita una instalación eléctrica preparada. Instalamos puntos de recarga Modo 3 en viviendas, garajes, empresas y flotas. Todo legalizado y con la potencia adecuada para tu caso.',
+    heroDesc: 'El vehículo eléctrico necesita una instalación eléctrica preparada. Instalamos puntos de recarga Modo 3 en viviendas, garajes comunitarios, empresas y flotas en Madrid y Toledo. Todo legalizado según ITC-BT-52, con la potencia adecuada para tu caso y gestión de la subvención MOVES incluida.',
     image: '/images/services/recarga.webp',
     icon: 'BatteryCharging',
     bullets: [
@@ -147,10 +231,24 @@ export const services = [
       'Compatible con todas las marcas de VE',
       'Solicitud de subvención MOVES incluida',
     ],
+    process: [
+      { step: '01', title: 'Estudio eléctrico', desc: 'Comprobamos potencia disponible, distancia al cuadro y si hay que ampliar acometida. Sin adivinar.' },
+      { step: '02', title: 'Presupuesto', desc: 'Te proponemos el wallbox que encaja con tu coche y tu instalación. Precio cerrado, sin letra pequeña.' },
+      { step: '03', title: 'Instalación', desc: 'Montamos wallbox, protecciones dedicadas y cableado según ITC-BT-52. Legalizado desde el día uno.' },
+      { step: '04', title: 'Subvención MOVES', desc: 'Legalizamos y gestionamos la solicitud MOVES sin coste adicional. Puedes recuperar hasta el 70%.' },
+    ],
+    trustPoints: [
+      { icon: 'Shield', text: 'Instaladores certificados según ITC-BT-52' },
+      { icon: 'Users', text: 'Compatibilidad con todas las marcas de VE del mercado' },
+      { icon: 'CheckCircle', text: 'Gestión de subvención MOVES incluida sin coste' },
+    ],
     faq: [
       { q: '¿Necesito ampliar la potencia para instalar un wallbox?', a: 'Depende de la potencia contratada y del consumo de tu hogar. Hacemos un estudio previo para saber si hay que ampliarla o no.' },
       { q: '¿Qué wallbox recomiendáis?', a: 'Trabajamos con marcas homologadas como Wallbox, Efacec y Circontrol. El modelo depende de tu caso: potencia disponible, uso, si quieres control por app...' },
       { q: '¿Hay subvenciones para el wallbox?', a: 'Sí, el programa MOVES III cubre hasta el 70% del coste en algunos casos. Gestionamos la solicitud sin coste adicional.' },
+      { q: '¿Se puede instalar en un garaje comunitario?', a: 'Sí. Hay dos opciones: circuito individual desde tu contador o sistema de recarga compartida. Te asesoramos sobre qué aprobó tu comunidad.' },
+      { q: '¿Cuánto cuesta instalar un wallbox completo?', a: 'Entre 1.200€ y 2.500€ según distancia al cuadro, potencia y modelo de cargador. Con la subvención MOVES puedes recuperar hasta el 70%.' },
+      { q: '¿Puedo cargar con un enchufe normal?', a: 'Técnicamente sí, pero es lento y poco seguro para uso diario. Un wallbox Modo 3 es mucho más rápido, seguro y eficiente.' },
     ],
   },
 ];
