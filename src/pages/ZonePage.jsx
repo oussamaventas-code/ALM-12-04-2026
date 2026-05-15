@@ -132,7 +132,7 @@ export default function ZonePage() {
     <main ref={heroRef}>
       <SeoHead
         title={`Electricista en ${zone.name} — ALMelectricidad`}
-        description={`Electricistas en ${zone.name}. ${zone.description} Presupuesto sin compromiso en menos de 24h.`}
+        description={zone.metaDesc || `Electricistas en ${zone.name}. ${zone.description} Presupuesto sin compromiso.`}
         canonical={`/zonas/${zone.slug}`}
         ogImage="/og/zonas.png"
       />

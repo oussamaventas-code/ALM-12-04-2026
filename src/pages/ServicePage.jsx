@@ -225,7 +225,7 @@ export default function ServicePage() {
     <main ref={mainRef}>
       <SeoHead
         title={`${service.title} en Madrid — ALMelectricidad`}
-        description={service.heroDesc}
+        description={service.metaDesc || service.heroDesc.slice(0, 155)}
         canonical={`/servicios/${service.slug}`}
         schema={serviceSchema}
         ogImage={`/og/${service.slug}.png`}
