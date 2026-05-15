@@ -114,13 +114,13 @@ export default function ServiciosPage() {
                   }`}
               >
                 {/* Imagen */}
-                <div className="relative h-44 overflow-hidden shrink-0">
+                <div className="relative h-72 overflow-hidden shrink-0 bg-dark">
                   <img
                     src={s.image}
                     alt={s.title}
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent" />
                   {s.highlight && (
