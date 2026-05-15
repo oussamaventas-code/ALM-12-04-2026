@@ -6,11 +6,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // gsap.registerPlugin ya registrado globalmente en App.jsx
 
 const timelineSteps = [
-  { img: "/video  seccion de urgencias/img 1.webp", title: "Recibimos el aviso" },
-  { img: "/video  seccion de urgencias/img 2.webp", title: "Asignamos al equipo" },
-  { img: "/video  seccion de urgencias/img 3.webp", title: "Llegamos y diagnosticamos" },
-  { img: "/video  seccion de urgencias/img 4.webp", title: "Reparamos la avería" },
-  { img: "/video  seccion de urgencias/img 5.webp", title: "Apretón de manos y resuelto" }
+  { img: "/video  seccion de urgencias/img 1.webp", title: "Nos llamas, recibimos el aviso" },
+  { img: "/video  seccion de urgencias/img 2.webp", title: "Melisa activa al equipo" },
+  { img: "/video  seccion de urgencias/img 3.webp", title: "Salimos de inmediato" },
+  { img: "/video  seccion de urgencias/img 4.webp", title: "Llegamos al lugar" },
+  { img: "/video  seccion de urgencias/img 5.webp", title: "Diagnosticamos y reparamos" },
+  { img: "/video  seccion de urgencias/img 6.webp", title: "Problema resuelto" },
 ];
 
 export default function UrgenciasSection() {
@@ -130,7 +131,7 @@ export default function UrgenciasSection() {
           playsInline
           preload="none"
         >
-          <source src="/video  seccion de urgencias/Avería Urgente1.mp4" type="video/mp4" />
+          <source src="/video  seccion de urgencias/emergencia.mp4" type="video/mp4" />
         </video>
         
         <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/20 to-ink/90 z-10"></div>
