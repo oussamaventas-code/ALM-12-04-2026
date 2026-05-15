@@ -54,7 +54,7 @@ export default function HistoriaPage() {
         title="Nuestra Historia — ALM Electricidad | Madrid y Toledo"
         description="De AMelectric a ALM Electricidad: la historia de Jorge, sus valores, su familia y la visión de una empresa que trabaja sin límites. Electricistas con propósito en Madrid y Toledo."
         canonical="/sobre-nosotros"
-        ogImage="https://almelectricidad.com/og-historia.png"
+        ogImage="/og/historia.png"
       />
 
       <div ref={pageRef}>

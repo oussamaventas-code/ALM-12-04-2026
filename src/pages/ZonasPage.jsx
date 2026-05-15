@@ -54,7 +54,7 @@ export default function ZonasPage() {
     <>
       <SeoHead
         title="Zonas de Cobertura — ALM Electricidad | Madrid y Toledo"
-        description="Electricistas profesionales en Ocaña, Aranjuez, Madrid (Norte, Sur, Este, Oeste, Getafe, Alcorcón) y Toledo (capital, Talavera, Illescas). Proyectos a nivel nacional. Urgencias 24h."
+        description="Electricistas en Madrid y Toledo. Ocaña, Aranjuez, Getafe, Alcorcón, Toledo, Illescas y más. Urgencias 24h. Proyectos a nivel nacional."
         canonical="/zonas"
         schema={schema}
         ogImage="/og/zonas.png"

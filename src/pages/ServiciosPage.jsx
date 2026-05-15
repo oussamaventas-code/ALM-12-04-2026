@@ -70,7 +70,7 @@ export default function ServiciosPage() {
   return (
     <div className="overflow-x-hidden">
       <SeoHead
-        title="Servicios de Electricidad en Madrid y Toledo — ALMelectricidad"
+        title="Servicios de Electricista en Madrid y Toledo — ALMelectricidad"
         description="Instalaciones eléctricas, urgencias 24h, paneles solares, iluminación LED, boletines, telecomunicaciones, recarga de VE y fotovoltaica industrial. Instaladores autorizados REBT."
         canonical="/servicios"
         ogImage="/og/instalaciones-electricas.png"
