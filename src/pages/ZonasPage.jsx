@@ -23,17 +23,20 @@ export default function ZonasPage() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.zp-hero > *', {
-        y: 35, opacity: 0, duration: 0.75, stagger: 0.13, ease: 'power3.out', delay: 0.2,
-      });
-      gsap.from('.zp-card', {
-        y: 28, opacity: 0, duration: 0.55, stagger: 0.07, ease: 'power3.out',
-        scrollTrigger: { trigger: '.zp-grid', start: 'top 78%', once: true },
-      });
-      gsap.from('.zp-highlight', {
-        y: 22, opacity: 0, duration: 0.5, stagger: 0.09, ease: 'power3.out',
-        scrollTrigger: { trigger: '.zp-highlights', start: 'top 80%', once: true },
-      });
+      gsap.fromTo('.zp-hero > *',
+        { y: 35, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.75, stagger: 0.13, ease: 'power3.out', delay: 0.2 },
+      );
+      gsap.fromTo('.zp-card',
+        { y: 28, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.55, stagger: 0.07, ease: 'power3.out',
+          scrollTrigger: { trigger: '.zp-grid', start: 'top 78%', once: true } },
+      );
+      gsap.fromTo('.zp-highlight',
+        { y: 22, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, stagger: 0.09, ease: 'power3.out',
+          scrollTrigger: { trigger: '.zp-highlights', start: 'top 80%', once: true } },
+      );
     }, pageRef);
     return () => ctx.revert();
   }, []);

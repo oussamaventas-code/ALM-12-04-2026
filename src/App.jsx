@@ -121,18 +121,21 @@ function useLenis() {
 // React then fails with "removeChild: not a child of this node" because the
 // DOM no longer matches React's virtual tree.  useLayoutEffect cleanup runs
 // BEFORE React commits deletions, giving us a window to revert GSAP changes.
+//
+// CRITICAL: kill logic lives in the CLEANUP function (return () => {...}),
+// NOT in the setup body.  React guarantees: all cleanups from the previous
+// render fire BEFORE any setups of the new render.  If the kill were in the
+// setup body it would run AFTER child components (pages) have already
+// created their GSAP tweens — leaving elements stuck at autoAlpha:0.
 function useScrollTriggerCleanup() {
   const location = useLocation();
-  const prevPath = useRef(location.pathname);
 
   useLayoutEffect(() => {
-    if (prevPath.current !== location.pathname) {
-      // Revert all ScrollTrigger instances: removes pin-spacers,
-      // restores original DOM positions, kills tweens.
+    // Cleanup fires before the next render's effects — safe to kill here.
+    return () => {
       ScrollTrigger.getAll().forEach((st) => st.kill(true));
       gsap.killTweensOf('*');
-      prevPath.current = location.pathname;
-    }
+    };
   }, [location.pathname]);
 }
 

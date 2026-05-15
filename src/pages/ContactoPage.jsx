@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SeoHead from '../components/SeoHead';
 import {
@@ -31,6 +31,7 @@ const SERVICIOS = [
 ];
 
 export default function ContactoPage() {
+  const pageRef  = useRef(null);
   const heroRef  = useRef(null);
   const formRef  = useRef(null);
   const [enviado, setEnviado] = useState(false);
@@ -43,16 +44,20 @@ export default function ContactoPage() {
     mensaje:  '',
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    // Scope context to pageRef (wraps hero + form) so .ct-animate elements
+    // outside the hero section are found correctly.
     const ctx = gsap.context(() => {
-      gsap.from('.ct-hero > *', {
-        y: 30, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out', delay: 0.15,
-      });
-      gsap.from('.ct-animate', {
-        y: 30, opacity: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out',
-        scrollTrigger: { trigger: formRef.current, start: 'top 80%', once: true },
-      });
-    }, heroRef);
+      gsap.fromTo('.ct-hero > *',
+        { y: 30, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.7, stagger: 0.12, ease: 'power3.out', delay: 0.15 },
+      );
+      gsap.fromTo('.ct-animate',
+        { y: 30, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.08, ease: 'power3.out',
+          scrollTrigger: { trigger: formRef.current, start: 'top 80%', once: true } },
+      );
+    }, pageRef);
     return () => ctx.revert();
   }, []);
 
@@ -96,6 +101,7 @@ export default function ContactoPage() {
         ogImage="https://almelectricidad.com/og-contacto.png"
       />
 
+      <div ref={pageRef}>
       {/* Hero */}
       <section ref={heroRef} className="relative bg-dark pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-brand/5 via-transparent to-transparent pointer-events-none" />
@@ -344,6 +350,7 @@ export default function ContactoPage() {
           </div>
         </div>
       </section>
+      </div>
     </>
   );
 }

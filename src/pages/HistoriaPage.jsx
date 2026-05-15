@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import SeoHead from '../components/SeoHead';
 import { historyMilestones, jorgeValues, jorgeFacts } from '../data/history';
@@ -19,27 +19,31 @@ function TimelineIcon({ name, size = 20, className }) {
 export default function HistoriaPage() {
   const pageRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       // Hero reveal
-      gsap.from('.hs-hero > *', {
-        y: 40, opacity: 0, duration: 0.8, stagger: 0.14, ease: 'power3.out', delay: 0.2,
-      });
+      gsap.fromTo('.hs-hero > *',
+        { y: 40, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.14, ease: 'power3.out', delay: 0.2 },
+      );
       // Timeline items
-      gsap.from('.hs-milestone', {
-        x: -40, opacity: 0, duration: 0.65, stagger: 0.18, ease: 'power3.out',
-        scrollTrigger: { trigger: '.hs-timeline', start: 'top 75%', once: true },
-      });
+      gsap.fromTo('.hs-milestone',
+        { x: -40, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.65, stagger: 0.18, ease: 'power3.out',
+          scrollTrigger: { trigger: '.hs-timeline', start: 'top 75%', once: true } },
+      );
       // Values cards
-      gsap.from('.hs-value', {
-        y: 30, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out',
-        scrollTrigger: { trigger: '.hs-values', start: 'top 78%', once: true },
-      });
+      gsap.fromTo('.hs-value',
+        { y: 30, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out',
+          scrollTrigger: { trigger: '.hs-values', start: 'top 78%', once: true } },
+      );
       // Jorge section
-      gsap.from('.hs-jorge > *', {
-        y: 30, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out',
-        scrollTrigger: { trigger: '.hs-jorge', start: 'top 75%', once: true },
-      });
+      gsap.fromTo('.hs-jorge > *',
+        { y: 30, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.7, stagger: 0.12, ease: 'power3.out',
+          scrollTrigger: { trigger: '.hs-jorge', start: 'top 75%', once: true } },
+      );
     }, pageRef);
     return () => ctx.revert();
   }, []);

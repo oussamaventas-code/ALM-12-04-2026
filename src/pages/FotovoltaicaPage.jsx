@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SeoHead from '../components/SeoHead';
 import PresupuestoSolarForm from '../components/PresupuestoSolarForm';
@@ -63,11 +63,12 @@ export default function FotovoltaicaPage() {
   const costeEstimado = consumption * 15;
   const amortizacion  = yearSavings > 0 ? (costeEstimado / yearSavings).toFixed(1) : '—';
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.fv-hero-content > *', {
-        y: 40, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.2,
-      });
+      gsap.fromTo('.fv-hero-content > *',
+        { y: 40, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.2 },
+      );
     }, heroRef);
     return () => ctx.revert();
   }, []);
